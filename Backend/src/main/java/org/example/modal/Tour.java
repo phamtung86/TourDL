@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tour")
 public class Tour {
-
+    private static final long serialVersionUID = 1L;
     @Column(name = "id")
     @Id
     private String id;
