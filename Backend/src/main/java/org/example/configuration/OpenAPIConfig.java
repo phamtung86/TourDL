@@ -24,7 +24,7 @@ public class OpenAPIConfig {
     public GroupedOpenApi groupedOpenApi() {
         return GroupedOpenApi.builder()
                 .group("Api-service-1")
-                .packagesToScan("org.example.Controller")
+                .packagesToScan("org.example.controller")
                 .build();
     }
 }

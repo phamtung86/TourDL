@@ -27,6 +27,11 @@ public class VoucherController {
         return null;
     }
 
+    @GetMapping("/TotalVoucher")
+    public int getTotalVoucher() {
+        return voucherService.totalVouchers();
+    }
+
     @PostMapping("/vouchers")
     public boolean addNewVoucher(@RequestBody Voucher voucher) {
         Voucher newVoucher = voucherService.createVoucher(voucher);

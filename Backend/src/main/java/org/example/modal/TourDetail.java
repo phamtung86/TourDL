@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "`tour_detail`")
 public class TourDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,7 +20,7 @@ public class TourDetail {
     private String cuisine;
     @Column(name = "suitable_people")
     private String suitable_people;
-    @Column(name = "time_suitable")
+    @Column(name = "time_suiable")
     private String time_suitable;
     @Column(name = "transport")
     private String transport;

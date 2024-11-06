@@ -50,4 +50,9 @@ public class VoucherService {
         }
         return false;
     }
+
+    // total quantity voucher
+    public int totalVouchers() {
+        return voucherReponsitory.totalVouchers();
+    }
 }
