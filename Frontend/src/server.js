@@ -4,6 +4,7 @@ const port = process.env.PORT || 8080;
 const connectDB = require('./config/connectDatabase');
 const configViewEngine = require('./config/viewEngine');
 const initWebRouters = require('./routes/web');
+const initAPIs = require('./routes/api');
 const cors = require('cors');
 const app = express();
 
@@ -18,7 +19,7 @@ configViewEngine(app);
 
 // Khai bao routes
 initWebRouters(app);
-
+initAPIs(app);
 // Middleware 404 not found
 app.use((req, res) => {
   return res.render('404.ejs');
