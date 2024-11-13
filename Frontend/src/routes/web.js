@@ -6,9 +6,16 @@ const initWebRouters = (app) => {
   router.get('/', (req, res) => {
     return res.send('GetDone');
   });
+  router.get('/adb', (req, res) => {
+    return res.send('KhanhVinh');
+  });
   router.get('/get-test', async (req, res) => {
-    let tour_order = await db.TourOder.findAll({});
-    return res.send(tour_order.JSON());
+    try {
+      let tour_order = await db.TourDetail.findAll({});
+      return res.status(200).json(tour_order);
+    } catch (error) {
+      return res.send(error);
+    }
   });
   return app.use('/', router);
 };

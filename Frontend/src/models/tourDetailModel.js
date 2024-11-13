@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class TourDetail extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init(
+  TourDetail.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,41 +19,49 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      user_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      pass_word: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      phone_number: {
+      file_name: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      email: {
+      url: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      address: {
+      sight_seeing: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      role: {
-        type: DataTypes.INTEGER,
+      cuisine: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      suitable_people: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      time_suiable: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      transport: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      sale_description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      tour_id: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'User',
-      tableName: 'user',
+      modelName: 'TourDetail',
+      tableName: 'tour_detail',
       timestamps: false,
     }
   );
-  return User;
+  return TourDetail;
 };
