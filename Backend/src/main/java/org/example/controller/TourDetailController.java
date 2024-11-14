@@ -30,7 +30,7 @@ public class TourDetailController {
         return new ResponseEntity<>(tourDetail, HttpStatus.OK);
     }
 
-    @PostMapping("/addNewTourDetail") // Thêm dấu /
+    @PostMapping("/addNewTourDetail")
     public ResponseEntity<TourDetail> addNewTourDetail(@RequestBody TourDetail tourDetail) {
         TourDetail newTourDetail = tourDetailService.createNewTourDetail(tourDetail);
         return new ResponseEntity<>(newTourDetail, HttpStatus.CREATED);

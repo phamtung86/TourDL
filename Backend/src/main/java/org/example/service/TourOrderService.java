@@ -77,7 +77,7 @@ public class TourOrderService {
 
     // get top tour
     public List<TourOrderDTO> listTopTours() {
-        Pageable pageable = PageRequest.of(0, 10); // Sử dụng PageRequest của Spring
+        Pageable pageable = PageRequest.of(0, 10);
         return tourOrderReponsitory.getTopTourOrders(pageable);
     }
 
@@ -92,11 +92,11 @@ public class TourOrderService {
     // tao 1 tour order
     @Transactional
     public void createNewTourOrder(TourOrder tourOrder, String tourId) {
-        Optional<Tour> optionalTour = tourReponsitory.findById(tourId); // Giả sử repository của Tour là `tourRepository`
+        Optional<Tour> optionalTour = tourReponsitory.findById(tourId);
 
         if (optionalTour.isPresent()) {
             Tour tour = optionalTour.get();
-            tourOrder.setTour(tour); // Giả sử `TourOrder` có phương thức `setTour`
+            tourOrder.setTour(tour);
             tourOrderReponsitory.save(tourOrder);
         } else {
             throw new EntityNotFoundException("Tour with ID " + tourId + " not found.");
