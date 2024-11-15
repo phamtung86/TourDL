@@ -24,8 +24,8 @@ public class TourOrderController {
         return tourOrderService.getRevenue(type);
     }
     @GetMapping("/TopTour")
-    public List<TourOrderDTO> getTopTour() {
-        return tourOrderService.listTopTours();
+    public List<TourOrderDTO> getTopTour(@RequestParam String type) {
+        return tourOrderService.listTopTours(type);
     }
 
     @GetMapping("/TourOrderByMonth")

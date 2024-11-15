@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -79,10 +78,9 @@
                                             <i class="bi bi-cart"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>145</h6>
-                                            <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">increase</span>
-
+                                            <h6></h6>
+                                            <span class="text-success small pt-1 fw-bold">12%</span>
+                                            <span class="text-muted small pt-2 ps-1">increase</span>
                                         </div>
                                     </div>
                                 </div>
@@ -90,26 +88,26 @@
                             </div>
                         </div><!-- End Sales Card -->
 
-                        <!-- Revenue Card -->
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card revenue-card">
-
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                             class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
+                                            <h6>Lọc theo</h6>
                                         </li>
-
-                                        <li><a class="dropdown-item" href="#">Hôm nay</a></li>
-                                        <li><a class="dropdown-item" href="#">Tháng</a></li>
-                                        <li><a class="dropdown-item" href="#">Năm</a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="DAY"
+                                                onclick="getRevenueFromDropdown('DAY')">Hôm nay</a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="MONTH"
+                                                onclick="getRevenueFromDropdown('MONTH')">Tháng</a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="YEAR"
+                                                onclick="getRevenueFromDropdown('YEAR')">Năm</a></li>
                                     </ul>
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Doanh thu <span>| Hôm nay</span></h5>
+                                    <h5 class="card-title">Doanh thu <span id="card-title-status">| Tháng</span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -117,14 +115,15 @@
                                             <i class="bi bi-currency-dollar"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>$3,264</h6>
-                                            <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                                class="text-muted small pt-2 ps-1">increase</span>
-
+                                            <h6 id="revenue">
+                                                <%= data.revenue.toLocaleString('en-US', { maximumFractionDigits: 3 })
+                                                    %>
+                                            </h6>
+                                            <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                                                class="text-muted small pt-2 ps-1">increase</span> -->
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div><!-- End Revenue Card -->
 
@@ -273,75 +272,54 @@
                                             class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
+                                            <h6>Lọc theo</h6>
                                         </li>
 
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="DAY"
+                                                onclick="getTopTourByType('DAY')">Hôm nay</a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="MONTH"
+                                                onclick="getTopTourByType('MONTH')">Tháng</a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="YEAR"
+                                                onclick="getTopTourByType('YEAR')">Năm</a></li>
                                     </ul>
                                 </div>
 
                                 <div class="card-body pb-0">
-                                    <h5 class="card-title">Top Selling <span>| Today</span></h5>
+                                    <h5 class="card-title">Top Tour <span id="card-top-tour-title">| Tháng</span></h5>
 
                                     <table class="table table-borderless">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Preview</th>
-                                                <th scope="col">Product</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Sold</th>
-                                                <th scope="col">Revenue</th>
+                                                <th class="list-tour-title" scope="col">Mã tour</th>
+                                                <th class="list-tour-title" scope="col">Hình ảnh</th>
+                                                <th class="list-tour-title" scope="col">Tên tour</th>
+                                                <th class="list-tour-title" scope="col">Số lượng đặt</th>
+                                                <th class="list-tour-title" scope="col">Tổng số tiền</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row"><a href="#"><img src="assets/img/product-1.jpg"
-                                                            alt=""></a></th>
-                                                <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas
-                                                        nulla</a></td>
-                                                <td>$64</td>
-                                                <td class="fw-bold">124</td>
-                                                <td>$5,828</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#"><img src="assets/img/product-2.jpg"
-                                                            alt=""></a></th>
-                                                <td><a href="#" class="text-primary fw-bold">Exercitationem similique
-                                                        doloremque</a></td>
-                                                <td>$46</td>
-                                                <td class="fw-bold">98</td>
-                                                <td>$4,508</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#"><img src="assets/img/product-3.jpg"
-                                                            alt=""></a></th>
-                                                <td><a href="#" class="text-primary fw-bold">Doloribus nisi
-                                                        exercitationem</a></td>
-                                                <td>$59</td>
-                                                <td class="fw-bold">74</td>
-                                                <td>$4,366</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#"><img src="assets/img/product-4.jpg"
-                                                            alt=""></a></th>
-                                                <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum
-                                                        error</a></td>
-                                                <td>$32</td>
-                                                <td class="fw-bold">63</td>
-                                                <td>$2,016</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#"><img src="assets/img/product-5.jpg"
-                                                            alt=""></a></th>
-                                                <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus
-                                                        repellendus</a></td>
-                                                <td>$79</td>
-                                                <td class="fw-bold">41</td>
-                                                <td>$3,239</td>
-                                            </tr>
+                                        <tbody id="list-top-tour">
+                                            <% data.topTour.forEach(function(tour){ %>
+                                                <tr>
+                                                    <td class="list-tour-data">
+                                                        <%= tour.tour.id %>
+                                                    </td>
+                                                    <td class="list-tour-data"><img src="<%= tour.tour.imageLink %>"
+                                                            alt=""></td>
+                                                    <td class="list-tour-data">
+                                                        <%= tour.tour.name %>
+                                                    </td>
+                                                    <td class="list-tour-data">
+                                                        <%= tour.quantity %>
+                                                    </td>
+                                                    <td class="list-tour-data">
+                                                        <%= Number(tour.totalPrice).toLocaleString('en-US', {
+                                                            maximumFractionDigits: 3 }) %> ₫
+                                                    </td>
+
+                                                </tr>
+                                                <% }); %>
                                         </tbody>
+
                                     </table>
 
                                 </div>
@@ -375,16 +353,7 @@
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
-        <div class="copyright">
-            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
+
     </footer><!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -399,9 +368,84 @@
     <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
-
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Hàm lấy doanh thu
+        async function getRevenue(type) {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/v1/Revenue/${type}`);
+                const revenue = response.data; // Lấy dữ liệu từ response
+                if (response.status === 200) {
+                    const formattedRevenue = revenue.toLocaleString('en-US', { maximumFractionDigits: 3 });
+                    document.getElementById("revenue").innerHTML = formattedRevenue;
+                } else {
+                    return
+                }
+
+            } catch (error) {
+                console.error('Lỗi khi lấy doanh thu:', error);
+            }
+        }
+
+        function changeUSToVN(type) {
+            switch (type) {
+                case "DAY": return "Hôm nay"
+                case "MONTH": return "Tháng"
+                case "YEAR": return "Năm"
+            }
+        }
+
+        // Hàm gọi getRevenue khi người dùng chọn giá trị từ dropdown
+        function getRevenueFromDropdown(type, e) {
+            e.preventDefault();
+            document.getElementById("card-title-status").innerHTML = "| " + changeUSToVN(type)
+            getRevenue(type);
+        }
+
+        async function getTopTour(type) {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/v1/TopTour?type=${type}`);
+
+                if (response.status === 200) {
+                    const html = response.data.length > 0
+                        ? response.data.map((item) => {
+                            const formattedTotalPrice = item.totalPrice
+                                ? Number(item.totalPrice).toLocaleString('en-US', { maximumFractionDigits: 3 })
+                                : "0";
+                            return `
+                        <tr>
+                            <td class="list-tour-data">${item.tour.id}</td>
+                            <td class="list-tour-data"><img src="${item.tour.imageLink}" alt=""/></td>
+                            <td class="list-tour-data">${item.tour.name}</td>
+                            <td class="list-tour-data">${item.quantity}</td>
+                            <td class="list-tour-data">${formattedTotalPrice} ₫</td>                                              
+                        </tr>
+                    `;
+                        }).join('')
+                        : `
+                    <tr>
+                        ${Array(5).fill('<td class="list-tour-data">Không có dữ liệu</td>').join('')}
+                    </tr>
+                `;
+
+                    document.getElementById('list-top-tour').innerHTML = html;
+                }
+            } catch (error) {
+                console.log("Lỗi trong quá trình lấy top tour " + error);
+            }
+        }
+
+
+        function getTopTourByType(type, e) {
+            event.preventDefault();
+            document.getElementById('card-top-tour-title').innerHTML = "| " + changeUSToVN(type);
+            getTopTour(type)
+        }
+    </script>
+
+
 
 </body>
 
