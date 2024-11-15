@@ -29,15 +29,21 @@ public class UserService {
         Optional<Users> userOpt = userReponsitory.findById(userId);
         if (userOpt.isPresent()) {
            Users userUpdate = userOpt.get();
-           userUpdate.setName(user.getName());
-           userUpdate.setPassWord(user.getPassWord());
+           userUpdate.setUserName(user.getUserName());
+//           userUpdate.setPassWord(user.getPassWord());
            userUpdate.setName(user.getName());
            userUpdate.setPhoneNumber((user.getPhoneNumber()));
            userUpdate.setEmail(user.getEmail());
            userUpdate.setAddress(user.getAddress());
+//           userUpdate.setRole(user.getRole());
            userReponsitory.save(userUpdate);
            return true;
         }
         return false;
+    }
+
+    // get total account user
+    public int getTotalAccountUser() {
+        return userReponsitory.totalAccountUser();
     }
 }
