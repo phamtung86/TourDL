@@ -26,8 +26,14 @@ public class UserController {
     public boolean addNewUser(@RequestBody Users user) {
         return userService.createNewUser(user);
     }
+
     @PutMapping("/users/{userID}")
     public boolean updateUser(@RequestBody Users user, @PathVariable int userID) {
         return userService.updateUser(userID, user);
+    }
+
+    @GetMapping("/TotalUsers")
+    public int getTotalUsers() {
+        return userService.getTotalAccountUser();
     }
 }

@@ -11,10 +11,10 @@ public class Users {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "username")
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "password")
+    @Column(name = "pass_word")
     private String passWord;
 
     @Column(name = "name")
