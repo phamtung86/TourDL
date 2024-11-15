@@ -76,14 +76,33 @@ public class TourOrderService {
     }
 
     // get top tour
-    public List<TourOrderDTO> listTopTours() {
+    public List<TourOrderDTO> listTopTours(String type) {
         Pageable pageable = PageRequest.of(0, 10);
-        return tourOrderReponsitory.getTopTourOrders(pageable);
+        Timestamp startDate;
+        Timestamp endDate;
+        switch (type.toUpperCase()) {
+            case "DAY":
+                startDate = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+                endDate = Timestamp.valueOf(LocalDate.now().atTime(23, 59, 59));
+                return tourOrderReponsitory.getTopTourOrdersByDay(startDate, endDate, pageable);
+            case "MONTH":
+                startDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(1).atStartOfDay()); // Ngày đầu tháng
+                endDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(23, 59, 59)); // Ngày cuối tháng
+                return tourOrderReponsitory.getTopTourOrdersByMonth(startDate, endDate, pageable);
+            case "YEAR":
+                startDate = Timestamp.valueOf(LocalDate.now().withDayOfYear(1).atStartOfDay()); // Ngày đầu năm
+                endDate = Timestamp.valueOf(LocalDate.now().withDayOfYear(LocalDate.now().lengthOfYear()).atTime(23, 59, 59)); // Ngày cuối năm
+                return tourOrderReponsitory.getTopTourOrdersByYear(startDate, endDate, pageable);
+            default:
+                startDate = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+                endDate = Timestamp.valueOf(LocalDate.now().atTime(23, 59, 59));
+                return tourOrderReponsitory.getTopTourOrdersByDay(startDate, endDate, pageable);
+        }
     }
 
     // tour order by month
 
-    public int countTourOrderByMonth(){
+    public int countTourOrderByMonth() {
         Timestamp startDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(1).atStartOfDay());
         Timestamp endDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(23, 59, 59));
         return tourOrderReponsitory.countTourOrderByMonth(startDate, endDate);

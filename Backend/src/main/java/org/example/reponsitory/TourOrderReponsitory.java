@@ -31,7 +31,15 @@ public interface TourOrderReponsitory extends JpaRepository<TourOrder, Integer> 
     @Query("SELECT SUM(to.totalPrice) FROM TourOrder to WHERE to.orderDate BETWEEN :startOfYear AND :endOfYear")
     Double totalRevenueByYear(@Param("startOfYear") Timestamp  startOfYear, @Param("endOfYear") Timestamp  endOfYear);
 
-    // Top tour được đặt nhiều nhất
-    @Query("SELECT new org.example.dto.TourOrderDTO(MAX(to.id), SUM(to.totalPrice), to.tour) FROM TourOrder to GROUP BY to.tour ORDER BY SUM(to.totalPrice) DESC")
-    List<TourOrderDTO> getTopTourOrders(Pageable pageable);
+    // Top tour được đặt nhiều nhất theo ngay
+    @Query("SELECT new org.example.dto.TourOrderDTO(MAX(to.id),COUNT(to.id), SUM(to.totalPrice), to.tour) FROM TourOrder to WHERE to.orderDate BETWEEN :startOfDay AND :endOfDay GROUP BY to.tour ORDER BY COUNT(to.id) DESC")
+    List<TourOrderDTO> getTopTourOrdersByDay(@Param("startOfDay") Timestamp startOfDay, @Param("endOfDay") Timestamp  endOfDay,Pageable pageable);
+
+    // Top tour duoc dat nhieu nhat theo thang
+    @Query("SELECT new org.example.dto.TourOrderDTO(MAX(to.id),COUNT(to.id), SUM(to.totalPrice), to.tour) FROM TourOrder to WHERE to.orderDate BETWEEN :startOfMonth AND :endOfMonth GROUP BY to.tour ORDER BY COUNT(to.id) DESC")
+    List<TourOrderDTO> getTopTourOrdersByMonth(@Param("startOfMonth") Timestamp  startOfMonth, @Param("endOfMonth") Timestamp  endOfMonth,Pageable pageable);
+
+    // Top tour duoc dat nhieu nhat theo nam
+    @Query("SELECT new org.example.dto.TourOrderDTO(MAX(to.id),COUNT(to.id), SUM(to.totalPrice), to.tour) FROM TourOrder to WHERE to.orderDate BETWEEN :startOfYear AND :endOfYear GROUP BY to.tour ORDER BY COUNT(to.id) DESC")
+    List<TourOrderDTO> getTopTourOrdersByYear(@Param("startOfYear") Timestamp  startOfYear, @Param("endOfYear") Timestamp  endOfYear,Pageable pageable);
 }
