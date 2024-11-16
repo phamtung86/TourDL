@@ -20,11 +20,11 @@ public class TourOrderController {
     }
 
     @GetMapping("/Revenue/{type}")
-    public Double getRevenue(@PathVariable String type) {
+    public Double getRevenue(@PathVariable("type") String type) {
         return tourOrderService.getRevenue(type);
     }
     @GetMapping("/TopTour")
-    public List<TourOrderDTO> getTopTour(@RequestParam String type) {
+    public List<TourOrderDTO> getTopTour(@RequestParam("type") String type) {
         return tourOrderService.listTopTours(type);
     }
 
@@ -34,20 +34,12 @@ public class TourOrderController {
     }
 
     @PostMapping("/TourOrders/{tourID}")
-    public void addTourOrder(@RequestBody TourOrder tourOrder, @PathVariable String tourID) {
+    public void addTourOrder(@RequestBody TourOrder tourOrder, @PathVariable("tourID") String tourID) {
         tourOrderService.createNewTourOrder(tourOrder,tourID);
     }
-    @GetMapping("/TourOrders/totalInDay")
-    public int totalInDay(){
-        return tourOrderService.totalTourOrderInDay();
-    }
-    @GetMapping("/TourOrders/totalInMonth")
-    public int totalInMonth(){
-        return tourOrderService.totalTourOrderInMonth();
-    }
-    @GetMapping("/TourOrders/totalInYear")
-    public int totalInYear(){
-        return tourOrderService.totalTourOrderInYear();
+    @GetMapping("/TourOrders/TourOrdersByType/{type}")
+    public int totalInDay(@PathVariable("type") String type){
+        return tourOrderService.totalTourOrderByType(type);
     }
 
 }

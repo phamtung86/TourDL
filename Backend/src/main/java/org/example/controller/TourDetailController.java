@@ -22,7 +22,7 @@ public class TourDetailController {
     }
 
     @GetMapping("/TourDetails/{tourId}")
-    public ResponseEntity<TourDetail> tourDetailById(@PathVariable String tourId) {
+    public ResponseEntity<TourDetail> tourDetailById(@PathVariable("tourId") String tourId) {
         TourDetail tourDetail = tourDetailService.findTourDetailByTourId(tourId);
         if (tourDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

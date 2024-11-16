@@ -122,17 +122,17 @@ public class TourOrderService {
         }
     }
 
-    public int totalTourOrderInDay() {
-        return tourOrderReponsitory.totalTourOrderInDay();
-    }
-
-    public int totalTourOrderInMonth() {
-        return tourOrderReponsitory.totalTourOrderInMonth();
-
-    }
-
-    public int totalTourOrderInYear() {
-        return tourOrderReponsitory.totalTourOrderInYear();
+    public int totalTourOrderByType(String type) {
+        switch (type){
+            case "DAY":
+                return tourOrderReponsitory.totalTourOrderInDay();
+            case "MONTH" :
+                return tourOrderReponsitory.totalTourOrderInMonth();
+            case "YEAR" :
+                return tourOrderReponsitory.totalTourOrderInYear();
+            default:
+                return tourOrderReponsitory.totalTourOrderInMonth();
+        }
     }
 }
 

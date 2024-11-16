@@ -19,8 +19,9 @@ public class Calendar {
     private Timestamp startDate;
     @Column(name = "voucher_id")
     private Integer voucherId;
-    @Column(name = "tour_id")
-    private String tourId;
+    @ManyToOne()
+    @JoinColumn(name = "tour_id", referencedColumnName = "id")
+    private Tour tour;
 
     public Calendar() {
     }
@@ -49,12 +50,11 @@ public class Calendar {
         this.voucherId = voucherId;
     }
 
-    public String getTourId() {
-        return tourId;
+    public Tour getTour() {
+        return tour;
     }
 
-    public void setTourId(String tourId) {
-        this.tourId = tourId;
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
-
 }

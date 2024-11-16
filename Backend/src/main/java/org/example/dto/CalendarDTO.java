@@ -1,16 +1,17 @@
 package org.example.dto;
 
 import org.example.modal.Calendar;
+import org.example.modal.Tour;
 
 import java.sql.Timestamp;
 import java.util.Optional;
 
 public class CalendarDTO {
-    private String tourID;
+    private Tour tour;
     private Timestamp startDate;
     private int voucherID;
     public CalendarDTO(Calendar calendar){
-        this.tourID = calendar.getTourId();
+        this.tour = calendar.getTour();
         this.startDate = calendar.getStartDate();
         if (calendar.getVoucherId() == null){
             this.voucherID = 0;
@@ -22,12 +23,12 @@ public class CalendarDTO {
     public CalendarDTO() {
     }
 
-    public String getTourID() {
-        return tourID;
+    public Tour getTour() {
+        return tour;
     }
 
-    public void setTourID(String tourID) {
-        this.tourID = tourID;
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
 
     public Timestamp getStartDate() {
