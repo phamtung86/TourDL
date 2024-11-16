@@ -37,6 +37,17 @@ public class TourOrderController {
     public void addTourOrder(@RequestBody TourOrder tourOrder, @PathVariable String tourID) {
         tourOrderService.createNewTourOrder(tourOrder,tourID);
     }
-
+    @GetMapping("/TourOrders/totalInDay")
+    public int totalInDay(){
+        return tourOrderService.totalTourOrderInDay();
+    }
+    @GetMapping("/TourOrders/totalInMonth")
+    public int totalInMonth(){
+        return tourOrderService.totalTourOrderInMonth();
+    }
+    @GetMapping("/TourOrders/totalInYear")
+    public int totalInYear(){
+        return tourOrderService.totalTourOrderInYear();
+    }
 
 }

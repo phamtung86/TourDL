@@ -42,4 +42,13 @@ public interface TourOrderReponsitory extends JpaRepository<TourOrder, Integer> 
     // Top tour duoc dat nhieu nhat theo nam
     @Query("SELECT new org.example.dto.TourOrderDTO(MAX(to.id),COUNT(to.id), SUM(to.totalPrice), to.tour) FROM TourOrder to WHERE to.orderDate BETWEEN :startOfYear AND :endOfYear GROUP BY to.tour ORDER BY COUNT(to.id) DESC")
     List<TourOrderDTO> getTopTourOrdersByYear(@Param("startOfYear") Timestamp  startOfYear, @Param("endOfYear") Timestamp  endOfYear,Pageable pageable);
+    // Tong Tour dat trong ngay
+    @Query("SELECT COUNT(t) FROM TourOrder t WHERE DATE(t.orderDate) = CURRENT_DATE")
+    int totalTourOrderInDay();
+    @Query("SELECT COUNT(t) FROM TourOrder t WHERE MONTH(t.orderDate) = MONTH(CURRENT_DATE) AND YEAR(t.orderDate) = YEAR(CURRENT_DATE)")
+    int totalTourOrderInMonth();
+    @Query("SELECT COUNT(t) FROM TourOrder t WHERE YEAR(t.orderDate) = YEAR(CURRENT_DATE)")
+    int totalTourOrderInYear();
+
+
 }
