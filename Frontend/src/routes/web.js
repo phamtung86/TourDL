@@ -22,7 +22,7 @@ const initWebRouters = (app) => {
   // })
   router.get('/Dashboard', adminController.getDashBoard);
   router.get('/voucher', (req, res) => {
-    return res.send('This is voucher page');
+    return res.render('admin/voucher.ejs');
   });
   return app.use('/', router);
 };

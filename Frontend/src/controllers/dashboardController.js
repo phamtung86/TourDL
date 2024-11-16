@@ -1,5 +1,5 @@
 const axios = require('../utils/axios.js');
-let handGetRevenue = async (req, res) => {
+let getDashBoard = async (req, res) => {
   const revenue = await axios.get(`http://localhost:8080/api/v1/Revenue/MONTH`);
   const topTour = await axios.get(
     `http://localhost:8080/api/v1/TopTour?type=MONTH`
@@ -16,6 +16,6 @@ let handGetRevenue = async (req, res) => {
     totalAccountCustomer: totalAccountCustomer,
     totalTourOrder: totalTourOrder,
   };
-  return res.render('admin/index.ejs', { data: data });
+  return res.render('admin/dashboard.ejs', { data: data });
 };
-module.exports = { getDashBoard: handGetRevenue };
+module.exports = { getDashBoard: getDashBoard };
