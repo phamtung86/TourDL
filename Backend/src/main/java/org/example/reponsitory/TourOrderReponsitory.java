@@ -49,6 +49,13 @@ public interface TourOrderReponsitory extends JpaRepository<TourOrder, Integer> 
     int totalTourOrderInMonth();
     @Query("SELECT COUNT(t) FROM TourOrder t WHERE YEAR(t.orderDate) = YEAR(CURRENT_DATE)")
     int totalTourOrderInYear();
+    //Lấy số touroder theo từng tháng
+    @Query("SELECT MONTH(b.orderDate) AS month, COUNT(b) AS totalTourOrder " +
+            "FROM TourOrder b " +
+            "WHERE YEAR(b.orderDate) = YEAR(CURDATE()) " +
+            "GROUP BY MONTH(b.orderDate) " +
+            "ORDER BY month")
+    List<Object[]> getMonthlyOrderStats();
 
 
 }

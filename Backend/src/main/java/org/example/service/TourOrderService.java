@@ -4,6 +4,7 @@ import com.mysql.cj.Session;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.dto.TourOrderDTO;
+import org.example.dto.TourOrderStats;
 import org.example.modal.Tour;
 import org.example.modal.TourOrder;
 import org.example.reponsitory.TourOrderReponsitory;
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -134,5 +136,22 @@ public class TourOrderService {
                 return tourOrderReponsitory.totalTourOrderInMonth();
         }
     }
+    //lay totalorder theo tung thang
+    public TourOrderStats getTourOrderStatsByMonth() {
+        List<Object[]> results = tourOrderReponsitory.getMonthlyOrderStats();
+        List<String> months = new ArrayList<>(12);
+        List<Integer> totalOrders = new ArrayList<>(12);
+        for(int i = 1 ; i <= 12; i++){
+            months.add("tháng "+i);
+            totalOrders.add(0);
+        }
+        for(Object[] result : results ){
+            int month = (int) result[0];
+            long totalOrder = (long) result[1];
+            totalOrders.set(month - 1, (int) totalOrder);
+        }
+        return new TourOrderStats(months,totalOrders);
+    }
+
 }
 
