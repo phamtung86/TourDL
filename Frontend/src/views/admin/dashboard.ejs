@@ -178,53 +178,48 @@
                                     <h5 class="card-title">Recent Sales <span>| Today</span></h5>
 
                                     <table class="table table-borderless datatable">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Customer</th>
-                                                <th scope="col">Product</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2457</a></th>
-                                                <td>Brandon Jacob</td>
-                                                <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                                <td>$64</td>
-                                                <td><span class="badge bg-success">Approved</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2147</a></th>
-                                                <td>Bridie Kessler</td>
-                                                <td><a href="#" class="text-primary">Blanditiis dolor omnis
-                                                        similique</a></td>
-                                                <td>$47</td>
-                                                <td><span class="badge bg-warning">Pending</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2049</a></th>
-                                                <td>Ashleigh Langosh</td>
-                                                <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                                                <td>$147</td>
-                                                <td><span class="badge bg-success">Approved</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2644</a></th>
-                                                <td>Angus Grady</td>
-                                                <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                                                <td>$67</td>
-                                                <td><span class="badge bg-danger">Rejected</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2644</a></th>
-                                                <td>Raheem Lehner</td>
-                                                <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                                                <td>$165</td>
-                                                <td><span class="badge bg-success">Approved</span></td>
-                                            </tr>
-                                        </tbody>
+                                        <div>
+                                            <canvas id="myChart"></canvas>
+                                        </div>
+
+                                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                                        <script>
+                                            const ctx = document.getElementById('myChart');
+
+                                            const myChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: [],  // Dữ liệu nhãn ban đầu là mảng rỗng
+                                                    datasets: [{
+                                                        label: 'Tour đặt',
+                                                        data: [],  // Dữ liệu ban đầu là mảng rỗng
+                                                        borderWidth: 1
+                                                    }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        y: {
+                                                            beginAtZero: true
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                            fetch('http://localhost:8080/api/v1/TourOrders/statsbyMonth')  // Thay thế URL này bằng API thật
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    // 4. Cập nhật dữ liệu cho biểu đồ
+                                                    myChart.data.labels = data.month;  // Gán dữ liệu nhãn
+                                                    myChart.data.datasets[0].data = data.totalOrder;  // Gán dữ liệu biểu đồ
+
+                                                    // 5. Cập nhật lại biểu đồ sau khi thay đổi dữ liệu
+                                                    myChart.update();
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching data:', error);
+                                                });
+                                        </script>
+
                                     </table>
 
                                 </div>
@@ -232,7 +227,7 @@
                             </div>
                         </div><!-- End Recent Sales -->
 
-                        <!-- Top Selling -->
+                        <!-- Top Tour  -->
                         <div class="col-12">
                             <div class="card top-selling overflow-auto">
 
@@ -294,7 +289,7 @@
                                 </div>
 
                             </div>
-                        </div><!-- End Top Selling -->
+                        </div><!-- End Top Tour -->
 
                     </div>
                 </div><!-- End Left side columns -->
