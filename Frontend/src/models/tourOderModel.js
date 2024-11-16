@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      TourOrder.hasMany(models.UserTourOrder, {
+        foreignKey: 'tour_order_Id',
+        as: 'userTourOrder',
+      });
     }
   }
   TourOrder.init(
@@ -18,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-      },
-      total_price: {
-        type: DataTypes.DOUBLE,
-        allowNull: true,
       },
       total_price: {
         type: DataTypes.DOUBLE,

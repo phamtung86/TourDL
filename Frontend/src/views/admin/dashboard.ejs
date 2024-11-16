@@ -1,417 +1,290 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+  <%- include('../partials/head') %>
     <title>Dashboard - NiceAdmin Bootstrap Template</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
+    <link href="assets/img/favicon.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
     <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet" />
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
-
-    <main id="main" class="main">
-
+  <div class="nav-bar-content">
+    <!-- Start menubar -->
+    <%- include('./menuBar') %>
+      <!-- Main -->
+      <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Dashboard</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
+          <h1>Dashboard</h1>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </nav>
+        </div>
+        <!-- End Page Title -->
 
         <section class="section dashboard">
-            <div class="row">
-
-                <!-- Left side columns -->
-                <div class="col-lg-8">
-                    <div class="row">
-
-                        <!-- Sales Card -->
-                        <div class="col-xxl-4 col-md-6">
-                            <div class="card info-card sales-card">
-
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Lọc theo</h6>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#" data-value="DAY"
-                                                onclick="getTotalTourByType('DAY')">Hôm nay</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="MONTH"
-                                                onclick="getTotalTourByType('MONTH')">Tháng</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="YEAR"
-                                                onclick="getTotalTourByType('YEAR')">Năm</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="card-body">
-                                    <h5 class="card-title">Tour Đặt <span id="cart-title-total-tour-order">|
-                                            Tháng</span></h5>
-                                    <div class="d-flex align-items-center">
-                                        <div
-                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-cart"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6 id="total-tour-order">
-                                                <%= data.totalTourOrder %>
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div><!-- End Sales Card -->
-
-                        <div class="col-xxl-4 col-md-6">
-                            <div class="card info-card revenue-card">
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Lọc theo</h6>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#" data-value="DAY"
-                                                onclick="getRevenueFromDropdown('DAY')">Hôm nay</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="MONTH"
-                                                onclick="getRevenueFromDropdown('MONTH')">Tháng</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="YEAR"
-                                                onclick="getRevenueFromDropdown('YEAR')">Năm</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="card-body">
-                                    <h5 class="card-title">Doanh thu <span id="card-title-status">| Tháng</span></h5>
-
-                                    <div class="d-flex align-items-center">
-                                        <div
-                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-currency-dollar"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6 id="revenue">
-                                                <%= data.revenue.toLocaleString('en-US', { maximumFractionDigits: 3 })
-                                                    %>
-                                            </h6>
-                                            <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                                class="text-muted small pt-2 ps-1">increase</span> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- End Revenue Card -->
-
-                        <!-- Customers Card -->
-                        <div class="col-xxl-4 col-xl-12">
-
-                            <div class="card info-card customers-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Customers</h5>
-
-                                    <div class="d-flex align-items-center">
-                                        <div
-                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>
-                                                <%= data.totalAccountCustomer %>
-                                            </h6>
-                                            <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">decrease</span>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div><!-- End Customers Card -->
-
-                        <!-- Recent Sales -->
-                        <div class="col-12">
-                            <div class="card recent-sales overflow-auto">
-
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="card-body">
-                                    <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                                    <table class="table table-borderless datatable">
-                                        <div>
-                                            <canvas id="myChart"></canvas>
-                                        </div>
-
-                                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-                                        <script>
-                                            const ctx = document.getElementById('myChart');
-
-                                            const myChart = new Chart(ctx, {
-                                                type: 'bar',
-                                                data: {
-                                                    labels: [],  // Dữ liệu nhãn ban đầu là mảng rỗng
-                                                    datasets: [{
-                                                        label: 'Tour đặt',
-                                                        data: [],  // Dữ liệu ban đầu là mảng rỗng
-                                                        borderWidth: 1
-                                                    }]
-                                                },
-                                                options: {
-                                                    scales: {
-                                                        y: {
-                                                            beginAtZero: true
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                            fetch('http://localhost:8080/api/v1/TourOrders/statsbyMonth')  // Thay thế URL này bằng API thật
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    // 4. Cập nhật dữ liệu cho biểu đồ
-                                                    myChart.data.labels = data.month;  // Gán dữ liệu nhãn
-                                                    myChart.data.datasets[0].data = data.totalOrder;  // Gán dữ liệu biểu đồ
-
-                                                    // 5. Cập nhật lại biểu đồ sau khi thay đổi dữ liệu
-                                                    myChart.update();
-                                                })
-                                                .catch(error => {
-                                                    console.error('Error fetching data:', error);
-                                                });
-                                        </script>
-
-                                    </table>
-
-                                </div>
-
-                            </div>
-                        </div><!-- End Recent Sales -->
-
-                        <!-- Top Tour  -->
-                        <div class="col-12">
-                            <div class="card top-selling overflow-auto">
-
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Lọc theo</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#" data-value="DAY"
-                                                onclick="getTopTourByType('DAY')">Hôm nay</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="MONTH"
-                                                onclick="getTopTourByType('MONTH')">Tháng</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="YEAR"
-                                                onclick="getTopTourByType('YEAR')">Năm</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="card-body pb-0">
-                                    <h5 class="card-title">Top Tour <span id="card-top-tour-title">| Tháng</span></h5>
-
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th class="list-tour-title" scope="col">Mã tour</th>
-                                                <th class="list-tour-title" scope="col">Hình ảnh</th>
-                                                <th class="list-tour-title" scope="col">Tên tour</th>
-                                                <th class="list-tour-title" scope="col">Số lượng đặt</th>
-                                                <th class="list-tour-title" scope="col">Tổng số tiền</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="list-top-tour">
-                                            <% data.topTour.forEach(function(tour){ %>
-                                                <tr>
-                                                    <td class="list-tour-data">
-                                                        <%= tour.tour.id %>
-                                                    </td>
-                                                    <td class="list-tour-data"><img src="<%= tour.tour.imageLink %>"
-                                                            alt=""></td>
-                                                    <td class="list-tour-data">
-                                                        <%= tour.tour.name %>
-                                                    </td>
-                                                    <td class="list-tour-data">
-                                                        <%= tour.quantity %>
-                                                    </td>
-                                                    <td class="list-tour-data">
-                                                        <%= Number(tour.totalPrice).toLocaleString('en-US', {
-                                                            maximumFractionDigits: 3 }) %> ₫
-                                                    </td>
-
-                                                </tr>
-                                                <% }); %>
-                                        </tbody>
-
-                                    </table>
-
-                                </div>
-
-                            </div>
-                        </div><!-- End Top Tour -->
-
+          <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-8">
+              <div class="row">
+                <!-- Sales Card -->
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card sales-card">
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Lọc theo</h6>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="DAY" onclick="getTotalTourByType('DAY')">Hôm
+                            nay</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="MONTH"
+                            onclick="getTotalTourByType('MONTH')">Tháng</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="YEAR"
+                            onclick="getTotalTourByType('YEAR')">Năm</a>
+                        </li>
+                      </ul>
                     </div>
-                </div><!-- End Left side columns -->
+
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Tour Đặt
+                        <span id="cart-title-total-tour-order">| Tháng</span>
+                      </h5>
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-cart"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6 id="total-tour-order">
+                            <%= data.totalTourOrder %>
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Sales Card -->
+
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card revenue-card">
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Lọc theo</h6>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="DAY" onclick="getRevenueFromDropdown('DAY')">Hôm
+                            nay</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="MONTH"
+                            onclick="getRevenueFromDropdown('MONTH')">Tháng</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="YEAR"
+                            onclick="getRevenueFromDropdown('YEAR')">Năm</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Doanh thu <span id="card-title-status">| Tháng</span>
+                      </h5>
+
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-currency-dollar"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6 id="revenue">
+                            <%= data.revenue.toLocaleString('en-US', { maximumFractionDigits: 3 }) %>
+                          </h6>
+                          <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                                                class="text-muted small pt-2 ps-1">increase</span> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Revenue Card -->
+
+                <!-- Customers Card -->
+                <div class="col-xxl-4 col-xl-12">
+                  <div class="card info-card customers-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Customers</h5>
+
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-people"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>
+                            <%= data.totalAccountCustomer %>
+                          </h6>
+                          <span class="text-danger small pt-1 fw-bold">12%</span>
+                          <span class="text-muted small pt-2 ps-1">decrease</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Customers Card -->
+
+                <div class="col-12">
+                  <div class="card recent-sales overflow-auto">
+
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Filter</h6>
+                        </li>
+
+                        <li><a class="dropdown-item" href="#">Today</a></li>
+                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="card-body">
+                      <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+
+                      <table class="table table-borderless datatable">
+                        <div>
+                          <canvas id="myChart"></canvas>
+                        </div>
+                      </table>
+                    </div>
+
+                  </div>
+                </div><!-- End Recent Sales -->
+
+                <!-- Top Selling -->
+                <div class="col-12">
+                  <div class="card top-selling overflow-auto">
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Lọc theo</h6>
+                        </li>
+
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="DAY" onclick="getTopTourByType('DAY')">Hôm
+                            nay</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="MONTH"
+                            onclick="getTopTourByType('MONTH')">Tháng</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#" data-value="YEAR" onclick="getTopTourByType('YEAR')">Năm</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="card-body pb-0">
+                      <h5 class="card-title">
+                        Top Tour <span id="card-top-tour-title">| Tháng</span>
+                      </h5>
+
+                      <table class="table table-borderless">
+                        <thead>
+                          <tr>
+                            <th class="list-tour-title" scope="col">Mã tour</th>
+                            <th class="list-tour-title" scope="col">
+                              Hình ảnh
+                            </th>
+                            <th class="list-tour-title" scope="col">
+                              Tên tour
+                            </th>
+                            <th class="list-tour-title" scope="col">
+                              Số lượng đặt
+                            </th>
+                            <th class="list-tour-title" scope="col">
+                              Tổng số tiền
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody id="list-top-tour">
+                          <% data.topTour.forEach(function(tour){ %>
+                            <tr>
+                              <td class="list-tour-data">
+                                <%= tour.tour.id %>
+                              </td>
+                              <td class="list-tour-data">
+                                <img src="<%= tour.tour.imageLink %>" alt="" />
+                              </td>
+                              <td class="list-tour-data">
+                                <%= tour.tour.name %>
+                              </td>
+                              <td class="list-tour-data">
+                                <%= tour.quantity %>
+                              </td>
+                              <td class="list-tour-data">
+                                <%= Number(tour.totalPrice).toLocaleString('en-US', { maximumFractionDigits: 3 }) %> ₫
+                              </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Top Selling -->
+              </div>
             </div>
+            <!-- End Left side columns -->
+          </div>
         </section>
-
-    </main><!-- End #main -->
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
-
-    </footer><!-- End Footer -->
-
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/chart.js/chart.umd.js"></script>
-    <script src="assets/vendor/echarts/echarts.min.js"></script>
-    <script src="assets/vendor/quill/quill.js"></script>
-    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-
-        async function getTotalOrderByType(type) {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/v1/TourOrders/TourOrdersByType/${type}`);
-                if (response.status == 200) {
-                    document.getElementById("total-tour-order").innerHTML = response.data
-                } else {
-                    return
-                }
-            } catch (error) {
-                console.error('Lỗi khi lấy tổng số tour:', error);
-            }
-        }
-
-        function getTotalTourByType(type) {
-            document.getElementById('cart-title-total-tour-order').innerHTML = "| " + changeUSToVN(type);
-            getTotalOrderByType(type)
-        }
-
-        // Hàm lấy doanh thu
-        async function getRevenue(type) {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/v1/Revenue/${type}`);
-                const revenue = response.data; // Lấy dữ liệu từ response
-                if (response.status === 200) {
-                    const formattedRevenue = revenue.toLocaleString('en-US', { maximumFractionDigits: 3 });
-                    document.getElementById("revenue").innerHTML = formattedRevenue;
-                } else {
-                    return
-                }
-
-            } catch (error) {
-                console.error('Lỗi khi lấy doanh thu:', error);
-            }
-        }
-
-        function changeUSToVN(type) {
-            switch (type) {
-                case "DAY": return "Hôm nay"
-                case "MONTH": return "Tháng"
-                case "YEAR": return "Năm"
-            }
-        }
-
-        // Hàm gọi getRevenue khi người dùng chọn giá trị từ dropdown
-        function getRevenueFromDropdown(type) {
-            document.getElementById("card-title-status").innerHTML = "| " + changeUSToVN(type)
-            getRevenue(type);
-        }
-
-        async function getTopTour(type) {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/v1/TopTour?type=${type}`);
-
-                if (response.status === 200) {
-                    const html = response.data.length > 0
-                        ? response.data.map((item) => {
-                            const formattedTotalPrice = item.totalPrice
-                                ? Number(item.totalPrice).toLocaleString('en-US', { maximumFractionDigits: 3 })
-                                : "0";
-                            return `
-                        <tr>
-                            <td class="list-tour-data">${item.tour.id}</td>
-                            <td class="list-tour-data"><img src="${item.tour.imageLink}" alt=""/></td>
-                            <td class="list-tour-data">${item.tour.name}</td>
-                            <td class="list-tour-data">${item.quantity}</td>
-                            <td class="list-tour-data">${formattedTotalPrice} ₫</td>                                              
-                        </tr>
-                    `;
-                        }).join('')
-                        : `
-                    <tr>
-                        ${Array(5).fill('<td class="list-tour-data">Không có dữ liệu</td>').join('')}
-                    </tr>
-                `;
-
-                    document.getElementById('list-top-tour').innerHTML = html;
-                }
-            } catch (error) {
-                console.log("Lỗi trong quá trình lấy top tour " + error);
-            }
-        }
-
-
-        function getTopTourByType(type, e) {
-            event.preventDefault();
-            document.getElementById('card-top-tour-title').innerHTML = "| " + changeUSToVN(type);
-            getTopTour(type)
-        }
-    </script>
-
-
-
+      </main>
+      <!-- ------------------------------ -->
+      <!-- Javascript -->
+      <%- include('../partials/baseScript')%>
+        <!-- Vendor JS Files -->
+        <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendor/chart.js/chart.umd.js"></script>
+        <script src="assets/vendor/echarts/echarts.min.js"></script>
+        <script src="assets/vendor/quill/quill.js"></script>
+        <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+        <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+        <script src="assets/vendor/php-email-form/validate.js"></script>
+        <!-- Template Main JS File -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </div>
+  <!-- --------- -->
+  <script src="/js/dashboard.js"></script>
 </body>
 
 </html>
