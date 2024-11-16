@@ -26,24 +26,13 @@ public class TourDetail {
     private String transport;
     @Column(name = "sale_description")
     private String saleDescription;
-    @Column(name = "tour_Id")
-    private String tourId;
+    @OneToOne
+    @JoinColumn(name = "tour_id", referencedColumnName = "id")
+    private Tour tour;
 
     public TourDetail() {
     }
 
-    public TourDetail(int id, String fileName, String url, String sightSeeing, String cuisine, String suitablePeople, String timeSuitable, String transport, String saleDescription, String tourId) {
-        this.id = id;
-        this.fileName = fileName;
-        this.url = url;
-        this.sightSeeing = sightSeeing;
-        this.cuisine = cuisine;
-        this.suitablePeople = suitablePeople;
-        this.timeSuitable = timeSuitable;
-        this.transport = transport;
-        this.saleDescription = saleDescription;
-        this.tourId = tourId;
-    }
 
     public int getId() {
         return id;
@@ -117,11 +106,11 @@ public class TourDetail {
         this.saleDescription = saleDescription;
     }
 
-    public String getTourId() {
-        return tourId;
+    public Tour getTour() {
+        return tour;
     }
 
-    public void setTourId(String tourId) {
-        this.tourId = tourId;
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
 }

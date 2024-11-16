@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class TourDetailService {
     @Autowired
-    private TourDetailReponsitory tourDetailRepository; // Đổi tên
+    private TourDetailReponsitory tourDetailRepository;
 
     public List<TourDetail> getAllTourDetail() {
         return tourDetailRepository.findAll();
@@ -19,6 +19,7 @@ public class TourDetailService {
     // Xem theo id_tour
     public TourDetail findTourDetailByTourId(String tourId) {
         TourDetail tourDetail = tourDetailRepository.findTourDetailByTourId(tourId);
+
         if (tourDetail == null) {
             // Xử lý khi không tìm thấy tourDetail
             throw new RuntimeException("TourDetail not found for ID: " + tourId);

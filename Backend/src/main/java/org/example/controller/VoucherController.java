@@ -44,7 +44,7 @@ public class VoucherController {
     // update voucher
 
     @PutMapping("/vouchers/{id}")
-    public boolean updateVoucher(@PathVariable int id, @RequestBody Voucher voucher) {
+    public boolean updateVoucher(@PathVariable("id") int id, @RequestBody Voucher voucher) {
         Optional<Voucher> isExists = voucherService.findVoucherById(id);
         if (isExists.isPresent()) {
             voucherService.updateVoucher(id, voucher);
@@ -54,7 +54,7 @@ public class VoucherController {
     }
 
     @DeleteMapping("vouchers/{id}")
-    public boolean deleteVoucher(@PathVariable int id) {
+    public boolean deleteVoucher(@PathVariable("id") int id) {
         Optional<Voucher> isExists = voucherService.findVoucherById(id);
         if (isExists.isPresent()) {
             voucherService.deleteVoucher(id);

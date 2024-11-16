@@ -27,7 +27,7 @@ public class CalendarService {
     public List<Calendar> findCalendarbyTour( String tourID){
         List<Calendar> calendars = new ArrayList<>();
         for(Calendar calendar : getAllCalendar()) {
-            if(calendar.getTourId().equals(tourID)) {
+            if(calendar.getTour().equals(tourID)) {
                 calendars.add(calendar);
             }
 
