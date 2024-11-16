@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.dto.TourOrderDTO;
+import org.example.dto.TourOrderStats;
 import org.example.modal.TourOrder;
 import org.example.service.TourOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,12 @@ public class TourOrderController {
     public int totalInDay(@PathVariable("type") String type){
         return tourOrderService.totalTourOrderByType(type);
     }
-
+    @GetMapping("/TourOrders/statsbyMonth")
+    public TourOrderStats getOrderStats() {
+        return tourOrderService.getTourOrderStatsByMonth();
+    }
+    @GetMapping("/TourOrders/StatsRevenue/{type}")
+    public List<TourOrderDTO> getRevenueStats(@PathVariable("type") String type) {
+        return tourOrderService.listTourOrderStatsByType(type);
+    }
 }
