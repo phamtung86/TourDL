@@ -7,12 +7,15 @@ const initWebRouters = require('./routes/web');
 const initAPIs = require('./routes/api');
 const cors = require('cors');
 const app = express();
+const bodyParser = require('body-parser');
 
 app.use(cors({ origin: true }));
 // Config req.body
 // Middleware convert object req -> Json de su dung
-app.use(express.json()); // for json
-app.use(express.urlencoded({ extended: true })); // for form data
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Config view
 configViewEngine(app);
