@@ -46,5 +46,8 @@ public class TourOrderController {
     public TourOrderStats getOrderStats() {
         return tourOrderService.getTourOrderStatsByMonth();
     }
-
+    @GetMapping("/TourOrders/StatsRevenue/{type}")
+    public List<TourOrderDTO> getRevenueStats(@PathVariable("type") String type) {
+        return tourOrderService.listTourOrderStatsByType(type);
+    }
 }

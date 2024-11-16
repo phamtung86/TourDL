@@ -506,6 +506,9 @@
   font-weight: 650;
 
 }
-
+#myChart, #revenueLineChart{
+  width: 100% !important;
+  height: 500px !important;
+}
 
 

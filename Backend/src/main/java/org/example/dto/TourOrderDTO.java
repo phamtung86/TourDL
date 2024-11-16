@@ -4,6 +4,7 @@ import org.example.modal.TourOrder;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.util.Date;
 
 public class TourOrderDTO {
     private int id;
@@ -13,6 +14,7 @@ public class TourOrderDTO {
     private int totalMember;
     private Tour tour;
     private long quantity;
+    private int month;
     // Constructor để chuyển từ TourOrder sang TourOrderDTO
     public TourOrderDTO(TourOrder tourOrder) {
         this.id = tourOrder.getId();
@@ -32,8 +34,48 @@ public class TourOrderDTO {
         this.tour = tour;
     }
 
+    public TourOrderDTO(double totalPrice, Date orderDateDate) {
+        DecimalFormat df = new DecimalFormat("#");
+        this.totalPrice = df.format(totalPrice);
+         this.orderDate = new Timestamp(orderDateDate.getTime());
+    }
+
+    public TourOrderDTO(double totalPrice, int month) {
+        DecimalFormat df = new DecimalFormat("#");
+        this.totalPrice = df.format(totalPrice);
+        this.month = month;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void setTotalMember(int totalMember) {
+        this.totalMember = totalMember;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     public void setTotalPrice(String totalPrice) {
