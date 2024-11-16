@@ -125,33 +125,45 @@ public class TourOrderService {
     }
 
     public int totalTourOrderByType(String type) {
-        switch (type){
+        switch (type) {
             case "DAY":
                 return tourOrderReponsitory.totalTourOrderInDay();
-            case "MONTH" :
+            case "MONTH":
                 return tourOrderReponsitory.totalTourOrderInMonth();
-            case "YEAR" :
+            case "YEAR":
                 return tourOrderReponsitory.totalTourOrderInYear();
             default:
                 return tourOrderReponsitory.totalTourOrderInMonth();
         }
     }
+
     //lay totalorder theo tung thang
     public TourOrderStats getTourOrderStatsByMonth() {
         List<Object[]> results = tourOrderReponsitory.getMonthlyOrderStats();
         List<String> months = new ArrayList<>(12);
         List<Integer> totalOrders = new ArrayList<>(12);
-        for(int i = 1 ; i <= 12; i++){
-            months.add("tháng "+i);
+        for (int i = 1; i <= 12; i++) {
+            months.add("tháng " + i);
             totalOrders.add(0);
         }
-        for(Object[] result : results ){
+        for (Object[] result : results) {
             int month = (int) result[0];
             long totalOrder = (long) result[1];
             totalOrders.set(month - 1, (int) totalOrder);
         }
-        return new TourOrderStats(months,totalOrders);
+        return new TourOrderStats(months, totalOrders);
     }
 
+    // thong ke doanh thu
+    public List<TourOrderDTO> listTourOrderStatsByType(String type) {
+        switch (type.toUpperCase()) {
+            case "DAY":
+                return tourOrderReponsitory.listTourOrderStatsByDay();
+            case "MONTH":
+                return tourOrderReponsitory.listTourOrderStatsByMonth();
+            default:
+                return tourOrderReponsitory.listTourOrderStatsByDay();
+        }
+    }
 }
 

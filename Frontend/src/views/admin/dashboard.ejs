@@ -3,7 +3,7 @@
 
 <head>
   <%- include('../partials/head') %>
-    <title>Dashboard - NiceAdmin Bootstrap Template</title>
+    <title>Dashboard</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
     <!-- Favicons -->
@@ -161,22 +161,8 @@
 
                 <div class="col-12">
                   <div class="card recent-sales overflow-auto">
-
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">Today</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                      </ul>
-                    </div>
-
                     <div class="card-body">
-                      <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+                      <h5 class="card-title">Thống kê số lượng tour được đặt theo tháng</span></h5>
 
                       <table class="table table-borderless datatable">
                         <div>
@@ -184,7 +170,30 @@
                         </div>
                       </table>
                     </div>
+                  </div>
+                </div><!-- End Recent Sales -->
+                <div class="col-12">
+                  <div class="card recent-sales overflow-auto">
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Lọc theo</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="changeChartArtRevenue('DAY')">Ngày</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="changeChartArtRevenue('MONTH')">Tháng</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)" >Năm</a></li>                        
+                      </ul>
+                    </div>
 
+                    <div class="card-body">
+                      <h5 class="card-title">Biểu đồ thống kê doanh thu <span id="card-stats-revenue-title">| Tháng</span> </h5>
+                      <table class="table table-borderless datatable">
+                        <div>
+                            <canvas id="revenueLineChart" ></canvas>
+                        </div>
+                      </table>
+                    </div>
                   </div>
                 </div><!-- End Recent Sales -->
 
