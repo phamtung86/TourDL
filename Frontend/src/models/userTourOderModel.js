@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      UserTourOrder.belongsTo(models.TourOrder, {
+        foreignKey: 'tour_order_Id',
+        as: 'tourOrder',
+      });
     }
   }
   UserTourOrder.init(

@@ -28,7 +28,9 @@ let handleCreate = async (req, res) => {
   try {
     let data = req.body;
     console.log({ data });
-
+    return res.status(200).json({
+      text: 'ok',
+    });
     let result = await transportService.postNewValue(data);
     if (result.errCode !== 0) {
       console.log(result);
