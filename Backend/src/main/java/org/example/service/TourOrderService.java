@@ -121,5 +121,18 @@ public class TourOrderService {
             throw new EntityNotFoundException("Tour with ID " + tourId + " not found.");
         }
     }
+
+    public int totalTourOrderInDay() {
+        return tourOrderReponsitory.totalTourOrderInDay();
+    }
+
+    public int totalTourOrderInMonth() {
+        return tourOrderReponsitory.totalTourOrderInMonth();
+
+    }
+
+    public int totalTourOrderInYear() {
+        return tourOrderReponsitory.totalTourOrderInYear();
+    }
 }
 

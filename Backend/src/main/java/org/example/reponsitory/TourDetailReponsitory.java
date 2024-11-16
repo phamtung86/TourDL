@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TourDetailReponsitory extends JpaRepository<TourDetail, Integer> {
-    @Query("SELECT td FROM TourDetail td WHERE td.tour_id = :idParam")
+    @Query("SELECT td FROM TourDetail td WHERE td.tourId = :idParam")
     TourDetail findTourDetailByTourId(@Param("idParam") String idParam);
 }
 

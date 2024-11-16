@@ -39,4 +39,7 @@ public class TourDetailService {
         }
         return false; // Có thể thêm thông điệp ở đây nếu cần
     }
+    public int sumTour(){
+        return tourDetailRepository.findAll().size();
+    }
 }
