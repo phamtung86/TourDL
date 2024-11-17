@@ -140,7 +140,7 @@
                 <div class="col-xxl-4 col-xl-12">
                   <div class="card info-card customers-card">
                     <div class="card-body">
-                      <h5 class="card-title">Customers</h5>
+                      <h5 class="card-title">Người Dùng</h5>
 
                       <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -150,8 +150,8 @@
                           <h6>
                             <%= data.totalAccountCustomer %>
                           </h6>
-                          <span class="text-danger small pt-1 fw-bold">12%</span>
-                          <span class="text-muted small pt-2 ps-1">decrease</span>
+                          <!-- <span class="text-danger small pt-1 fw-bold">12%</span>
+                          <span class="text-muted small pt-2 ps-1">decrease</span> -->
                         </div>
                       </div>
                     </div>
@@ -163,7 +163,6 @@
                   <div class="card recent-sales overflow-auto">
                     <div class="card-body">
                       <h5 class="card-title">Thống kê số lượng tour được đặt theo tháng</span></h5>
-
                       <table class="table table-borderless datatable">
                         <div>
                           <canvas id="myChart"></canvas>
@@ -180,17 +179,20 @@
                         <li class="dropdown-header text-start">
                           <h6>Lọc theo</h6>
                         </li>
-                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="changeChartArtRevenue('DAY')">Ngày</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="changeChartArtRevenue('MONTH')">Tháng</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0)" >Năm</a></li>                        
+                        <li><a class="dropdown-item" href="javascript:void(0)"
+                            onclick="changeChartArtRevenue('DAY')">Ngày</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)"
+                            onclick="changeChartArtRevenue('MONTH')">Tháng</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)">Năm</a></li>
                       </ul>
                     </div>
 
                     <div class="card-body">
-                      <h5 class="card-title">Biểu đồ thống kê doanh thu <span id="card-stats-revenue-title">| Tháng</span> </h5>
+                      <h5 class="card-title">Biểu đồ thống kê doanh thu <span id="card-stats-revenue-title">|
+                          Tháng</span> </h5>
                       <table class="table table-borderless datatable">
                         <div>
-                            <canvas id="revenueLineChart" ></canvas>
+                          <canvas id="revenueLineChart"></canvas>
                         </div>
                       </table>
                     </div>
@@ -216,6 +218,18 @@
                   </div>
                 </div><!-- End Recent Sales -->
 
+                <div class="col-12">
+                  <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+                      <h5 class="card-title">Thống kê lượng sử dụng phương tiện</h5>
+                      <table class="table table-borderless datatable">
+                        <div>
+                          <canvas id="transportChart"></canvas>
+                        </div>
+                      </table>
+                    </div>
+                  </div>
+                </div>
                 <!-- Top Selling -->
                 <div class="col-12">
                   <div class="card top-selling overflow-auto">
@@ -225,7 +239,7 @@
                         <li class="dropdown-header text-start">
                           <h6>Lọc theo</h6>
                         </li>
-  
+
                         <li>
                           <a class="dropdown-item" href="#" data-value="DAY" onclick="getTopTourByType('DAY')">Hôm
                             nay</a>
@@ -239,12 +253,12 @@
                         </li>
                       </ul>
                     </div>
-  
+
                     <div class="card-body pb-0">
                       <h5 class="card-title">
                         Top Tour <span id="card-top-tour-title">| Tháng</span>
                       </h5>
-  
+
                       <table class="table table-borderless">
                         <thead>
                           <tr>
@@ -299,21 +313,23 @@
                         <li class="dropdown-header text-start">
                           <h6>Theo tháng</h6>
                         </li>
-  
+
                         <li>
-                          <a class="dropdown-item customer__link-option" style="cursor: pointer;"  data-value="3" >3 tháng</a>
+                          <a class="dropdown-item customer__link-option" style="cursor: pointer;" data-value="3">3
+                            tháng</a>
                         </li>
                         <li>
-                          <a class="dropdown-item customer__link-option"  style="cursor: pointer;" data-value="6">6 tháng</a>
+                          <a class="dropdown-item customer__link-option" style="cursor: pointer;" data-value="6">6
+                            tháng</a>
                         </li>
                       </ul>
                     </div>
-  
+
                     <div class="card-body pb-0">
                       <h5 class="card-title">
                         Khách hàng tiềm năng <span id="card-top-tour-title " class="customer__option">| 3 Tháng</span>
                       </h5>
-  
+
                       <table class="table table-borderless">
                         <thead>
                           <tr>
@@ -348,7 +364,7 @@
                                 <%= customer.user.email %>
                               </td>
                               <td class="list-tour-data" style="color: black;">
-                                <%= customer.countTrip%> 
+                                <%= customer.countTrip%>
                               </td>
                             </tr>
                             <% }); %>

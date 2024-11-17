@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.TransportDTO;
 import org.example.modal.Transport;
 import org.example.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class TransportController {
     @GetMapping("/maptransports")
     public Map<Integer, Transport> mapTransport() {
         return transportService.mapTransports();
+    }
+    @GetMapping("/StasTransportUsed")
+    public List<TransportDTO> listTransportsUsedInMonth(){
+        return transportService.listTransportsUsedInMonth();
     }
 }

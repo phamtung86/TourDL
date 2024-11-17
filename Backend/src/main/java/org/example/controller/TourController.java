@@ -49,8 +49,9 @@ public class TourController {
     // update tour by id
     @PutMapping("/tours/{id}")
     public ResponseEntity<Tour> updateTour(@PathVariable("id") String id, @RequestBody Tour tourUpdate) {
-        Tour updatedTour = tourService.updateTour(id, tourUpdate);
-        return ResponseEntity.ok(updatedTour);
+//        Tour updatedTour = tourService.updateTour(id, tourUpdate);
+//        return ResponseEntity.ok(updatedTour);
+        return null;
     }
 
 }
