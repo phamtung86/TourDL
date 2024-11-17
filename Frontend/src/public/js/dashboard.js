@@ -65,13 +65,13 @@ async function getTopTour(type) {
       const html =
         response.data.length > 0
           ? response.data
-              .map((item) => {
-                const formattedTotalPrice = item.totalPrice
-                  ? Number(item.totalPrice).toLocaleString('en-US', {
-                      maximumFractionDigits: 3,
-                    })
-                  : '0';
-                return `
+            .map((item) => {
+              const formattedTotalPrice = item.totalPrice
+                ? Number(item.totalPrice).toLocaleString('en-US', {
+                  maximumFractionDigits: 3,
+                })
+                : '0';
+              return `
                     <tr>
                         <td class="list-tour-data">${item.tour.id}</td>
                         <td class="list-tour-data"><img src="${item.tour.imageLink}" alt=""/></td>
@@ -80,13 +80,13 @@ async function getTopTour(type) {
                         <td class="list-tour-data">${formattedTotalPrice} ₫</td>                                              
                     </tr>
                 `;
-              })
-              .join('')
+            })
+            .join('')
           : `
                 <tr>
                     ${Array(5)
-                      .fill('<td class="list-tour-data">Không có dữ liệu</td>')
-                      .join('')}
+            .fill('<td class="list-tour-data">Không có dữ liệu</td>')
+            .join('')}
                 </tr>
             `;
 
@@ -229,9 +229,8 @@ async function charArtsRevenueByType(type, event) {
               },
               label: function (tooltipItem) {
                 const value = tooltipItem.raw;
-                return `${
-                  tooltipItem.dataset.label
-                }: ${value.toLocaleString()} VNĐ`; // Hiển thị doanh thu
+                return `${tooltipItem.dataset.label
+                  }: ${value.toLocaleString()} VNĐ`; // Hiển thị doanh thu
               },
             },
           },
@@ -302,15 +301,13 @@ const getCustomerChangeMonth = async (e) => {
       let inforUser = userInput.user;
       tableCustomer.innerHTML += `
         <tr>
-          <td class="list-tour-data" data-userId="${userInput.userID}"> ${
-        index + 1
-      }</td>
+          <td class="list-tour-data" data-userId="${userInput.userID}"> ${index + 1
+        }</td>
           <td class="list-tour-data">${inforUser.name}</td>
           <td class="list-tour-data">${inforUser.phoneNumber}</td>
           <td class="list-tour-data">${inforUser.email}</td>
-          <td class="list-tour-data" style="color: black;">${
-            userInput.countTrip
-          }</td>
+          <td class="list-tour-data" style="color: black;">${userInput.countTrip
+        }</td>
         </tr>  
       `;
     });
@@ -453,3 +450,86 @@ window.onload = function () {
   chartArtTopToup();
   chartArtTourHas();
 };
+
+
+function chartArtTransport() {
+
+  // Lấy dữ liệu từ API
+  fetch('http://localhost:8080/api/v1/StasTransportUsed')
+    .then(response => response.json())
+    .then(data => {
+      const dailyUsage = {};
+
+      // Xử lý dữ liệu để nhóm theo ngày và transportId
+      data.forEach(item => {
+        const orderDate = item.orderDate;  // Lấy ngày từ orderDate
+        const transportId = item.transportId;  // Lấy transportId
+
+        // Tạo nhóm cho ngày và phương tiện nếu chưa có
+        if (!dailyUsage[orderDate]) {
+          dailyUsage[orderDate] = {};
+        }
+        if (!dailyUsage[orderDate][transportId]) {
+          dailyUsage[orderDate][transportId] = 0;
+        }
+
+        // Cộng dồn số lượng theo ngày và phương tiện
+        dailyUsage[orderDate][transportId] += item.quantity;
+      });
+
+      // Tạo dữ liệu cho biểu đồ
+      const dates = Object.keys(dailyUsage); // Các ngày
+      const transportIds = new Set();
+
+      // Lấy tất cả transportId từ dữ liệu để tạo dataset
+      Object.values(dailyUsage).forEach(day => {
+        Object.keys(day).forEach(transportId => {
+          transportIds.add(transportId);
+        });
+      });
+
+      const datasets = Array.from(transportIds).map(transportId => {
+        const transportNameMap = {
+          1: 'Xe',      // transportId = 1 là "Xe"
+          2: 'Máy bay'  // transportId = 2 là "Máy bay"
+        };
+        return {
+          label: transportNameMap[transportId], // Sử dụng tên "Xe" hoặc "Máy bay"
+          data: dates.map(date => dailyUsage[date][transportId] || 0), // Lấy số lượng theo từng ngày
+          backgroundColor: transportId == 1 ? 'rgba(0, 123, 255, 0.6)' : 'rgba(255, 99, 132, 0.6)', // Màu sắc cho mỗi transportId
+          borderColor: transportId == 1 ? 'rgba(0, 123, 255, 1)' : 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        };
+      });
+
+      // Vẽ biểu đồ với Chart.js
+      const ctx = document.getElementById('transportChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',  // Biểu đồ cột
+        data: {
+          labels: dates,  // Các ngày
+          datasets: datasets  // Các phương tiện
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Thời gian'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Lượng sử dụng'
+              }
+            }
+          }
+        }
+      });
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}
+chartArtTransport()

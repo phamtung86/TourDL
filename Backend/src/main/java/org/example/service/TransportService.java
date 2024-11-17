@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dto.TransportDTO;
 import org.example.modal.Transport;
 import org.example.reponsitory.TransportReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,7 @@ public class TransportService {
         List<Transport> transports = transportReponsitory.findAll();
         return transports.stream().collect(Collectors.toMap(Transport::getId, transport -> transport));
     }
-
+    public List<TransportDTO> listTransportsUsedInMonth(){
+        return transportReponsitory.countByTransportIdForMonth();
+    }
 }
