@@ -117,7 +117,7 @@
 .dropdown-menu .dropdown-item:hover {
   background-color: #f6f9ff;
 }
-.col-lg-8{
+.col-lg-8 {
   width: 100% !important;
 }
 @keyframes dropdown-animate {
@@ -191,7 +191,7 @@
   font-size: 18px;
   font-weight: 500;
   color: #012970;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .card-title span {
@@ -208,7 +208,6 @@
   background-color: rgba(255, 255, 255, 0.6);
 }
 
-
 /* Close Button */
 .btn-close {
   background-size: 25%;
@@ -218,7 +217,6 @@
   outline: 0;
   box-shadow: none;
 }
-
 
 /*--------------------------------------------------------------
 # Sidebar
@@ -471,44 +469,64 @@
   max-width: 60px;
 }
 .list-tour-title,
-.list-tour-data{
+.list-tour-data {
   text-align: center;
   /* font-weight: 650; */
 }
-.list-tour-title{
+.list-tour-title {
   font-size: 17px;
 }
-.list-tour-data{
+.list-tour-data {
   font-size: 15px;
 }
 .list-tour-title:nth-child(1),
-.list-tour-data:nth-child(1){
+.list-tour-data:nth-child(1) {
   width: 10%;
 }
 .list-tour-title:nth-child(2),
-.list-tour-data:nth-child(2){
+.list-tour-data:nth-child(2) {
   width: 15%;
 }
 .list-tour-title:nth-child(3),
-.list-tour-data:nth-child(3){
+.list-tour-data:nth-child(3) {
   width: 40%;
 }
 .list-tour-title:nth-child(4),
-.list-tour-data:nth-child(4){
+.list-tour-data:nth-child(4) {
   width: 15%;
 }
 .list-tour-title:nth-child(5),
-.list-tour-data:nth-child(5){
+.list-tour-data:nth-child(5) {
   width: 30%;
 }
-.list-tour-data:nth-child(5){
+.list-tour-data:nth-child(5) {
   color: red;
   font-weight: 650;
-
 }
-#myChart, #revenueLineChart{
+#myChart,
+#revenueLineChart {
   width: 100% !important;
   height: 500px !important;
 }
+#myPieChart {
+  width: 500px !important;
+  height: 500px !important;
+}
 
+#myPieChartTour {
+  width: 500px !important;
+  height: 500px !important;
+}
 
+.chart-customer-tour__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-customer-tour__item h6 {
+  display: block;
+  width: fit-content;
+  text-align: center;
+  margin: 10px auto 0 auto;
+}
