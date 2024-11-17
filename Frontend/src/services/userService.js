@@ -1,37 +1,59 @@
 const db = require('../models');
-const userTourOderModel = require('../models/userTourOderModel');
-
-/** 
- * include: [
-          {
-            model: db.Library,
-            as: 'library',
-            attributes: {
-              exclude: ['id', 'productId', 'createdAt', 'updatedAt'],
-            },
-          },
-        ],
- * 
- * 
-*/
+const moment = require('moment');
+const { Op } = require('sequelize');
 
 let getTopUser = (option) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let myMoment = moment();
+      let currentDay = myMoment.format('YYYY-MM-DD HH:mm:ss');
+      let beforeThreeMonth = myMoment
+        .subtract(option, 'months')
+        .format('YYYY-MM-DD HH:mm:ss');
       let data = await db.UserTourOrder.findAll({
+        attributes: [
+          ['user_Id', 'userID'],
+          [
+            db.sequelize.fn('count', db.sequelize.col('tour_order_Id')),
+            'countTrip',
+          ],
+        ],
+        group: ['UserTourOrder.user_Id'],
         include: [
           {
             model: db.TourOrder,
             as: 'tourOrder',
-            attributes: ['total_price'],
+            where: {
+              order_date: {
+                [Op.between]: [beforeThreeMonth, currentDay],
+              },
+            },
+            attributes: [],
+          },
+          {
+            model: db.User,
+            as: 'user',
+            where: {
+              role: 0,
+            },
+            attributes: [
+              ['name', 'name'],
+              ['phone_number', 'phoneNumber'],
+              ['email', 'email'],
+            ],
           },
         ],
+        raw: false, // true: -> cấu trúc JS, fasle -> cấu trúc Sequelize
+        nest: true, //true -> lồng nhau, fasle -> không lồng
+        limit: 10,
+        order: db.sequelize.literal('countTrip DESC'),
       });
       return resolve({
-        errCode: 0,
+        status: 0,
         data: data,
       });
     } catch (error) {
+      console.log(error);
       reject(error);
     }
   });
