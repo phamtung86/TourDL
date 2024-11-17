@@ -30,7 +30,7 @@ public class Users {
     private String address;
 
     @Column(name = "role")
-    private int role; // 0 la admin - 1 la user
+    private int role; // 1 la admin - 0 la user
 
     public Users() {
     }
