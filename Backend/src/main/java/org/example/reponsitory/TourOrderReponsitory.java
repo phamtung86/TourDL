@@ -58,7 +58,7 @@ public interface TourOrderReponsitory extends JpaRepository<TourOrder, Integer> 
     List<Object[]> getMonthlyOrderStats();
 
     // thong ke doanh thu theo ngay
-    @Query("SELECT new org.example.dto.TourOrderDTO(SUM(to.totalPrice),DATE(to.orderDate) ) FROM TourOrder to GROUP BY DATE(to.orderDate) ORDER BY DATE(to.orderDate)")
+    @Query("SELECT new org.example.dto.TourOrderDTO(SUM(to.totalPrice),DATE(to.orderDate) ) FROM TourOrder to WHERE MONTH(to.orderDate) = MONTH(CURRENT_DATE) GROUP BY DATE(to.orderDate)  ORDER BY DATE(to.orderDate)")
     List<TourOrderDTO> listTourOrderStatsByDay();
     // thong ke doanh thu theo thang
     @Query("SELECT new org.example.dto.TourOrderDTO(SUM(to.totalPrice),MONTH(to.orderDate)) FROM TourOrder to GROUP BY MONTH(to.orderDate) ORDER BY MONTH(to.orderDate)")
