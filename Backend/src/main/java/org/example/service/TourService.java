@@ -32,25 +32,25 @@ public class TourService {
     }
 
     // update tour by id
-    public Tour updateTour(String id, Tour tourDetails) {
-            Optional<Tour> optionalTour = tourReponsitory.findById(id);
-            if(optionalTour.isPresent()) {
-                Tour existingTour = optionalTour.get();
-                existingTour.setName(tourDetails.getName());
-                existingTour.setPrice(tourDetails.getPrice());
-                existingTour.setImageLink(tourDetails.getImageLink());
-                existingTour.setFileName(tourDetails.getFileName());
-                existingTour.setDestination(tourDetails.getDestination());
-                existingTour.setDeparturePoint(tourDetails.getDeparturePoint());
-                existingTour.setSlot(tourDetails.getSlot());
-                existingTour.setTransportId(tourDetails.getTransportId());
-                existingTour.setTourTypeId(tourDetails.getTourTypeId());
-                return tourReponsitory.save(existingTour);
-            }else {
-                System.out.println("Tour not found with id " + id);
-                return null;
-            }
-    }
+//    public Tour updateTour(String id, Tour tourDetails) {
+//            Optional<Tour> optionalTour = tourReponsitory.findById(id);
+//            if(optionalTour.isPresent()) {
+//                Tour existingTour = optionalTour.get();
+//                existingTour.setName(tourDetails.getName());
+//                existingTour.setPrice(tourDetails.getPrice());
+//                existingTour.setImageLink(tourDetails.getImageLink());
+//                existingTour.setFileName(tourDetails.getFileName());
+//                existingTour.setDestination(tourDetails.getDestination());
+//                existingTour.setDeparturePoint(tourDetails.getDeparturePoint());
+//                existingTour.setSlot(tourDetails.getSlot());
+//                existingTour.setTransportId(tourDetails.getTransportId());
+//                existingTour.setTourTypeId(tourDetails.getTourTypeId());
+//                return tourReponsitory.save(existingTour);
+//            }else {
+//                System.out.println("Tour not found with id " + id);
+//                return null;
+//            }
+//    }
 
     // search tour by name
     public List<Tour> getTourByName(String Name) {

@@ -1,9 +1,6 @@
 package org.example.modal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tour")
@@ -34,11 +31,13 @@ public class Tour {
     @Column(name = "slot")
     private int slot;
 
-    @Column(name = "transport_id")
-    private String transportId;
+    @OneToOne
+    @JoinColumn(name = "transport_id", referencedColumnName = "id")
+    private Transport transport;
 
-    @Column(name = "tour_type_id")
-    private String tourTypeId;
+    @OneToOne
+    @JoinColumn(name = "tour_type_id", referencedColumnName = "id")
+    private TourType tourType;
     public Tour() {
 
     }
@@ -107,20 +106,20 @@ public class Tour {
         this.slot = slot;
     }
 
-    public String getTransportId() {
-        return transportId;
+    public Transport getTransport() {
+        return transport;
     }
 
-    public void setTransportId(String transportId) {
-        this.transportId = transportId;
+    public void setTransport(Transport transport) {
+        this.transport = transport;
     }
 
-    public String getTourTypeId() {
-        return tourTypeId;
+    public TourType getTourType() {
+        return tourType;
     }
 
-    public void setTourTypeId(String tourTypeId) {
-        this.tourTypeId = tourTypeId;
+    public void setTourType(TourType tourType) {
+        this.tourType = tourType;
     }
 
     @Override
@@ -134,8 +133,8 @@ public class Tour {
                 ", destination='" + destination + '\'' +
                 ", departurePoint='" + departurePoint + '\'' +
                 ", slot=" + slot +
-                ", transportId='" + transportId + '\'' +
-                ", tourTypeId='" + tourTypeId + '\'' +
+                ", transport=" + transport +
+                ", tourType=" + tourType +
                 '}';
     }
 }
