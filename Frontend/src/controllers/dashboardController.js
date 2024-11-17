@@ -10,11 +10,16 @@ let getDashBoard = async (req, res) => {
   const totalTourOrder = await axios.get(
     `http://localhost:8080/api/v1/TourOrders/TourOrdersByType/MONTH`
   );
+  const topCustomer = await axios.get(
+    `http://localhost:3124/api/v1/users-top?month=3`
+  );
+
   let data = {
     revenue: revenue,
     topTour: topTour,
     totalAccountCustomer: totalAccountCustomer,
     totalTourOrder: totalTourOrder,
+    topCustomer: topCustomer.data,
   };
   return res.render('admin/dashboard.ejs', { data: data });
 };

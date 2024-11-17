@@ -1,4 +1,6 @@
 const db = require('../models');
+const moment = require('moment');
+const { Op } = require('sequelize');
 
 const getTourByType = () => {
   return new Promise(async (resolve, reject) => {
@@ -36,6 +38,11 @@ const getTourByType = () => {
 let getTourByCustomer = () => {
   return new Promise(async (resolve, reject) => {
     try {
+      let myMoment = moment();
+      let currentDay = myMoment.format('YYYY-MM-DD HH:mm:ss');
+      let beforeThreeMonth = myMoment
+        .subtract(6, 'months')
+        .format('YYYY-MM-DD HH:mm:ss');
       let data = await db.Tour.findAll({
         attributes: [],
         group: ['Tour.tour_type_id'],
@@ -48,6 +55,11 @@ let getTourByCustomer = () => {
           {
             model: db.TourOrder,
             as: 'tourOrders',
+            where: {
+              order_date: {
+                [Op.between]: [beforeThreeMonth, currentDay],
+              },
+            },
             attributes: [
               [
                 db.sequelize.fn('sum', db.sequelize.col('total_member')),
@@ -59,7 +71,6 @@ let getTourByCustomer = () => {
         ],
         raw: true,
         nest: true,
-        // order: db.sequelize.literal('countTour DESC'),
       });
       return resolve({
         status: 0,

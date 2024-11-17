@@ -196,6 +196,25 @@
                     </div>
                   </div>
                 </div><!-- End Recent Sales -->
+                <div class="col-12">
+                  <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+                      <h5 class="card-title">Biểu đồ phân tích</h5>
+                      <table class="table table-borderless datatable">
+                        <div class="chart-customer-tour__container">
+                          <div class="chart-customer-tour__item">
+                            <canvas id="myPieChart"></canvas>
+                            <h6 class="chart-art-top-tour">Tỉ lệ tour yêu thích 6 tháng gần nhất</h6>
+                          </div>
+                          <div class="chart-customer-tour__item">
+                            <canvas id="myPieChartTour"></canvas>
+                            <h6 class="chart-art-top-tour">Tỉ lệ tour hiện có</h6>
+                          </div>
+                        </div>
+                      </table>
+                    </div>
+                  </div>
+                </div><!-- End Recent Sales -->
 
                 <!-- Top Selling -->
                 <div class="col-12">
@@ -206,7 +225,7 @@
                         <li class="dropdown-header text-start">
                           <h6>Lọc theo</h6>
                         </li>
-
+  
                         <li>
                           <a class="dropdown-item" href="#" data-value="DAY" onclick="getTopTourByType('DAY')">Hôm
                             nay</a>
@@ -220,12 +239,12 @@
                         </li>
                       </ul>
                     </div>
-
+  
                     <div class="card-body pb-0">
                       <h5 class="card-title">
                         Top Tour <span id="card-top-tour-title">| Tháng</span>
                       </h5>
-
+  
                       <table class="table table-borderless">
                         <thead>
                           <tr>
@@ -270,6 +289,75 @@
                   </div>
                 </div>
                 <!-- End Top Selling -->
+
+                <!-- Customer -->
+                <div class="col-12">
+                  <div class="card top-selling overflow-auto">
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Theo tháng</h6>
+                        </li>
+  
+                        <li>
+                          <a class="dropdown-item customer__link-option" style="cursor: pointer;"  data-value="3" >3 tháng</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item customer__link-option"  style="cursor: pointer;" data-value="6">6 tháng</a>
+                        </li>
+                      </ul>
+                    </div>
+  
+                    <div class="card-body pb-0">
+                      <h5 class="card-title">
+                        Khách hàng tiềm năng <span id="card-top-tour-title " class="customer__option">| 3 Tháng</span>
+                      </h5>
+  
+                      <table class="table table-borderless">
+                        <thead>
+                          <tr>
+                            <th class="list-tour-title" scope="col">STT</th>
+                            <th class="list-tour-title" scope="col">
+                              Tên khách hàng
+                            </th>
+                            <th class="list-tour-title" scope="col">
+                              Số điện thoại
+                            </th>
+                            <th class="list-tour-title" scope="col">
+                              Email
+                            </th>
+                            <th class="list-tour-title" scope="col">
+                              Số tour đã đi
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody id="list-top-tour " class="list__customer">
+                          <% data.topCustomer.forEach(function(customer, index){ %>
+                            <tr>
+                              <td class="list-tour-data" data-userId="<%= customer.userID%>">
+                                <%= index+1 %>
+                              </td>
+                              <td class="list-tour-data">
+                                <%= customer.user.name %>
+                              </td>
+                              <td class="list-tour-data">
+                                <%= customer.user.phoneNumber %>
+                              </td>
+                              <td class="list-tour-data">
+                                <%= customer.user.email %>
+                              </td>
+                              <td class="list-tour-data" style="color: black;">
+                                <%= customer.countTrip%> 
+                              </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Customer -->
               </div>
             </div>
             <!-- End Left side columns -->

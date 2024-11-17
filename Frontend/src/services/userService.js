@@ -12,7 +12,7 @@ let getTopUser = (option) => {
         .format('YYYY-MM-DD HH:mm:ss');
       let data = await db.UserTourOrder.findAll({
         attributes: [
-          'user_Id',
+          ['user_Id', 'userID'],
           [
             db.sequelize.fn('count', db.sequelize.col('tour_order_Id')),
             'countTrip',
@@ -40,7 +40,7 @@ let getTopUser = (option) => {
             ],
           },
         ],
-        raw: true, // true: -> cấu trúc JS, fasle -> cấu trúc Sequelize
+        raw: false, // true: -> cấu trúc JS, fasle -> cấu trúc Sequelize
         nest: true, //true -> lồng nhau, fasle -> không lồng
         limit: 10,
         order: db.sequelize.literal('countTrip DESC'),
