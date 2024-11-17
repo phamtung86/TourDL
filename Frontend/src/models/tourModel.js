@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Tour.belongsTo(models.TourType, {
+        foreignKey: 'tour_type_id',
+        as: 'tourType',
+      });
+      Tour.hasMany(models.TourOrder, {
+        foreignKey: 'tour_id',
+        as: 'tourOrders',
+      });
     }
   }
   Tour.init(
@@ -16,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        autoIncrement: true,
+        autoIncrement: false,
         primaryKey: true,
       },
       name: {

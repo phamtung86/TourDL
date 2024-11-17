@@ -1,5 +1,4 @@
 const db = require('../models');
-const userTourOderModel = require('../models/userTourOderModel');
 const moment = require('moment');
 const { Op } = require('sequelize');
 
