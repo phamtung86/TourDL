@@ -1,17 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../partials/head') %>
-    <!-- Cần title -->
-  </head>
 
-  <body>
-    <div class="nav-bar-content">
-      <!-- Start menubar -->
-      <%- include('./menuBar') %>
-      <h1>Đây là voucher</h1>
-      <!-- Javascript -->
-      <%- include('../partials/baseScript')%>
+<head>
+  <title>Voucher</title>
+  <link rel="stylesheet" href="assets/css/voucher.css">
+  <%- include('../partials/head') %>
+</head>
+
+<body>
+  <div class="nav-bar-content">
+    <!-- Start menubar -->
+    <%- include('./menuBar') %>
+      <div class="voucher__admin">
+        <div class='voucher__admin--overview'>
+          <div class='voucher__admin--report'>
+            <div class='voucher__admin--report--title'>Tổng số voucher</div>
+            <div class='voucher__admin--report--value'></div>
+          </div>
+          <div class='voucher__admin--report'>
+            <div class='voucher__admin--report--title'>Đã hết hạn</div>
+            <div class='voucher__admin--report--value'>
+
+            </div>
+          </div>
+          <div class='voucher__admin--report'>
+            <div class='voucher__admin--report--title'>Còn hạn</div>
+            <div class='voucher__admin--report--value'>
+
+            </div>
+          </div>
+        </div>
+        <div class='voucher__admin--function'>
+          <div class='action__search'>
+            <span class='action__search--title'>Tìm kiếm</span>
+            <input class='action__search--text' placeholder='Nhập mã voucher cần tìm' />
+          </div>
+          <div class='box__action--button'>
+            <span class='box__action--title'>Hành động</span>
+            <button class='action__button action__add'>
+              <FontAwesomeIcon icon={faPlus}/> Thêm mới
+            </button>
+            <button class='action__button action__lock'>
+              <FontAwesomeIcon icon={faPenToSquare} /> Sửa
+            </button>
+            <button class='action__button action__delete'>
+              <FontAwesomeIcon icon={faLock} /> Khóa
+            </button>
+            <button class='action__button action__refresh'>
+              <FontAwesomeIcon icon={faRotate} /> Làm mới
+            </button>
+          </div>
+        </div>
+        <div class="voucher__admin--table">
+          <div class="voucher__admin--table--header">
+            <div class="voucher__admin--table--title"></div>
+            <div class="voucher__admin--table--title">Mã</div>
+            <div class="voucher__admin--table--title">Tên voucher</div>
+            <div class="voucher__admin--table--title">Loại voucher</div>
+            <div class="voucher__admin--table--title">Giá trị</div>
+            <div class="voucher__admin--table--title">Ngày bắt đầu</div>
+            <div class="voucher__admin--table--title">Ngày hết hạn</div>
+          </div>
+          <div class='voucher__admin--table--body'>
+          </div>
+        </div>
+      </div>
+  </div>
+  <%- include('../partials/baseScript')%>
     </div>
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/voucher.js"></script>
+</body>
+
 </html>
