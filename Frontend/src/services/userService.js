@@ -33,6 +33,9 @@ let getTopUser = (option) => {
           {
             model: db.User,
             as: 'user',
+            where: {
+              role: 0,
+            },
             attributes: [
               ['name', 'name'],
               ['phone_number', 'phoneNumber'],
