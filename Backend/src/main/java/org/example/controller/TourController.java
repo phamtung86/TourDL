@@ -53,6 +53,14 @@ public class TourController {
 //        return ResponseEntity.ok(updatedTour);
         return null;
     }
+    //Phan trang tour
+    @GetMapping("/tours/page")
+    public List<Tour> getToursByPage(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        return tourService.getToursByPage(page,size);
+    }
 
 }
 
