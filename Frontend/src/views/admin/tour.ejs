@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %>
+    <!-- Cần title -->
+    <title>Quản lý Tour Du Lịch</title>
+    <link rel="stylesheet" href="assets/css/tour.css">
+  </head>
+  <body>
+    <div class="nav-bar-content">
+      <!-- Start menubar -->
+      <%- include('./menuBar') %>
+      <div class="container">
+        <h1 class="title">Quản Lý Tour Du Lịch</h1>
+
+        <!-- Tìm kiếm -->
+        <div class="search-box">
+            <input class="search-box-input" type="text" id="search" placeholder="Tìm kiếm theo tên tour..." oninput="searchTour()">
+        </div>
+
+        <!-- Bảng quản lý -->
+        <div class="table-container">
+            <table id="tour-table">
+                <thead>
+                    <tr>
+                        <th>Mã Tour</th>
+                        <th>Tên Tour</th>
+                        <th>Giá</th>
+                        <th>Hình ảnh</th>
+                        <th>Điểm Khởi Hành</th>
+                        <th>Điểm Đến</th>
+                        <th>Phương Tiện</th>
+                        <th>Loại Tour</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody id="tour-body">
+                    <!-- Dữ liệu tour sẽ được hiển thị ở đây -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Nút thêm tour mới -->
+        <button class="btn btn-primary" onclick="openForm()">Thêm Tour Mới</button>
+
+        <!-- Form Thêm/Sửa Tour -->
+        <div id="form-container" class="form-container">
+            <form id="tour-form" onsubmit="submitForm(event)">
+                <h2 id="form-title">Thêm Tour Mới</h2>
+                <button type="button" class="close-btn" onclick="closeForm()">×</button>
+                <label for="tour-code">Mã Tour:</label>
+                <input type="text" id="tour-code" required>
+                
+                <label for="tour-name">Tên Tour:</label>
+                <input type="text" id="tour-name" required>
+                
+                <label for="tour-price">Giá:</label>
+                <input type="number" id="tour-price" required>
+                
+                <label for="tour-image">Hình ảnh:</label>
+                <input type="text" id="tour-image">
+                
+                <label for="tour-start">Điểm Khởi Hành:</label>
+                <input type="text" id="tour-start" required>
+                
+                <label for="tour-end">Điểm Đến:</label>
+                <input type="text" id="tour-end" required>
+                
+                <label for="tour-transport">Phương Tiện:</label>
+                <input type="text" id="tour-transport" required>
+                
+                <label for="tour-type">Loại Tour:</label>
+                <input type="text" id="tour-type" required>
+                <div class = "buttomform">
+                    <button  type="submit" class="btn btn-success">Lưu</button>
+                    <button  type="button" class="btn btn-cancel" onclick="closeForm()">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="js/tour.js"></script>
+      </div>
+      <!-- Javascript -->
+      <%- include('../partials/baseScript')%>
+    </div>
+  </body>
+</html>

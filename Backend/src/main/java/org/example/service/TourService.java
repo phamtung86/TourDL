@@ -3,6 +3,8 @@ package org.example.service;
 import org.example.modal.Tour;
 import org.example.reponsitory.TourReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +31,11 @@ public class TourService {
             return true;
         }
         return false;
+    }
+    public List<Tour> getToursByPage(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page -1,size);
+        Page<Tour> tourPage = tourReponsitory.findAll(pageRequest);
+        return tourPage.getContent();
     }
 
     // update tour by id

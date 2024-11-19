@@ -39,7 +39,7 @@ public class TourOrderController {
         tourOrderService.createNewTourOrder(tourOrder,tourID);
     }
     @GetMapping("/TourOrders/TourOrdersByType/{type}")
-    public int totalInDay(@PathVariable("type") String type){
+    public int totalIn(@PathVariable("type") String type){
         return tourOrderService.totalTourOrderByType(type);
     }
     @GetMapping("/TourOrders/statsbyMonth")
