@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.modal.Voucher;
+import org.example.service.IVoucherService;
 import org.example.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,16 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/vouchers")
 public class VoucherController {
     @Autowired
-    private VoucherService voucherService;
-    @GetMapping("/vouchers")
+    private IVoucherService voucherService;
+    @GetMapping
     public List<Voucher> getAllVoucher() {
-        return voucherService.listAllVoucher();
+        return voucherService.getVouchers();
     }
 
-    @GetMapping("/vouchers/{id}")
+    @GetMapping("/{id}")
     public Voucher getVoucherById(@PathVariable int id) {
         Optional<Voucher> isExists = voucherService.findVoucherById(id);
         if (isExists.isPresent()) {
@@ -32,7 +33,7 @@ public class VoucherController {
         return voucherService.totalVouchers();
     }
 
-    @PostMapping("/vouchers")
+    @PostMapping
     public boolean addNewVoucher(@RequestBody Voucher voucher) {
         Voucher newVoucher = voucherService.createVoucher(voucher);
         if (newVoucher != null) {
@@ -43,7 +44,7 @@ public class VoucherController {
 
     // update voucher
 
-    @PutMapping("/vouchers/{id}")
+    @PutMapping("/{id}")
     public boolean updateVoucher(@PathVariable("id") int id, @RequestBody Voucher voucher) {
         Optional<Voucher> isExists = voucherService.findVoucherById(id);
         if (isExists.isPresent()) {
@@ -53,7 +54,7 @@ public class VoucherController {
         return false;
     }
 
-    @DeleteMapping("vouchers/{id}")
+    @DeleteMapping("/{id}")
     public boolean deleteVoucher(@PathVariable("id") int id) {
         Optional<Voucher> isExists = voucherService.findVoucherById(id);
         if (isExists.isPresent()) {
@@ -62,4 +63,9 @@ public class VoucherController {
         }
         return false;
     }
+    @PutMapping("/{id}/{status}")
+    public boolean updateStatusVoucher(@PathVariable("id") int id, @PathVariable("status") int status){
+        return voucherService.updateStatusVoucher(id, status);
+    }
+
 }
