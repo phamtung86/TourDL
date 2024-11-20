@@ -36,4 +36,8 @@ public class UserController {
     public int getTotalUsers() {
         return userService.getTotalAccountUser();
     }
+    @GetMapping("Users/{email}")
+    public Users getbyEmail(@PathVariable("email") String email){
+        return userService.getUserByEmail(email);
+    }
 }

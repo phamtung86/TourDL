@@ -12,14 +12,10 @@ public class TourUserDetail implements UserDetails {
     private String password;
     private Collection <GrantedAuthority> authorities;
     public static String mapRoleToString(int role){
-        switch (role){
-            case 1:
-                return "ROLE_USER";
-            case 2:
-                return "ROLE_ADMIN";
-            default:
-                return "ROLE_USER";
+        if (role == 0) {
+            return "ROLE_USER";
         }
+        return "ROLE_ADMIN";
     }
     public static TourUserDetail buildUserDetails(Users user){
         String role = mapRoleToString(user.getRole());
@@ -84,21 +80,21 @@ public class TourUserDetail implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return UserDetails.super.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return UserDetails.super.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return UserDetails.super.isEnabled();
     }
 }

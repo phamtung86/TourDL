@@ -1,8 +1,10 @@
 package org.example.service;
 
+import org.apache.catalina.User;
 import org.example.modal.Users;
 import org.example.reponsitory.UserReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,16 +14,29 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserReponsitory userReponsitory;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // get all user
     public ArrayList<Users> getAllUSer () {
         return (ArrayList<Users>) userReponsitory.findAll();
     }
-
     // create user
     public boolean createNewUser(Users user) {
-        userReponsitory.save(user);
-        return true;
+        Optional<Users> userOpt = userReponsitory.findById(user.getId());
+        if(userOpt.isEmpty()){
+            user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+            userReponsitory.save(user);
+            return true;
+        }
+        return false;
+
+    }
+    public Users getUserByEmail(String email){
+        return userReponsitory.findByEmail(email);
     }
 
     // update user

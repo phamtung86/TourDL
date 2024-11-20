@@ -1,5 +1,4 @@
 package org.example.security.jwt;
-
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,7 +10,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 @Component
@@ -19,7 +17,7 @@ public class JwtUtils {
     @Value("${auth.token.jwtSecret}")
     private String jwtSecret;
     @Value("${auth.token.expirationInMils}")
-    private int expỉationTime;
+    private int expirationTime;
 
     public String generateTokenForUser(Authentication authentication){
         TourUserDetail userPrincipal = (TourUserDetail) authentication.getPrincipal();
@@ -31,8 +29,9 @@ public class JwtUtils {
                 .claim("id",userPrincipal.getId())
                 .claim("roles",roles)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+expỉationTime))
-                .signWith(key(), SignatureAlgorithm.HS256).compact();
+                .setExpiration(new Date(new Date().getTime()+expirationTime))
+                .signWith(key(), SignatureAlgorithm.HS256)
+                .compact();
     }
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
@@ -41,7 +40,7 @@ public class JwtUtils {
         return Jwts.parserBuilder()
                 .setSigningKey(key())
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody().getSubject();
     }
     public boolean validateToken(String token){
@@ -49,10 +48,10 @@ public class JwtUtils {
             Jwts.parserBuilder()
                     .setSigningKey(key())
                     .build()
-                    .parseClaimsJwt(token);
+                    .parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
-            throw new JwtException(e.getMessage());
+           throw new JwtException(e.getMessage());
         }
     }
 }

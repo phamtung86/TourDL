@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,10 +23,11 @@ import java.util.List;
 
 @EnableWebSecurity
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true)
 public class TourConfig {
     private final TourUserDetailService tourUserDetailService;
     private final JwtAuthEntryPoint authEntryPoint;
-    private static final List<String> SECURED_URLS = List.of("/api/v1/**","api/User/**");
+    private static final List<String> SECURED_URLS = List.of("/api/v1/**");
 
     public TourConfig(TourUserDetailService tourUserDetailService, JwtAuthEntryPoint authEntryPoint) {
         this.tourUserDetailService = tourUserDetailService;
@@ -60,7 +62,8 @@ public class TourConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception ->exception.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth->auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).authenticated().anyRequest().permitAll());
+                .authorizeHttpRequests(auth->auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).authenticated()
+                        .anyRequest().permitAll());
         http.authenticationProvider(daoAuthenticationProvider());
         http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
