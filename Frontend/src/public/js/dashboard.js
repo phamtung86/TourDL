@@ -141,7 +141,7 @@ function chatArtsTourOrderByMonth() {
 }
 chatArtsTourOrderByMonth();
 
-let revenueLineChart = null; // Khởi tạo biến này là null thay vì undefined
+let revenueLineChart = null;
 
 async function charArtsRevenueByType(type, event) {
   // Ngừng hành vi mặc định của thẻ <a>

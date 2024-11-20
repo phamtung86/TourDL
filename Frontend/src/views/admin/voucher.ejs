@@ -10,22 +10,22 @@
 <body>
   <div class="nav-bar-content">
     <!-- Start menubar -->
-    <%- include('./menuBar') %>
+    <%- include('./menuBar.ejs') %>
       <div class="voucher__admin">
         <div class='voucher__admin--overview'>
           <div class='voucher__admin--report'>
             <div class='voucher__admin--report--title'>Tổng số voucher</div>
-            <div class='voucher__admin--report--value'></div>
+            <div class='voucher__admin--report--value total-voucher'></div>
           </div>
           <div class='voucher__admin--report'>
             <div class='voucher__admin--report--title'>Đã hết hạn</div>
-            <div class='voucher__admin--report--value'>
+            <div class='voucher__admin--report--value expiry-voucher'>
 
             </div>
           </div>
           <div class='voucher__admin--report'>
-            <div class='voucher__admin--report--title'>Còn hạn</div>
-            <div class='voucher__admin--report--value'>
+            <div class='voucher__admin--report--title'>Đang mở</div>
+            <div class='voucher__admin--report--value valid-voucher'>
 
             </div>
           </div>
@@ -36,11 +36,11 @@
             <input class='action__search--text' placeholder='Nhập mã voucher cần tìm' />
           </div>
           <div class='box__action--button'>
-            <span class='box__action--title'>Hành động</span>
-            <button class='action__button action__add'>
+            <span class='box__action--title' >Hành động</span>
+            <button class='action__button action__add' data-link="/voucher/add">
               <FontAwesomeIcon icon={faPlus}/> Thêm mới
             </button>
-            <button class='action__button action__lock'>
+            <button class='action__button action__lock' data-link="/voucher/modify">
               <FontAwesomeIcon icon={faPenToSquare} /> Sửa
             </button>
             <button class='action__button action__delete'>
@@ -69,7 +69,7 @@
   <%- include('../partials/baseScript')%>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/voucher.js"></script>
+    <script type="module" src="/js/voucher.js"></script>
 </body>
 
 </html>

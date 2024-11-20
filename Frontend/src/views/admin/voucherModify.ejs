@@ -12,15 +12,15 @@
   <div class="voucher-crud">
     <%- include('./menuBar.ejs') %>
       <div class="voucher__admin--add-form" id="addVoucherForm">
-        <h3 class="voucher-crud-title">Thêm mới voucher</h3>
+        <h3 class="voucher-crud-title">Sửa thông tin voucher</h3>
         <form class="crud-voucher-form">
           <div class="form-label-value">
             <label class="form-label" for="voucherName">Tên voucher</label>
             <input type="text" class="voucher-input" id="voucherName" name="voucherName" required>
           </div>
           <div class="form-label-value">
-            <label class="form-label" for="voucherType">Loại voucher</label>
-            <select class="voucher-input">
+            <label class="form-label" for="voucherType" >Loại voucher</label>
+            <select class="voucher-input"id="voucherType">
               <option value="1">Tiền</option>
               <option value="0">Phần trăm</option>
             </select>
@@ -38,7 +38,7 @@
             <input type="date" class="voucher-input" id="voucherExpiryDate" name="voucherExpiryDate" required>
           </div>
           <div class="form-button">
-            <button class="form-button-cancel" type="button" id="cancelAddVoucher">Hủy</button>
+            <button class="form-button-cancel" type="button"  id="cancelAddVoucher">Hủy</button>
             <button class="form-button-submit" type="submit">Lưu</button>
           </div>
         </form>
@@ -46,7 +46,7 @@
       <%- include('../partials/baseScript')%>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="/js/voucherAdd.js"></script>
+  <script type="module" src="/js/voucherModify.js"></script>
 </body>
 
 </html>
