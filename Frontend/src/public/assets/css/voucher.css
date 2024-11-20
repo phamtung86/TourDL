@@ -145,3 +145,6 @@ padding: 10px;
 .action__warnning{
     background-color: yellow;
 }
+.action__button{
+    cursor: pointer;
+}

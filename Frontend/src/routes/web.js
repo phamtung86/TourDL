@@ -24,6 +24,13 @@ const initWebRouters = (app) => {
   router.get('/voucher', (req, res) => {
     return res.render('admin/voucher.ejs');
   });
+  router.get('/voucher/add', (req, res) => {
+    return res.render('admin/voucherAdd.ejs');
+  });
+  router.get('/voucher/modify/:id', (req, res) => {
+    const voucherId = req.params.id;
+    return res.render('admin/voucherModify.ejs',{voucherId});
+  });
   return app.use('/', router);
 };
 

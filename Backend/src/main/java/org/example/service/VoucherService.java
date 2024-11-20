@@ -1,5 +1,6 @@
 package org.example.service;
 
+import jakarta.transaction.Transactional;
 import org.example.modal.Voucher;
 import org.example.reponsitory.VoucherReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class VoucherService {
+public class VoucherService implements IVoucherService {
     @Autowired
     private VoucherReponsitory voucherReponsitory;
 
     // get all voucher
-    public List<Voucher> listAllVoucher (){
+    public List<Voucher> getVouchers (){
         return voucherReponsitory.findAll();
     }
+
 
     // get Voucher by id
     public Optional<Voucher> findVoucherById(int id) {
@@ -36,11 +38,20 @@ public class VoucherService {
             updatedVoucher.setVoucherName(voucher.getVoucherName());
             updatedVoucher.setValue(voucher.getValue());
             updatedVoucher.setType(voucher.getType());
+            updatedVoucher.setStartDate(voucher.getStartDate());
+            updatedVoucher.setExpiryDate(voucher.getExpiryDate());
             voucherReponsitory.save(updatedVoucher) ;
             return true;
         }
         return false;
     }
+
+    @Override
+    @Transactional
+    public boolean updateStatusVoucher(int id, int status) {
+        return voucherReponsitory.updateStatus(id, status) > 0;
+    }
+
 
     // delete voucher by id
     public boolean deleteVoucher(int id) {
