@@ -187,6 +187,104 @@
           }
         }
       }
+      .tour-list__item {
+        margin-top: 16px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        overflow: hidden;
+        border: 1px solid $border-color;
+        &:hover {
+          box-shadow: 0px 0px 10px 4px #dad9d9;
+          transition: ease-in-out 0.2s all;
+        }
+        .tour-list__item-img {
+          width: 340px;
+          min-width: 340px;
+          align-self: stretch;
+          img.tour-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+        .tour-list__item-info {
+          align-self: stretch;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding: 16px;
+          .tour-list__item--top {
+            margin-bottom: 40px;
+            .tour-list__item-heading {
+              font-size: $fs-medium;
+              color: #000;
+              font-weight: bold;
+              line-height: $fs-medium - 0.8em;
+              margin-bottom: 10px;
+            }
+            .tour-list__item-box {
+              display: grid;
+              grid-template-columns: auto auto;
+              gap: 10px 5px;
+              .tour-list__item-col {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                font-size: $fs-small;
+                font-weight: normal;
+                color: #000;
+                span {
+                  margin-right: 6px;
+                }
+                span.icon {
+                  font-size: $fs-small + 0.2em;
+                  color: #171717;
+                }
+                span.tour-list__item-value {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+          .tour-list__item--bottom {
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .tour-list__item-price {
+              font-size: $fs-medium;
+              font-weight: bold;
+              color: red;
+              line-height: $fs-small - 0.4em;
+              span {
+                font-weight: normal;
+                font-size: $fs-small - 0.6em;
+                color: #171717;
+              }
+            }
+            .tour-list__item-btn-detail {
+              padding: 12px 16px;
+              border: 1px solid $color-primary;
+              font-size: $fs-small;
+              font-weight: bold;
+              color: #fff;
+              background-color: $color-primary;
+              border-radius: 6px;
+              &:hover {
+                cursor: pointer;
+                background: #daefff;
+                border: 1px solid #0b5da7;
+                transition: ease-in-out 0.2s all;
+                color: #0b5da7;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
