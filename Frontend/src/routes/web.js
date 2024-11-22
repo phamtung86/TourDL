@@ -4,7 +4,7 @@ const db = require('../models/index');
 const adminController = require('../controllers/dashboardController');
 const initWebRouters = (app) => {
   router.get('/', (req, res) => {
-    return res.send('GetDone');
+    return res.render('customer/home.ejs');
   });
   router.get('/adb', (req, res) => {
     return res.send('KhanhVinh');
@@ -17,9 +17,6 @@ const initWebRouters = (app) => {
       return res.send(error);
     }
   });
-  // router.get('/Dashboard', async (req, res) => {
-  //   return res.render("admin/index.ejs", {})
-  // })
   router.get('/Dashboard', adminController.getDashBoard);
   router.get('/voucher', (req, res) => {
     return res.render('admin/voucher.ejs');
