@@ -3,7 +3,7 @@ package org.example.controller;
 import org.example.dto.TourOrderDTO;
 import org.example.dto.TourOrderStats;
 import org.example.modal.TourOrder;
-import org.example.service.TourOrderService;
+import org.example.service.ITourOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class TourOrderController {
     @Autowired
-    private TourOrderService tourOrderService;
+    private ITourOrderService tourOrderService;
 
     @GetMapping("/TourOrders")
     public List<TourOrderDTO> getTourOrders() {

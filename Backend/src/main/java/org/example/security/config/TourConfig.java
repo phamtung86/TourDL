@@ -27,7 +27,7 @@ import java.util.List;
 public class TourConfig {
     private final TourUserDetailService tourUserDetailService;
     private final JwtAuthEntryPoint authEntryPoint;
-    private static final List<String> SECURED_URLS = List.of("/api/v1/**");
+    private static final List<String> SECURED_URLS = List.of("/api");
 
     public TourConfig(TourUserDetailService tourUserDetailService, JwtAuthEntryPoint authEntryPoint) {
         this.tourUserDetailService = tourUserDetailService;

@@ -8,15 +8,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TourDetailService {
+public class TourDetailService implements ITourDetailService {
     @Autowired
     private TourDetailReponsitory tourDetailRepository;
 
+    @Override
     public List<TourDetail> getAllTourDetail() {
         return tourDetailRepository.findAll();
     }
 
     // Xem theo id_tour
+    @Override
     public TourDetail findTourDetailByTourId(String tourId) {
         TourDetail tourDetail = tourDetailRepository.findTourDetailByTourId(tourId);
 
@@ -28,11 +30,13 @@ public class TourDetailService {
     }
 
     // Add tour_detail
+    @Override
     public TourDetail createNewTourDetail(TourDetail tourDetail) {
         return tourDetailRepository.save(tourDetail);
     }
 
     // Delete TourDetail by ID
+    @Override
     public boolean deleteTourDetail(int id) {
         if (tourDetailRepository.existsById(id)) {
             tourDetailRepository.deleteById(id);
@@ -40,6 +44,7 @@ public class TourDetailService {
         }
         return false; // Có thể thêm thông điệp ở đây nếu cần
     }
+    @Override
     public int sumTour(){
         return tourDetailRepository.findAll().size();
     }

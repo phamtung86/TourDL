@@ -12,19 +12,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TourService {
+public class TourService implements ITourService {
     @Autowired
     private TourReponsitory tourReponsitory;
+    @Override
     public List<Tour> getAllTours() {
         return tourReponsitory.findAll();
     }
 
     // add tour
+    @Override
     public Tour createNewTour(Tour tour) {
         return tourReponsitory.save(tour);
     }
 
     // delete Tour By ID
+    @Override
     public boolean deleteTourById(String id) {
         if (tourReponsitory.existsById(id)) {
             tourReponsitory.deleteById(id);
@@ -32,6 +35,7 @@ public class TourService {
         }
         return false;
     }
+    @Override
     public List<Tour> getToursByPage(int page, int size){
         PageRequest pageRequest = PageRequest.of(page -1,size);
         Page<Tour> tourPage = tourReponsitory.findAll(pageRequest);
@@ -60,6 +64,7 @@ public class TourService {
 //    }
 
     // search tour by name
+    @Override
     public List<Tour> getTourByName(String Name) {
         List<Tour> listTourByName = new ArrayList<>();
         for (Tour tour : tourReponsitory.findAll()) {

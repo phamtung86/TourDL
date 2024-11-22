@@ -7,23 +7,29 @@ import org.example.reponsitory.CalendarReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CalendarService {
+public class CalendarService implements ICalendarService {
     @Autowired
     private CalendarReponsitory calendarReponsitory;
+
     //getAll
+    @Override
     public List<Calendar> getAllCalendar(){
         return  calendarReponsitory.findAll();
     }
+
     //CreateCalendarService
+    @Override
     public Calendar createNewCalendar(Calendar calendar){
         return calendarReponsitory.save(calendar);
 
     }
     //FindCalendarbyTourId
+    @Override
     public List<Calendar> findCalendarbyTour( String tourID){
         List<Calendar> calendars = new ArrayList<>();
         for(Calendar calendar : getAllCalendar()) {
@@ -35,6 +41,7 @@ public class CalendarService {
         return calendars;
     }
 
+    @Override
     public List<CalendarDTO> getExpiredCalendars(){
        List<Calendar> expiredCalendars = calendarReponsitory.getExpiredCalendars();
        List<CalendarDTO> calendarExpiredDTO = new ArrayList<>();
@@ -48,6 +55,7 @@ public class CalendarService {
        }
        return calendarExpiredDTO;
     }
+    @Override
     public List<CalendarDTO> getCalendarsWithinThreeDaysFromNow(){
         List<Calendar> OneDaysFromNow = calendarReponsitory.getCalendarsWithinOneDaysFromNow();
         List<CalendarDTO> OneCalendarDTOS = new ArrayList<>();
@@ -60,6 +68,7 @@ public class CalendarService {
         }
         return OneCalendarDTOS;
     }
+    @Override
     public List<CalendarDTO> getCalendarsInCurrentAndNextMonth(){
         List<Calendar> calendarsInCurrentAndNextMonth = calendarReponsitory.getCalendarsInCurrentAndNextMonth();
         List<CalendarDTO> calendarsInCurrentAndNextMonthDTOS = new ArrayList<>();
@@ -73,14 +82,16 @@ public class CalendarService {
         return calendarsInCurrentAndNextMonthDTOS;
     }
 
+
 //    //GetAllStartDate
-//    public List<Date> getAllStartedDate(){
+    @Override
+    public List<Date> getAllStartedDate(){
 //        List<Date> listStartDate = new ArrayList<>();
 //        for (Calendar calendar : getAllCalendar()){
 //            listStartDate.add(calendar.getStartDate());
 //        }
-//        return listStartDate;
-//    }
+        return null;
+    }
 
 
 

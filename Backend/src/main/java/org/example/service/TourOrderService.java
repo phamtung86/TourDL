@@ -24,13 +24,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class TourOrderService {
+public class TourOrderService implements ITourOrderService {
     @Autowired
     private TourOrderReponsitory tourOrderReponsitory;
     @Autowired
     private TourReponsitory tourReponsitory;
 
-
+    @Autowired
     public List<TourOrderDTO> getAllTourOrder() {
         List<TourOrderDTO> tourOrderDTOs = new ArrayList<>();
 
@@ -44,6 +44,7 @@ public class TourOrderService {
     }
 
     // lay doanh thu
+    @Override
     public double getRevenue(String type) {
         Timestamp startDate;
         Timestamp endDate;
@@ -78,6 +79,7 @@ public class TourOrderService {
     }
 
     // get top tour
+    @Override
     public List<TourOrderDTO> listTopTours(String type) {
         Pageable pageable = PageRequest.of(0, 10);
         Timestamp startDate;
@@ -103,7 +105,7 @@ public class TourOrderService {
     }
 
     // tour order by month
-
+    @Override
     public int countTourOrderByMonth() {
         Timestamp startDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(1).atStartOfDay());
         Timestamp endDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(23, 59, 59));
@@ -111,6 +113,7 @@ public class TourOrderService {
     }
 
     // tao 1 tour order
+    @Override
     @Transactional
     public void createNewTourOrder(TourOrder tourOrder, String tourId) {
         Optional<Tour> optionalTour = tourReponsitory.findById(tourId);
@@ -138,6 +141,7 @@ public class TourOrderService {
     }
 
     //lay totalorder theo tung thang
+    @Override
     public TourOrderStats getTourOrderStatsByMonth() {
         List<Object[]> results = tourOrderReponsitory.getMonthlyOrderStats();
         List<String> months = new ArrayList<>(12);
@@ -155,6 +159,7 @@ public class TourOrderService {
     }
 
     // thong ke doanh thu
+    @Override
     public List<TourOrderDTO> listTourOrderStatsByType(String type) {
         switch (type.toUpperCase()) {
             case "DAY":
