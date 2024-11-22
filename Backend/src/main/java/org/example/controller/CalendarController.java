@@ -3,7 +3,7 @@ package org.example.controller;
 
 import org.example.dto.CalendarDTO;
 import org.example.modal.Calendar;
-import org.example.service.CalendarService;
+import org.example.service.ICalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("api/Calendar")
 public class CalendarController {
     @Autowired
-    private CalendarService calendarService;
+    private ICalendarService calendarService;
     @GetMapping("/Calendars")
     public List<Calendar> listCalendar(){
         List<Calendar> calendars = calendarService.getAllCalendar();

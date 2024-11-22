@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.modal.TourDetail;
-import org.example.service.TourDetailService;
+import org.example.service.ITourDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/TourDetail")
 public class TourDetailController {
     @Autowired
-    private TourDetailService tourDetailService;
+    private ITourDetailService tourDetailService;
 
     @GetMapping("/TourDetails")
     public ResponseEntity<List<TourDetail>> listTourDetail() {

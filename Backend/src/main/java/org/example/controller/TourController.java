@@ -1,11 +1,10 @@
 package org.example.controller;
 
 import org.example.modal.Tour;
-import org.example.service.TourService;
+import org.example.service.ITourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 public class TourController {
 
     @Autowired
-    private TourService tourService;
+    private ITourService tourService;
 
     // get all tour
     @GetMapping("/tours")
