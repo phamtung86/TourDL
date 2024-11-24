@@ -169,6 +169,39 @@
             align-items: center;
             justify-content: space-between;
             min-width: 240px;
+            position: relative;
+            .tour-list__box-option {
+              position: absolute;
+              top: 120%;
+              left: 0;
+              background-color: #fff;
+              width: 85%;
+              box-shadow: 0px 0px 3px 0px #a7a5a5;
+              padding: 10px;
+              border-radius: 6px;
+              z-index: 9;
+              .tour-list__box-item {
+                .tour-list__box-link {
+                  display: block;
+                  padding: 8px;
+                  font-size: $fs-small - 0.1em;
+                  line-height: $fs-small - 0.1em;
+                  font-weight: normal;
+                  border-radius: 6px;
+                  &:hover {
+                    background-color: #daefff;
+                    cursor: pointer;
+                  }
+                  &.active {
+                    cursor: default;
+                    color: $color-primary;
+                    font-size: $fs-small;
+                    font-weight: bold;
+                    background-color: #fff;
+                  }
+                }
+              }
+            }
             &:hover {
               cursor: pointer;
               background: #daefff;
@@ -231,6 +264,9 @@
               grid-template-columns: auto auto;
               gap: 10px 5px;
               .tour-list__item-col {
+                &.--calendar {
+                  grid-column: 1 / 3;
+                }
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
@@ -243,9 +279,60 @@
                 span.icon {
                   font-size: $fs-small + 0.2em;
                   color: #171717;
+                  width: 30px;
+                  margin-right: 6px;
                 }
                 span.tour-list__item-value {
                   font-weight: bold;
+                }
+                .tour-list__item-day-container {
+                  display: flex;
+                  align-items: center;
+                  justify-content: flex-start;
+                  .tour-list__button {
+                    padding: 8px;
+                    background-color: #e5e5e5;
+                    border-radius: 6px;
+                    color: #000;
+                    filter: brightness(1);
+                    &.active {
+                      filter: brightness(0.8);
+                      &:hover {
+                        cursor: pointer;
+                      }
+                    }
+                    &.--left {
+                      margin-right: 4px;
+                    }
+                    &.--right {
+                      margin-left: 4px;
+                    }
+                  }
+                  .tour-list__item-startDay {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    max-width: 300px;
+                    overflow-x: scroll;
+                    &::-webkit-scrollbar {
+                      display: none;
+                    }
+                    .tour-list__item-day {
+                      border: 1px solid red;
+                      border-radius: 6px;
+                      padding: 8px 6px;
+                      color: red;
+                      background-color: #fff;
+                      font-size: $fs-small - 0.4em;
+                      margin-right: 6px;
+                      &:hover {
+                        cursor: pointer;
+                        background-color: red;
+                        color: #fff;
+                        transition: ease-in-out 0.2s all;
+                      }
+                    }
+                  }
                 }
               }
             }
