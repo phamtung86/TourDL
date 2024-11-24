@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/transport.css">
+    <%- include('../partials/head') %>
+        <title>Phương tiện</title>
+</head>
+
+<body>
+    <div class="nav-bar-content">
+        <!-- Start menubar -->
+        <%- include('./menuBar.ejs') %>
+            <div class="transport__admin">
+                <h3 class="transport-title">Phương Tiện</h3>
+                <div class="transport__admin--table">
+                    <div class="transport__admin--table--header">
+                        <div class="transport__admin--table--title">Mã</div>
+                        <div class="transport__admin--table--title">Tên phương tiện</div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <%- include('../partials/baseScript')%>
+</body>
+
+</html>
