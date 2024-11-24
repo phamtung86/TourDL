@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/transport.css">
     <%- include('../partials/head') %>
         <title>Phương tiện</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -17,13 +18,14 @@
                 <h3 class="transport-title">Phương Tiện</h3>
                 <div class="transport__admin--table">
                     <div class="transport__admin--table--header">
-                        <div class="transport__admin--table--title">Mã</div>
+                        <div class="transport__admin--table--title">Mã phương tiện</div>
                         <div class="transport__admin--table--title">Tên phương tiện</div>
                     </div>
                 </div>
             </div>
     </div>
     <%- include('../partials/baseScript')%>
+        <script type="module" src="/js/transport.js"></script>
 </body>
 
 </html>
