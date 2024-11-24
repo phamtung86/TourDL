@@ -18,16 +18,28 @@ const initWebRouters = (app) => {
     }
   });
   router.get('/Dashboard', adminController.getDashBoard);
+
+  router.get('/transport', (req, res) => {
+    return res.render('admin/transport.ejs');
+  });
+
   router.get('/voucher', (req, res) => {
     return res.render('admin/voucher.ejs');
   });
+
   router.get('/voucher/add', (req, res) => {
     return res.render('admin/voucherAdd.ejs');
   });
+
   router.get('/voucher/modify/:id', (req, res) => {
     const voucherId = req.params.id;
-    return res.render('admin/voucherModify.ejs',{voucherId});
+    return res.render('admin/voucherModify.ejs', { voucherId });
   });
+
+  router.get('/customer', (req, res) => {
+    return res.render('admin/customer.ejs');
+  });
+
   return app.use('/', router);
 };
 
