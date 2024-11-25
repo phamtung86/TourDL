@@ -5,8 +5,11 @@ import org.example.reponsitory.TourReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,11 +38,11 @@ public class TourService implements ITourService {
         }
         return false;
     }
+
+    // phan trang tour
     @Override
-    public List<Tour> getToursByPage(int page, int size){
-        PageRequest pageRequest = PageRequest.of(page -1,size);
-        Page<Tour> tourPage = tourReponsitory.findAll(pageRequest);
-        return tourPage.getContent();
+    public Page getPageTours(Pageable pageable){
+        return tourReponsitory.findAll(pageable);
     }
 
     // update tour by id
@@ -73,6 +76,19 @@ public class TourService implements ITourService {
             }
         }
         return listTourByName;
+    }
+
+    @Override
+    public Page<Tour> filterTours(Pageable pageable, BigDecimal minBudget,BigDecimal maxBudget, String departure, String destination, Integer tourType, Integer transportId) {
+        return tourReponsitory.filterTours(
+                pageable,
+                minBudget,
+                maxBudget,
+                departure,
+                destination,
+                tourType,
+                transportId
+        );
     }
 
 

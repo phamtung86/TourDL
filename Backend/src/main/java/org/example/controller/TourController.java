@@ -3,40 +3,43 @@ package org.example.controller;
 import org.example.modal.Tour;
 import org.example.service.ITourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/tours")
 public class TourController {
 
     @Autowired
     private ITourService tourService;
 
     // get all tour
-    @GetMapping("/tours")
+    @GetMapping("")
     public List<Tour> listAllTours() {
         return tourService.getAllTours();
     }
 
     // get tour by name
-    @GetMapping("/tours/{tourName}")
+    @GetMapping("/{tourName}")
     public List<Tour> getTourByName(@PathVariable("tourName") String tourName) {
         return tourService.getTourByName(tourName);
     }
 
     // add tour
-    @PostMapping("/tours")
+    @PostMapping("")
     public Tour addNewTour(@RequestBody Tour tour) {
         Tour newTour = tourService.createNewTour(tour);
         return new ResponseEntity<>(newTour, HttpStatus.CREATED).getBody();
     }
 
     // delete tour by id
-    @DeleteMapping("/tours/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTour(@PathVariable("id") String id) {
         boolean isDeleted = tourService.deleteTourById(id);
         if (isDeleted) {
@@ -46,19 +49,27 @@ public class TourController {
         }
     }
     // update tour by id
-    @PutMapping("/tours/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Tour> updateTour(@PathVariable("id") String id, @RequestBody Tour tourUpdate) {
 //        Tour updatedTour = tourService.updateTour(id, tourUpdate);
 //        return ResponseEntity.ok(updatedTour);
         return null;
     }
     //Phan trang tour
-    @GetMapping("/tours/page")
-    public List<Tour> getToursByPage(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "5") int size
-    ){
-        return tourService.getToursByPage(page,size);
+    @GetMapping("/page")
+    public Page<Tour> getToursByPage(Pageable pageable){
+        return tourService.getPageTours(pageable);
+    }
+
+    @GetMapping("/filter-tour")
+    public Page<Tour> filterTours(Pageable pageable,
+                                  @RequestParam(required = false) BigDecimal minBudget,
+                                  @RequestParam(required = false) BigDecimal maxBudget,
+                                  @RequestParam(required = false) String departure,
+                                  @RequestParam(required = false) String destination,
+                                  @RequestParam(required = false) Integer tourType,
+                                  @RequestParam(required = false) Integer transportId) {
+        return tourService.filterTours(pageable, minBudget, maxBudget, departure, destination, tourType, transportId);
     }
 
 }
