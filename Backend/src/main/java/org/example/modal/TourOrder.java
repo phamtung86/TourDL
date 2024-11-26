@@ -1,13 +1,20 @@
 package org.example.modal;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 
 @Entity
 @Table(name = "tour_order")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class TourOrder {
     private static final long serialVersionUID = 1L;
 
@@ -34,66 +41,5 @@ public class TourOrder {
     @JoinColumn(name = "tour_id", referencedColumnName = "id")
     private Tour tour;
 
-    public TourOrder() {
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Timestamp getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Timestamp orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public int getTotalMember() {
-        return totalMember;
-    }
-
-    public void setTotalMember(int totalMember) {
-        this.totalMember = totalMember;
-    }
-
-    public Tour getTour() {
-        return tour;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
-    }
-
-    @Override
-    public String toString() {
-        return "TourOrder{" +
-                "id=" + id +
-                ", totalPrice=" + getTotalPrice() +
-                ", note='" + note + '\'' +
-                ", orderDate=" + orderDate +
-                ", totalMember=" + totalMember +
-                ", tour=" + tour +
-                '}';
-    }
 }

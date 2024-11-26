@@ -1,32 +1,19 @@
 package org.example.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class UserDTO {
 
-    public String userName;
-    public String password;
+    private String oldPassword;
 
-    public UserDTO(String userName) {
-        this.userName = userName;
-    }
+    private  String token;
 
-    public UserDTO(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String newPassword;
 }

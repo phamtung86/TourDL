@@ -14,4 +14,5 @@ public interface UserReponsitory extends JpaRepository<Users, Integer> {
     Users findByEmailOrUsername(@Param("param") String param);
     boolean existsByEmail(String email);
     boolean existsByUserName(String userName);
+    Users findByEmail(String email);
 }

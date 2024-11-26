@@ -1,9 +1,17 @@
 package org.example.modal;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "`tour_detail`")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class TourDetail {
 
     @Id
@@ -30,87 +38,5 @@ public class TourDetail {
     @JoinColumn(name = "tour_id", referencedColumnName = "id")
     private Tour tour;
 
-    public TourDetail() {
-    }
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getSightSeeing() {
-        return sightSeeing;
-    }
-
-    public void setSightSeeing(String sightSeeing) {
-        this.sightSeeing = sightSeeing;
-    }
-
-    public String getCuisine() {
-        return cuisine;
-    }
-
-    public void setCuisine(String cuisine) {
-        this.cuisine = cuisine;
-    }
-
-    public String getSuitablePeople() {
-        return suitablePeople;
-    }
-
-    public void setSuitablePeople(String suitablePeople) {
-        this.suitablePeople = suitablePeople;
-    }
-
-    public String getTimeSuitable() {
-        return timeSuitable;
-    }
-
-    public void setTimeSuitable(String timeSuitable) {
-        this.timeSuitable = timeSuitable;
-    }
-
-    public String getTransport() {
-        return transport;
-    }
-
-    public void setTransport(String transport) {
-        this.transport = transport;
-    }
-
-    public String getSaleDescription() {
-        return saleDescription;
-    }
-
-    public void setSaleDescription(String saleDescription) {
-        this.saleDescription = saleDescription;
-    }
-
-    public Tour getTour() {
-        return tour;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
-    }
 }

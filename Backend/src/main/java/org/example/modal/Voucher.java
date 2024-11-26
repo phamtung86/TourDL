@@ -1,11 +1,19 @@
 package org.example.modal;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "voucher")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Voucher {
 
     @Column(name = "id")
@@ -30,74 +38,4 @@ public class Voucher {
 
     @Column(name = "expiry_date")
     private Timestamp expiryDate;
-    public Voucher() {}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getVoucherName() {
-        return voucherName;
-    }
-
-    public void setVoucherName(String voucherName) {
-        this.voucherName = voucherName;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Timestamp getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
-    }
-
-    public Timestamp getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(Timestamp expiryDate) {
-        this.expiryDate = expiryDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Voucher{" +
-                "id=" + id +
-                ", voucherName='" + voucherName + '\'' +
-                ", value=" + value +
-                ", type=" + type +
-                ", status=" + status +
-                ", startDate=" + startDate +
-                ", expiryDate=" + expiryDate +
-                '}';
-    }
 }

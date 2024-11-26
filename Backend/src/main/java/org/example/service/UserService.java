@@ -1,7 +1,9 @@
 package org.example.service;
 
 import org.example.exception.ExistedException;
+import org.example.modal.PasswordResetToken;
 import org.example.modal.Users;
+import org.example.reponsitory.PasswordTokenRepository;
 import org.example.reponsitory.UserReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,20 +13,23 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     @Autowired
     private UserReponsitory userReponsitory;
     private final PasswordEncoder passwordEncoder;
-
+    @Autowired
+    private PasswordTokenRepository passwordTokenRepository;
+    @Autowired
     public UserService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // get all user
+    @Override
     public ArrayList<Users> getAllUSer () {
         return (ArrayList<Users>) userReponsitory.findAll();
     }
-    // create user
+
+    @Override
     public void createNewUser(Users user) {
         // Kiểm tra xem id đã tồn tại trong cơ sở dữ liệu hay chưa
         if (userReponsitory.existsById(user.getId())) {
@@ -46,11 +51,12 @@ public class UserService {
         userReponsitory.save(user);
     }
 
-    public Users getUserByEmail(String email){
-        return userReponsitory.findByEmailOrUsername(email);
+    @Override
+    public Users findUserByEmail(String email){
+        return userReponsitory.findByEmail(email);
     }
 
-    // update user
+    @Override
     public boolean updateUser(int userId,Users user) {
         Optional<Users> userOpt = userReponsitory.findById(userId);
         if (userOpt.isPresent()) {
@@ -68,8 +74,21 @@ public class UserService {
         return false;
     }
 
-    // get total account user
+    @Override
     public int getTotalAccountUser() {
         return userReponsitory.totalAccountUser();
+    }
+
+    @Override
+    public Optional<Users> getUserByPasswordResetToken(String token) {
+        PasswordResetToken passwordResetToken = passwordTokenRepository.findByToken(token);
+        if (passwordResetToken != null) {
+            return Optional.ofNullable(passwordResetToken.getUser());
+        }
+        return Optional.empty();
+    }
+    public void changeUserPassword(Users user, String password) {
+        user.setPassWord(passwordEncoder.encode(password));
+        userReponsitory.save(user);
     }
 }

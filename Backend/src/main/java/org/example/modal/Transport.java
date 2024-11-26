@@ -1,9 +1,17 @@
 package org.example.modal;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "transport")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Transport {
     @Column(name = "id")
     @Id
@@ -13,30 +21,4 @@ public class Transport {
     @Column(name = "name")
     private String name;
 
-    public Transport() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Tranport{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }
