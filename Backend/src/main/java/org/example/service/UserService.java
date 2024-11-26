@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.apache.catalina.User;
+import org.example.exception.ExistedException;
 import org.example.modal.Users;
 import org.example.reponsitory.UserReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +25,29 @@ public class UserService {
         return (ArrayList<Users>) userReponsitory.findAll();
     }
     // create user
-    public boolean createNewUser(Users user) {
-        Optional<Users> userOpt = userReponsitory.findById(user.getId());
-        if(userOpt.isEmpty()){
-            user.setPassWord(passwordEncoder.encode(user.getPassWord()));
-            userReponsitory.save(user);
-            return true;
+    public void createNewUser(Users user) {
+        // Kiểm tra xem id đã tồn tại trong cơ sở dữ liệu hay chưa
+        if (userReponsitory.existsById(user.getId())) {
+            throw new ExistedException(user.getId() + " is exist");
         }
-        return false;
 
+        // Kiểm tra xem userName đã tồn tại hay chưa
+        if (userReponsitory.existsByUserName(user.getUserName())) {
+            throw new ExistedException(user.getUserName() + " is exist");
+        }
+
+        // Kiểm tra xem email đã tồn tại hay chưa
+        if (userReponsitory.existsByEmail(user.getEmail())) {
+            throw new ExistedException(user.getEmail() + " is exist");
+        }
+
+        // Nếu tất cả các điều kiện trên không gặp lỗi, lưu người dùng vào cơ sở dữ liệu
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+        userReponsitory.save(user);
     }
+
     public Users getUserByEmail(String email){
-        return userReponsitory.findByEmail(email);
+        return userReponsitory.findByEmailOrUsername(email);
     }
 
     // update user
