@@ -22,7 +22,7 @@ public class Tour {
     private String name;
 
     @Column(name = "price")
-    double price;
+    private double price;
 
     @Column(name = "image")
     private String imageLink;
@@ -35,9 +35,6 @@ public class Tour {
 
     @Column(name = "departure_point")
     private String departurePoint;
-
-    @Column(name = "slot")
-    private int slot;
 
     @OneToOne
     @JoinColumn(name = "transport_id", referencedColumnName = "id")
