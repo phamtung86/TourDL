@@ -91,5 +91,15 @@ public class TourService implements ITourService {
         );
     }
 
+    @Override
+    public Long totalTour() {
+        return tourReponsitory.count();
+    }
+
+    @Override
+    public List<Long> getTotalByType() {
+        return List.of();
+    }
+
 
 }

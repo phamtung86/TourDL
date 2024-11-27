@@ -71,6 +71,10 @@ public class TourController {
                                   @RequestParam(required = false) Integer transportId) {
         return tourService.filterTours(pageable, minBudget, maxBudget, departure, destination, tourType, transportId);
     }
+    @GetMapping("/total")
+    public long getTotal(){
+        return tourService.totalTour();
+    }
 
 }
 

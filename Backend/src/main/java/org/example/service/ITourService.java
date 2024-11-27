@@ -30,4 +30,6 @@ public interface ITourService {
 
     // bo loc tim kiem
     Page<Tour> filterTours(Pageable pageable, BigDecimal minBudget,BigDecimal maxBudget, String departure, String destination, Integer tourType, Integer transportId);
+    Long totalTour();
+    List<Long> getTotalByType();
 }

@@ -14,10 +14,11 @@ import java.sql.Timestamp;
 @Table(name = "password_reset_token")
 public class PasswordResetToken {
     public static final int EXPIRATION = 60 * 24;
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Column(name = "token")
     private String token;
 
     @OneToOne(targetEntity = Users.class, fetch = FetchType.EAGER)

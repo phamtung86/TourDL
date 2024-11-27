@@ -39,6 +39,9 @@ const initWebRouters = (app) => {
   router.get('/customer', (req, res) => {
     return res.render('admin/customer.ejs');
   });
+  router.get('/tour', (req, res) => {
+    return res.render('admin/tour.ejs');
+  });
 
   return app.use('/', router);
 };

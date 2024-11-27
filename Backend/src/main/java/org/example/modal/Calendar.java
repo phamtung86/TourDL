@@ -25,6 +25,8 @@ public class Calendar {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp startDate;
+    @Column(name = "slot")
+    private int slot;
     @Column(name = "voucher_id")
     private Integer voucherId;
     @ManyToOne()
