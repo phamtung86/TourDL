@@ -1,0 +1,64 @@
+.orderpage {
+  padding-top: 40px;
+  .orderpage__container {
+    .orderpage__header {
+      .orderpage__header-title {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $color-primary;
+        text-align: center;
+        font-size: $fs-large;
+        margin-bottom: 40px;
+      }
+      .infor-step {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        .infor-step__item {
+          margin: 0 40px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          &.active {
+            .infor-step__item-icon,
+            .infor-step__item-title {
+              color: $color-primary;
+            }
+          }
+          .infor-step__item-icon {
+            font-size: 4em;
+            color: #b1b1b1;
+            &.--arrow {
+              font-size: 2em;
+              margin-bottom: 14px;
+            }
+          }
+          .infor-step__item-title {
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: $fs-small;
+            text-transform: uppercase;
+            color: #b1b1b1;
+          }
+        }
+      }
+    }
+  }
+  .customer-info {
+    .customer-info__heading {
+      font-size: $fs-medium;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .customer-info__box {
+      .box__item {
+        .box__label {
+        }
+        .box__input {
+        }
+        .box__warning {
+        }
+      }
+    }
+  }
+}

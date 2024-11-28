@@ -51,6 +51,9 @@ const initWebRouters = (app) => {
   router.get('/tour', (req, res) => {
     return res.render('admin/tour.ejs');
   });
+  router.get('/order-tour', (req, res) => {
+    return res.render('customer/orderTour.ejs');
+  });
 
   // trang chi tiết đặt tour
   router.get('/detail', (req, res) => {

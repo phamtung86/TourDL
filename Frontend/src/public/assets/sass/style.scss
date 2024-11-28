@@ -10,7 +10,7 @@
 @import 'base/reset';
 
 // Layout
-// @import 'layout/header';
+@import 'layout/header';
 // @import 'layout/footer';
 
 // Components
@@ -18,4 +18,5 @@
 // Pages
 // Customer
 @import 'pages/customer/home';
+@import 'pages/customer/order';
 // Admin
