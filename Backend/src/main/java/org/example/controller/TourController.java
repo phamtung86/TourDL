@@ -1,9 +1,13 @@
 package org.example.controller;
 
+import org.example.dto.TourDTO;
 import org.example.modal.Tour;
 import org.example.service.ITourService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/tours")
@@ -18,7 +23,8 @@ public class TourController {
 
     @Autowired
     private ITourService tourService;
-
+    @Autowired
+	private ModelMapper modelMapper;
     // get all tour
     @GetMapping
     public List<Tour> listAllTours() {
@@ -57,9 +63,21 @@ public class TourController {
     }
     //Phan trang tour
     @GetMapping("/page")
-    public Page<Tour> getToursByPage(Pageable pageable){
-        return tourService.getPageTours(pageable);
+    public Page<TourDTO> getToursByPage(Pageable pageable) {
+        // Lấy page tours từ service
+        Page<Tour> pageTours = tourService.getPageTours(pageable);
+
+        // Ánh xạ từ List<Tour> sang List<TourDTO>
+        List<TourDTO> toursDTO = pageTours.getContent().stream()
+                .map(tour -> modelMapper.map(tour, TourDTO.class))
+                .collect(Collectors.toList());
+
+        // Tạo Page<TourDTO> từ List<TourDTO>
+        Page<TourDTO> dtoTours = new PageImpl<>(toursDTO, pageable, pageTours.getTotalElements());
+
+        return dtoTours;
     }
+
 
     @GetMapping("/filter-tour")
     public Page<Tour> filterTours(Pageable pageable,

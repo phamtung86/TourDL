@@ -1,5 +1,7 @@
 package org.example.modal;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,13 +38,15 @@ public class Tour {
     @Column(name = "departure_point")
     private String departurePoint;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transport_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "transport_id")
     private Transport transport;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tour_type_id", referencedColumnName = "id")
     private TourType tourType;
-
+    
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Calendar> calendar;
 
 }
