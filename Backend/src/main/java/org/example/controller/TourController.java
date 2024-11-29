@@ -20,19 +20,19 @@ public class TourController {
     private ITourService tourService;
 
     // get all tour
-    @GetMapping("")
+    @GetMapping
     public List<Tour> listAllTours() {
         return tourService.getAllTours();
     }
 
     // get tour by name
-    @GetMapping("/{tourName}")
-    public List<Tour> getTourByName(@PathVariable("tourName") String tourName) {
+    @GetMapping("/search")
+    public List<Tour> getTourByName(@RequestParam("tourName") String tourName) {
         return tourService.getTourByName(tourName);
     }
 
     // add tour
-    @PostMapping("")
+    @PostMapping
     public Tour addNewTour(@RequestBody Tour tour) {
         Tour newTour = tourService.createNewTour(tour);
         return new ResponseEntity<>(newTour, HttpStatus.CREATED).getBody();
