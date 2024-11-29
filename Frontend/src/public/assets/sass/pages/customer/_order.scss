@@ -14,6 +14,7 @@
         display: flex;
         align-items: flex-end;
         justify-content: center;
+        margin-bottom: 60px;
         .infor-step__item {
           margin: 0 40px;
           display: flex;
@@ -49,14 +50,51 @@
       font-size: $fs-medium;
       text-transform: uppercase;
       font-weight: bold;
+      margin-bottom: 18px;
     }
     .customer-info__box {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 18px 20px;
+      position: relative;
+      margin-bottom: 20px;
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top: 0%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #b1b1b1;
+      }
       .box__item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        $mb: 6px;
         .box__label {
+          font-size: $fs-small;
+          font-weight: bold;
+          margin-bottom: $mb;
         }
         .box__input {
+          width: 100%;
+          margin-bottom: $mb;
+          padding: 6px 0px;
+          border: none;
+          outline: none;
+          &::placeholder {
+            font-weight: normal;
+            font-size: 1em;
+          }
         }
         .box__warning {
+          font-size: $fs-small - 0.2em;
+          color: red;
+          font-weight: normal;
         }
       }
     }
