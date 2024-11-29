@@ -1,9 +1,9 @@
 .voucher__admin{
     width: 100%;
-    /* position: relative; */
+    padding: 10px;
 }
 .voucher__admin--table{
-    padding: 10px;
+    /* padding: 10px; */
 }
 .voucher__admin--table--header,
 .voucher__admin--table--rows{
@@ -19,15 +19,19 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    background-color: #9400d3;
+    background-color: #A52A2A;
     color: white;
+    opacity: 0.5;
+
 }
 .voucher__admin--table--header{
-    background-color: rgb(77, 190, 255);
+    background-color: #e8f5fe;
     position: sticky;
     top: 0;
     font-weight: 750;
     font-size: 18px;
+    color: white;
+
 }
 .voucher__admin--table--body{
     width: 100%;;
@@ -56,32 +60,37 @@ width: 150px;
 }
 
 .voucher__admin--overview{
-    width: 100%;
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: #bce3ff;
+    margin: auto;
+    border-radius: 10px;
+}
+.voucher__admin--report--title--icon{
+    display: flex;
+}
+.voucher__admin--report--title{
+    font-size: 16px;
 }
 .voucher__admin--report{
     height: 100px;
-    background-color: green;
+    background-color: rgb(255, 255, 255);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     width: 20%;
     border-radius: 10px;
-    color: white;
+
+
 }
 .voucher__admin--report:nth-child(2){
-    background-color: rgb(255, 187, 0);
+    background-color: rgb(255, 255, 255);
 }
 .voucher__admin--report:nth-child(3){
-    background-color: rgb(0, 153, 255);
-}
-.voucher__admin--report--title{
-    font-size: 25px;
-    font-weight: 600;
+    background-color: rgb(255, 255, 255);
 }
 .voucher__admin--report--value{
     font-size: 30px;
@@ -89,7 +98,7 @@ width: 150px;
 }
 .voucher__admin--function{
 display: flex;
-padding: 10px;
+margin: 20px 0px;
 }
 .action__search ,
 .box__action--button{

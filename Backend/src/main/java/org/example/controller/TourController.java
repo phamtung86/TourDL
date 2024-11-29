@@ -20,7 +20,7 @@ public class TourController {
     private ITourService tourService;
 
     // get all tour
-    @GetMapping("")
+    @GetMapping
     public List<Tour> listAllTours() {
         return tourService.getAllTours();
     }
