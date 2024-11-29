@@ -30,7 +30,6 @@ public class TourOrderService implements ITourOrderService {
     @Autowired
     private TourReponsitory tourReponsitory;
 
-    @Autowired
     public List<TourOrderDTO> getAllTourOrder() {
         List<TourOrderDTO> tourOrderDTOs = new ArrayList<>();
 

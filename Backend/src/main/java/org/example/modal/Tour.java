@@ -36,12 +36,13 @@ public class Tour {
     @Column(name = "departure_point")
     private String departurePoint;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transport_id", referencedColumnName = "id")
     private Transport transport;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_type_id", referencedColumnName = "id")
     private TourType tourType;
+
 
 }
