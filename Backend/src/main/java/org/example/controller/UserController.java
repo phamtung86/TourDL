@@ -135,4 +135,15 @@ public class UserController {
     private String getAppUrl(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/api/User" + request.getContextPath();
     }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable int id) {
+        Optional<Users> userOpt = userService.getUserById(id);
+        if (userOpt.isPresent()) {
+            return ResponseEntity.ok(userOpt.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse("User with ID " + id + " not found", null));
+        }
+    }
 }

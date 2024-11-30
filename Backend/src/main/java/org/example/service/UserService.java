@@ -91,4 +91,9 @@ public class UserService implements IUserService {
         user.setPassWord(passwordEncoder.encode(password));
         userReponsitory.save(user);
     }
+
+    @Override
+    public Optional<Users> getUserById(int id) {
+        return userReponsitory.findById(id);
+    }
 }

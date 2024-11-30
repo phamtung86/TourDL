@@ -21,4 +21,6 @@ public interface IUserService {
     int getTotalAccountUser();
     Optional<Users> getUserByPasswordResetToken(String token);
     void changeUserPassword(Users user, String password);
+
+    Optional<Users> getUserById(int id);
 }

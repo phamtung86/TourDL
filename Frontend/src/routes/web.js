@@ -36,9 +36,31 @@ const initWebRouters = (app) => {
     return res.render('admin/voucherModify.ejs', { voucherId });
   });
 
+  // trang quản lý tài khoản người dùng
   router.get('/customer', (req, res) => {
     return res.render('admin/customer.ejs');
   });
+
+  // Route để sửa thông tin người dùng
+  router.get('/user/edit/:id', (req, res) => {
+    const userId = req.params.id;
+    return res.render('admin/customerModify.ejs', { userId })
+  });
+
+  // trang chi tiết đặt tour
+  router.get('/detail', (req, res) => {
+    return res.render('customer/detail.ejs');
+  });
+
+  // trang đăng nhập 
+  router.get('/login', (req, res) => {
+    return res.render('customer/login.ejs');
+  });
+
+  // // trang đăng ký
+  // router.get('/register', (req, res) => {
+  //   return res.render('customer/register.ejs');
+  // });
 
   return app.use('/', router);
 };

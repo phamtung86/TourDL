@@ -1,0 +1,242 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+    line-height: 1.6rem
+}
+
+a {
+    color: black;
+    text-decoration: none
+}
+
+ul {
+    list-style: none
+}
+
+
+/* header */
+.header {
+    background-color: white;
+    box-shadow: 0px -10px 15px 2px #595050;
+    z-index: 10
+}
+
+.header .header__container .header__content {
+    padding: 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+
+.header .header__container .header__content .header__logo {
+    height: 66.6666666667px;
+    width: 200px
+}
+
+.header .header__container .header__content .header__logo .header__logo-link {
+    display: inline-block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%
+}
+
+.header .header__container .header__content .header__logo .header__logo-link .image__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain
+}
+
+/* .header .header__container .header__content .header__button .button__link {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-left: 10px;
+    border-radius: 4px;
+    background-color: #0b5da7;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #fff;
+    text-transform: uppercase;
+    font-size: 1.4em;
+    font-weight: bold
+}
+
+.header .header__container .header__content .header__button .button__link:hover {
+    color: #0b5da7;
+    background-color: #fff;
+    transition: 0.2s ease-in-out;
+    border: 1px solid #0b5da7
+} */
+
+/* end header */
+
+/* form container */
+/* #menu ul {
+    padding: 10px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    line-height: 70px;
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: rgb(37, 123, 197);
+}
+
+#menu ul li .a1 {
+    font-size: 30px;
+    padding-right: 800px;
+}
+
+#menu ul li .a1:hover {
+    color: cyan;
+} */
+
+/* #menu ul li .a1:active {
+    color: red;
+} */
+
+/* #menu ul li .a2 {
+    font-size: 40px;
+} */
+
+.login-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 87.5vh;
+    width: 100%;
+    /* background: url('/assets/image/travel_background.jpg');
+    background-position: center;
+    background-size: cover; */
+}
+
+.form-login {
+    padding: 35px 75px;
+    /* background-color: white; */
+    width: 100%;
+    max-width: 500px;
+    border-radius: 30px;
+    border: 2px #6267a5 solid;
+    /* background: transparent; */
+    /* backdrop-filter: blur(15px); */
+    /* box-shadow: 20px 20px 10px grey; */
+}
+
+h1 {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.lb-content {
+    font-size: 18px;
+    margin-bottom: 5px;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ip-cen {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+    margin-bottom: 20px;
+    /* background: #f2f3f5; */
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    outline: none;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.options {
+    display: flex;
+    max-height: 30px;
+    width: 100%;
+}
+
+.options .ip-check {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.ip-check_main {
+    display: flex;
+}
+
+.ip-check_main label {
+    font-size: 1.3rem;
+}
+
+.ip-check a {
+    font-size: 1.3rem;
+}
+
+.ip-check a:active {
+    color: blue;
+}
+
+.ip-box {
+    margin-right: 4px;
+}
+
+
+.btn-submit {
+    font-size: 2rem;
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+    border: 0;
+    outline: none;
+    display: block;
+    border-radius: 20px;
+    margin: 15px auto;
+    max-width: 300px;
+    background-color: red;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* .btn-submit:hover {
+    background-color: slateblue;
+    color: white;
+    font-size: 23px;
+} */
+
+.btn-submit:active {
+    transform: scale(0.90);
+}
+
+/* .ip-link {
+    margin-left: 113px;
+} */
+
+.btn-signin {
+    text-align: center;
+    font-size: 1.3333rem;
+}
+
+.btn-signin a {
+    text-decoration: none;
+}
+
+.btn-signin a:active {
+    color: blue;
+}
+
+/* end form container */
