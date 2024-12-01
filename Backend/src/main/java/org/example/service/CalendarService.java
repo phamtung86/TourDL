@@ -95,7 +95,7 @@ public class CalendarService implements ICalendarService {
     }
 
     @Override
-    public List<Timestamp> calendarInMonth(int month, int year, String tourId) {
+    public List<Object> calendarInMonth(int month, int year, String tourId) {
         if(calendarReponsitory.calendarInMonth(month,year,tourId).isEmpty()) throw new RuntimeException("Khong co lich nao trong thang nay!!");
         return calendarReponsitory.calendarInMonth(month,year,tourId);
 

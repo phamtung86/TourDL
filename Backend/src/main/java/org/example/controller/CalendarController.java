@@ -67,7 +67,7 @@ public class CalendarController {
     @GetMapping("/tours")
     public ResponseEntity<?> getCalendarsInMonth(@RequestParam("month") int month, @RequestParam("year") int year, @RequestParam("tourId") String tourId){
         try {
-            List<Timestamp> timestampList = calendarService.calendarInMonth(month,year,tourId);
+            List<Object> timestampList = calendarService.calendarInMonth(month,year,tourId);
             return new ResponseEntity<>(timestampList,HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);

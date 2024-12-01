@@ -5,10 +5,7 @@ import org.example.modal.Tour;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.sql.Timestamp;
-import java.util.Optional;
-
 @Data
 @NoArgsConstructor
 public class CalendarDTO {
@@ -24,8 +21,5 @@ public class CalendarDTO {
             this.voucherID = calendar.getVoucherId();
         }
     }
-	private int calendarId;
-	private Timestamp calendarStartDate;
-	private int calendarSlot;
 
 }

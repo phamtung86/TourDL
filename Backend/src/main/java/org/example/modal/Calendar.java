@@ -28,10 +28,8 @@ public class Calendar {
 
     @Column(name = "slot", nullable = false)
     private int slot;
-
     @Column(name = "voucher_id")
     private Integer voucherId;
-
     @ManyToOne
     @JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
     private Tour tour;

@@ -15,5 +15,5 @@ public interface ICalendarService {
     List<CalendarDTO> getCalendarsWithinThreeDaysFromNow();
     List<CalendarDTO> getCalendarsInCurrentAndNextMonth();
     List<Date> getAllStartedDate();
-    List<Timestamp> calendarInMonth(int month ,int year, String tourId);
+    List<Object> calendarInMonth(int month ,int year, String tourId);
 }
