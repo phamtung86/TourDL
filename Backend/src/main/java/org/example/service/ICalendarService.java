@@ -4,6 +4,7 @@ import org.example.dto.CalendarDTO;
 import org.example.modal.Calendar;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface ICalendarService {
@@ -14,4 +15,5 @@ public interface ICalendarService {
     List<CalendarDTO> getCalendarsWithinThreeDaysFromNow();
     List<CalendarDTO> getCalendarsInCurrentAndNextMonth();
     List<Date> getAllStartedDate();
+    List<Timestamp> calendarInMonth(int month ,int year, String tourId);
 }

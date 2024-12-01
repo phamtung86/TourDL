@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +94,12 @@ public class CalendarService implements ICalendarService {
         return null;
     }
 
+    @Override
+    public List<Timestamp> calendarInMonth(int month, int year, String tourId) {
+        if(calendarReponsitory.calendarInMonth(month,year,tourId).isEmpty()) throw new RuntimeException("Khong co lich nao trong thang nay!!");
+        return calendarReponsitory.calendarInMonth(month,year,tourId);
+
+    }
 
 
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -62,6 +63,16 @@ public class CalendarController {
             return new ResponseEntity<>(re.getMessage(),HttpStatus.NOT_FOUND);
 
         }
+    }
+    @GetMapping("/tours")
+    public ResponseEntity<?> getCalendarsInMonth(@RequestParam("month") int month, @RequestParam("year") int year, @RequestParam("tourId") String tourId){
+        try {
+            List<Timestamp> timestampList = calendarService.calendarInMonth(month,year,tourId);
+            return new ResponseEntity<>(timestampList,HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
 

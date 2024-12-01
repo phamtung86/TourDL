@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -20,6 +19,6 @@ public interface CalendarReponsitory extends JpaRepository<Calendar,Integer> {
     List<Calendar> getExpiredCalendars();
     @Query(value = "SELECT * FROM tour_calendar WHERE start_date >= CURRENT_DATE AND start_date < DATE_ADD(CURRENT_DATE, INTERVAL 2 MONTH)", nativeQuery = true)
     List<Calendar> getCalendarsInCurrentAndNextMonth();
-
-
+    @Query("SELECT c.startDate FROM Calendar c WHERE FUNCTION('MONTH',c.startDate) = :month AND FUNCTION('YEAR',c.startDate) = :year AND c.tour.id = :tourId")
+    List<Timestamp> calendarInMonth(@Param("month") int month, @Param("year") int year,@Param("tourId") String tourId);
 }
