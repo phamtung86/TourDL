@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/customerModify.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <%- include('../partials/head') %>
         <title>Sửa thông tin khách hàng</title>
 </head>
@@ -37,13 +38,14 @@
                         <input type="text" class="customer-input" id="customerAdrress" name="customerAdrress" required>
                     </div>
                     <div class="form-button">
-                        <button class="form-button-submit" type="submit">Lưu</button>
                         <button class="form-button-cancel" type="button" id="cancelAddVoucher">Hủy</button>
+                        <button class="form-button-submit" type="submit">Lưu</button>
                     </div>
                 </form>
             </div>
     </div>
     <%- include('../partials/baseScript')%>
+        <script type="module" src="/js/customerModify.js"></script>
 </body>
 
 </html>

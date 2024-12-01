@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- link css -->
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <!-- end link css -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Đăng nhập tài khoản</title>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="container-left">
+            <p>Chào mừng bạn đến với tour du lịch 3TV TRAVEL</p>
+            <span>
+                Nơi mang đến cho bạn một trải nghiệm tuyệt vời về thiên nhiên hùng vĩ và nền văn hóa đặc sắc.
+                <br>
+                Với hành trình độc đáo, chúng tôi cam kết sẽ mang đến cho bạn một kỳ nghỉ khó quên.
+            </span>
+        </div>
+        <div class="container-right">
+            <div class="logo">
+                <a href="#" class="logo-link">
+                    <img src="/assets/image/logo/logo-load.png" alt="logo" class="image__logo" />
+                </a>
+            </div>
+            <form>
+                <p>đăng nhập để trải nghiêm cùng chúng tôi</p>
+                <div class="form-value">
+                    <div class="inputbox">
+                        <label class="lb-content" for="username">Tên tài khoản</label> <br>
+                        <input class="ip-cen" type="text" id="username" name="username" required
+                            placeholder="Tên tài khoản">
+                    </div>
+                    <div class="inputbox">
+                        <label class="lb-content" for="password">Mật khẩu</label> <br>
+                        <input class="ip-cen" type="password" id="password" name="password" required
+                            placeholder="Mật khẩu">
+                    </div>
+                    <div class="inputcheck">
+                        <div class="input-remember">
+                            <input class="ip-box" type="checkbox" id="remember" name="remember">
+                            <label for="remember">Nhớ tài khoản</label>
+                        </div>
+                        <a class="ip-link" href="#">Quên mật khẩu?</a>
+                    </div>
+                    <button class="btn-submit" type="submit">ĐĂNG NHẬP</button>
+                    <p class="btn-signin">Bạn chưa có tài khoản? <a href="#">Đăng ký</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
