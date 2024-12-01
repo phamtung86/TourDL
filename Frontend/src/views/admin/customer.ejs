@@ -1,10 +1,23 @@
+<!-- 
+note :
+1 gọi api 
+2 render lên bảng
+3 hoàn thành các chức năng 
+4 thêm gì đc thêm nốt 
+
+các phần gồm có customer.ejs customerModifi.ejs và .css
+
+file web.js doasboardController.js 
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <title>Customer</title>
   <link rel="stylesheet" href="assets/css/customer.css">
-  <link rel="stylesheet" href="assets/css/customerModify.css">
+  <!-- <link rel="stylesheet" href="assets/css/customerModify.css"> -->
   <%- include('../partials/head') %>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
@@ -18,15 +31,15 @@
         <div class='user__admin--overview'>
           <div class='user__admin--report'>
             <div class='user__admin--report--title'>Tổng số nguời dùng</div>
-            <div class='user__admin--report--value total-user'></div>
+            <div class='user__admin--report--value total-user'>0</div>
           </div>
           <div class='user__admin--report'>
             <div class='user__admin--report--title'>Đang hoạt động</div>
-            <div class='user__admin--report--value active-user'></div>
+            <div class='user__admin--report--value active-user'>0</div>
           </div>
           <div class='user__admin--report'>
             <div class='user__admin--report--title'>Đã bị khóa</div>
-            <div class='user__admin--report--value locked-user'></div>
+            <div class='user__admin--report--value locked-user'>0</div>
           </div>
         </div>
 
@@ -72,6 +85,7 @@
       </div>
   </div>
   <%- include('../partials/baseScript')%>
+    <script type="module" src="/js/customer.js"></script>
 </body>
 
 </html>

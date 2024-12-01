@@ -26,6 +26,14 @@
     color: white;
 }
 
+.user__admin--table--row {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    /* border: 1px solid black; */
+    /* justify-content: center; */
+}
+
 .user__admin--table--header {
     background-color: rgb(77, 190, 255);
     position: sticky;
@@ -42,13 +50,21 @@
     justify-content: space-around;
 }
 
+.user__admin--table--title {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.user__admin--table--data {
+    font-size: 16px;
+}
+
 .user__admin--table--title,
 .user__admin--table--data {
     text-align: center;
     padding: 10px;
     width: 150px;
-    font-size: 17px;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .user__admin--table--rows:nth-child(even) {
