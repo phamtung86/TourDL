@@ -2,13 +2,15 @@
 // HTML
 const tourList = document.querySelector('.tour-list__item-container');
 // Other
-let PAGE_NUMBER = -1;
+let pageNumber = -1; // Tổng số trang
+let currentPageNumber = 1; // Số trang hiện tại
+let isLoadingAPI = false; // Cờ check đang load trang hay k
 // Function get api
 //* Lấy dữ liệu tours từ API
-let resTourList = async () => {
+let resTourList = async (pageNumber) => {
   try {
     let res = await axios.get(
-      `${URL_API_SERVER_V1}/tours/page?pageNumber=1&size=10&sort=id,asc`
+      `${URL_API_SERVER_V1}/tours/page?pageNumber=${pageNumber}&size=10&sort=id,asc`
     );
     res = res.data;
     return { status: 0, data: res };
@@ -16,16 +18,9 @@ let resTourList = async () => {
     return { status: 3, message: 'Hệ thống website hiện đang bị lỗi' };
   }
 };
-// Function render HTML
-let renderTourList = async () => {
-  let res = await resTourList();
-  if (res.status !== 0) {
-    alert(res.message);
-    tourList.innerHTML = ``;
-  }
-  let data = res.data;
-  PAGE_NUMBER = data.totalPages; // Gán số trang -> khi scroll gọi lại số lần api
-  let tours = data.content;
+
+//* Hàm xử lí chuyển đổi dữ liệu từ API -> HTML
+let generationToursHTML = (tours) => {
   let toursHTML = ``; // Biến để lưu trữ dữ liệu chuyển đổi HTML
   // Lưu dữ liệu tour từ API
   tours.forEach((tour) => {
@@ -145,6 +140,43 @@ let renderTourList = async () => {
   });
   tourList.innerHTML += toursHTML; // Hiển thị dữ liệu tour
 };
+// Function render HTML
+let renderTourList = async () => {
+  let res = await resTourList(1);
+  if (res.status !== 0) {
+    alert(res.message);
+    tourList.innerHTML = ``;
+  }
+  let data = res.data;
+  pageNumber = data.totalPages; // Gán số trang -> khi scroll gọi lại số lần api
+  let tours = data.content;
+  // Gọi hàm chuyển đổi dữ liệu từ API -> HTML
+  generationToursHTML(tours);
+};
+
+// Hàm render khi cuộn sử dụng theo infinite scroll
+let handleScrollRender = async () => {
+  if (isLoadingAPI) return;
+  if (currentPageNumber === pageNumber) {
+    window.removeEventListener('scroll', handleScrollRender);
+    return;
+  }
+  let heightPage = window.innerHeight * 2; // Lấy chiều cao của màn hình
+  let positionBottomTourList = tourList.getBoundingClientRect().bottom; // Lấy vị trí cuối cùng của tour trong list tour
+  if (positionBottomTourList <= heightPage && currentPageNumber < pageNumber) {
+    isLoadingAPI = true;
+    currentPageNumber++;
+    let res = await resTourList(currentPageNumber);
+    isLoadingAPI = false;
+    if (res.status !== 0) {
+      alert(res.message);
+    }
+    let data = res.data;
+    let tours = data.content;
+    // Gọi hàm chuyển đổi dữ liệu từ API -> HTML
+    generationToursHTML(tours);
+  }
+};
 
 // Hàm tải HTML vào trong trang website
 const loadHTML = async () => {
@@ -152,9 +184,7 @@ const loadHTML = async () => {
 };
 
 // Event action
-window.addEventListener('scroll', () => {
-  console.log(tourList.scrollTop + tourList.clientHeight);
-});
+window.addEventListener('scroll', handleScrollRender);
 
 // Hiển thị dữ liệu sau khi đã tải trang
 window.onload = () => {
