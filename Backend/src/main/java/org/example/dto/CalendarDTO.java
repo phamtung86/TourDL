@@ -9,17 +9,25 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 public class CalendarDTO {
-    private Tour tour;
-    private Timestamp startDate;
+    //  private
+//  private int calendarId;
+//    private Timestamp calendarStartDate ;
+//    private int calendarSlot
+//
+//
+//
+    private int calendarId;
+    private Timestamp calendarStartDate;
+    private int calendarSlot;
+    private String tourId;
     private int voucherID;
     public CalendarDTO(Calendar calendar){
-        this.tour = calendar.getTour();
-        this.startDate = calendar.getStartDate();
+        this.tourId = calendar.getTour().getId();
+        this.calendarStartDate = calendar.getStartDate();
         if (calendar.getVoucherId() == null){
             this.voucherID = 0;
         }else {
             this.voucherID = calendar.getVoucherId();
         }
     }
-
 }

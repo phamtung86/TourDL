@@ -1,51 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/customerModify.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <%- include('../partials/head') %>
-        <title>Sửa thông tin khách hàng</title>
-</head>
+    <link rel="stylesheet" href="/assets/css/customerModify.css" />
+    <title>Sửa thông tin khách hàng</title>
+  </head>
 
-<body>
+  <body>
     <div class="nav-bar-content">
-        <!-- Start menubar -->
-        <%- include('./menuBar.ejs') %>
-            <div class="modify__admin">
-                <h3 class="modify-title">Sửa thông tin khách hàng</h3>
-                <form class="modify-form">
-                    <div class="form-label-value">
-                        <label class="form-label" for="customerAccount">Tên tài khoản</label>
-                        <input type="text" class="customer-input" id="customerAccount" name="customerAccount" required>
-                    </div>
-                    <div class="form-label-value">
-                        <label class="form-label" for="customerName">Tên</label>
-                        <input type="text" class="customer-input" id="customerName" name="customerName" required>
-                    </div>
-                    <div class="form-label-value">
-                        <label class="form-label" for="customerEmail">Email</label>
-                        <input type="email" class="customer-input" id="customerEmail" name="customerEmail" required>
-                    </div>
-                    <div class="form-label-value">
-                        <label class="form-label" for="customerPhone">Số điện thoại</label>
-                        <input type="text" class="customer-input" id="customerPhone" name="customerPhone" required>
-                    </div>
-                    <div class="form-label-value">
-                        <label class="form-label" for="customerAdrress">Địa chỉ</label>
-                        <input type="text" class="customer-input" id="customerAdrress" name="customerAdrress" required>
-                    </div>
-                    <div class="form-button">
-                        <button class="form-button-cancel" type="button" id="cancelAddVoucher">Hủy</button>
-                        <button class="form-button-submit" type="submit">Lưu</button>
-                    </div>
-                </form>
-            </div>
+      <!-- Start menubar -->
+      <%- include('./menuBar.ejs') %>
+      <div class="modify__admin">
+        <h3 class="modify-title">Sửa thông tin khách hàng</h3>
+        <form class="modify-form">
+          <div class="form-label-value">
+            <label class="form-label" for="customerAccount"
+              >Tên tài khoản</label
+            >
+            <input
+              type="text"
+              class="customer-input"
+              id="customerAccount"
+              name="customerAccount"
+              required
+            />
+          </div>
+          <div class="form-label-value">
+            <label class="form-label" for="customerName">Tên</label>
+            <input
+              type="text"
+              class="customer-input"
+              id="customerName"
+              name="customerName"
+              required
+            />
+          </div>
+          <div class="form-label-value">
+            <label class="form-label" for="customerEmail">Email</label>
+            <input
+              type="email"
+              class="customer-input"
+              id="customerEmail"
+              name="customerEmail"
+              required
+            />
+          </div>
+          <div class="form-label-value">
+            <label class="form-label" for="customerPhone">Số điện thoại</label>
+            <input
+              type="text"
+              class="customer-input"
+              id="customerPhone"
+              name="customerPhone"
+              required
+            />
+          </div>
+          <div class="form-label-value">
+            <label class="form-label" for="customerAdrress">Địa chỉ</label>
+            <input
+              type="text"
+              class="customer-input"
+              id="customerAdrress"
+              name="customerAdrress"
+              required
+            />
+          </div>
+          <div class="form-button">
+            <button
+              class="form-button-cancel"
+              type="button"
+              id="cancelAddVoucher"
+            >
+              Hủy
+            </button>
+            <button class="form-button-submit" type="submit">Lưu</button>
+          </div>
+        </form>
+      </div>
     </div>
     <%- include('../partials/baseScript')%>
-        <script type="module" src="/js/customerModify.js"></script>
-</body>
-
+    <script type="module" src="/js/customerModify.js"></script>
+  </body>
 </html>
