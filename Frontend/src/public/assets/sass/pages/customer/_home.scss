@@ -186,10 +186,37 @@
             width: 340px;
             min-width: 340px;
             align-self: stretch;
+            position: relative;
             img.tour-img {
               width: 100%;
               height: 100%;
               object-fit: cover;
+            }
+            .tour-list__item-type {
+              font-size: $fs-small;
+              font-weight: bold;
+              display: inline-block;
+              padding: 8px 12px;
+              position: absolute;
+              $posi: 10px;
+              left: $posi;
+              bottom: $posi;
+              background-color: white;
+              cursor: default;
+              color: #fff;
+              border-radius: 4px;
+              &.--thrifty {
+                background-color: #228b22;
+              }
+              &.--good-price {
+                background-color: #ffd700;
+              }
+              &.--high {
+                background-color: #ff4500;
+              }
+              &.--standard {
+                background-color: #1e90ff;
+              }
             }
           }
           .tour-list__item-info {
