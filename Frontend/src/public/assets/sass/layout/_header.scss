@@ -48,3 +48,32 @@
     }
   }
 }
+
+.button-top {
+  position: fixed;
+  $posi: 40px;
+  bottom: $posi;
+  right: $posi;
+  width: $posi;
+  height: $posi;
+  background-color: $color-primary;
+  color: white;
+  border: 1px solid #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  &.active {
+    display: flex;
+  }
+  &:hover {
+    cursor: pointer;
+    background: #daefff;
+    border: 1px solid #0b5da7;
+    transition: ease-in-out 0.2s all;
+    color: $color-primary;
+  }
+  .button-top__item {
+    font-size: $fs-medium;
+  }
+}
