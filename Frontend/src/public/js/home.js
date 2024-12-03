@@ -151,6 +151,11 @@ const loadHTML = async () => {
   await renderTourList(); // Tải tours
 };
 
+// Event action
+window.addEventListener('scroll', () => {
+  console.log(tourList.scrollTop + tourList.clientHeight);
+});
+
 // Hiển thị dữ liệu sau khi đã tải trang
 window.onload = () => {
   loadHTML();
