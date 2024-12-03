@@ -48,7 +48,11 @@
       </div>
     </header>
     <!-- End Header -->
-
+    <div class="button-top">
+      <div class="button-top__item">
+        <i class="fa-solid fa-caret-up"></i>
+      </div>
+    </div>
     <!-- Body content -->
     <div class="homepage">
       <div class="grid wide homepage__content">
@@ -135,100 +139,31 @@
                   </div>
                 </div>
               </div>
-              <div class="tour-list__item-container">
-                <div class="tour-list__item">
-                  <div class="tour-list__item-img">
-                    <img
-                      src="/assets/image/tour/caurong.jpg"
-                      alt=""
-                      class="tour-img"
-                    />
-                    <span class="tour-list__item-type --thrifty">
-                      Tiết kiệm
-                    </span>
-                  </div>
-                  <div class="tour-list__item-info">
-                    <div class="tour-list__item--top">
-                      <h5 class="tour-list__item-heading">
-                        Đà nẵng - Rừng dừa bảy mẫu - Hội an Đà nẵng - Rừng dừa
-                        bảy mẫu - Hội an Đà nẵng - Rừng dừa bảy mẫu - Hội an
-                      </h5>
-                      <ul class="tour-list__item-box">
-                        <li class="tour-list__item-col">
-                          <span class="icon"
-                            ><i class="fa-solid fa-ticket"></i>
-                          </span>
-                          <span> Mã tour: </span>
-                          <span class="tour-list__item-value"> NDHAN5051 </span>
-                        </li>
-                        <li class="tour-list__item-col">
-                          <span class="icon">
-                            <i class="fa-solid fa-location-dot"></i>
-                          </span>
-                          <span> Khởi hành:</span>
-                          <span class="tour-list__item-value">
-                            TP. Hồ Chí Minh
-                          </span>
-                        </li>
-                        <li class="tour-list__item-col">
-                          <span class="icon">
-                            <i class="fa-solid fa-clock"></i>
-                          </span>
-                          <span> Thời gian:</span>
-                          <span class="tour-list__item-value"> 3D4Đ</span>
-                        </li>
-                        <li class="tour-list__item-col">
-                          <span class="icon">
-                            <i class="fa-solid fa-plane"></i>
-                          </span>
-                          <span> Phương tiện:</span>
-                          <span class="tour-list__item-value"> Máy bay</span>
-                        </li>
-                        <li class="tour-list__item-col --calendar">
-                          <span class="icon">
-                            <i class="fa-solid fa-calendar-days"></i>
-                          </span>
-                          <span>Ngày khởi hành:</span>
-                          <div class="tour-list__item-day-container">
-                            <span class="tour-list__button --left">
-                              <i class="fa-solid fa-caret-left"></i>
-                            </span>
-                            <ul class="tour-list__item-startDay">
-                              <li class="tour-list__item-day">28/11</li>
-                              <li class="tour-list__item-day">28/11</li>
-                              <li class="tour-list__item-day">28/11</li>
-                              <li class="tour-list__item-day">28/11</li>
-                              <li class="tour-list__item-day">28/11</li>
-                              <li class="tour-list__item-day">28/11</li>
-                              <li class="tour-list__item-day">28/11</li>
-                              <li class="tour-list__item-day">28/11</li>
-                            </ul>
-                            <span class="tour-list__button --right active">
-                              <i class="fa-solid fa-caret-right"></i>
-                            </span>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="tour-list__item--bottom">
-                      <p class="tour-list__item-price">
-                        <span>Giá từ:</span> <br />
-                        10.000.000 &#x20AB;
-                      </p>
-                      <a href="#" class="tour-list__item-btn-detail">
-                        Xem chi tiết
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <div class="tour-list__item-container"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- End body content -->
     <!-- Javascript -->
     <%- include('../partials/baseScriptFE')%>
     <script src="/js/home.js"></script>
+    <script>
+      let buttonTop = document.querySelector('.button-top');
+
+      buttonTop.addEventListener('click', () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      });
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          buttonTop.classList.add('active');
+        } else {
+          buttonTop.classList.remove('active');
+        }
+      });
+    </script>
   </body>
 </html>
