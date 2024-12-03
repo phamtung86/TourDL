@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import org.example.modal.Voucher;
 import org.example.reponsitory.VoucherReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,4 +68,10 @@ public class VoucherService implements IVoucherService {
     public int totalVouchers() {
         return voucherReponsitory.totalVouchers();
     }
+
+
+	@Override
+	public Page<Voucher> pageVouchers(Pageable pageable) {
+		return voucherReponsitory.findAll(pageable);
+	}
 }

@@ -11,7 +11,7 @@ let voucher = [];
 // Hàm lấy voucher theo ID
 async function fetchVoucherById(id) {
     try {
-        const response = await axios.get(`${URL_API_SERVER_V1}/vouchers/${id}`);
+        const response = await axios.get(`${URL_API_SERVER_V1}/vouchers/voucherId/${id}`);
         if (response.status === 200) {
             voucher = response.data;
             renderVoucher(voucher);

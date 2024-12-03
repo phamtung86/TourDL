@@ -1,5 +1,10 @@
 let vouchers = []; // Mảng lưu trữ dữ liệu voucher sau khi tải về từ API
 let voucherById = [];
+let currentPage = 1;
+let pageNumber = 1;
+let size = 5;
+let sort = "id,asc";
+var totalPages = 0;
 
 function changeTypeVoucher(type) {
     switch (type) {
@@ -19,24 +24,55 @@ function formatDate(dateString) {
 }
 
 // Hàm tải danh sách voucher từ API
-async function getVouchers() {
+async function getVouchers(pageNumber, size, sort) {
     try {
-        const response = await axios.get(`${URL_API_SERVER_V1}/vouchers`);
+        const response = await axios.get(`http://localhost:8080/api/v1/vouchers/page?pageNumber=${pageNumber}&size=${size}&sort=${sort}`);
         if (response.status === 200) {
-            vouchers = response.data;
+            vouchers = response.data.content;
             document.querySelector(".total-voucher").innerHTML = vouchers.length;
             if (vouchers.length > 0) {
                 renderVouchers(vouchers);
+                totalPages = response.data.totalPages;
                 countValidVouchers(vouchers);
                 countExpiredVouchers(vouchers);
+                getPaginationItems(pageNumber);  // Cập nhật phân trang sau khi tải dữ liệu
             } else {
-                alert("Không có voucher nào.");
+                alert("Lỗi khi lấy vouchers");
             }
         }
     } catch (error) {
         console.error("Lỗi khi tải danh sách voucher:", error);
     }
 }
+
+// Hàm xử lý phân trang
+const getPaginationItems = (currentPage) => {
+    const paginationItems = [];
+    if (totalPages <= 7) {
+        for (let i = 1; i <= totalPages; i++) {
+            paginationItems.push(i);
+        }
+    } else if (currentPage <= 4) {
+        paginationItems.push(1, 2, 3, 4, 5, "...", totalPages);
+    } else if (currentPage > totalPages - 4) {
+        paginationItems.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    } else {
+        paginationItems.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+    }
+
+    const pageNum = paginationItems.map((item) => {
+        return `
+            <div class="page-numbers">${item}</div>
+        `;
+    }).join("");
+    document.querySelector(".prev-page").insertAdjacentHTML('afterend', pageNum);
+};
+document.querySelectorAll('.page-numbers').forEach(button => {
+    button.addEventListener('click', function() {
+        const selectedPage = parseInt(this.innerText);  
+        getVouchers(selectedPage, size, sort);  
+    });
+});
 
 // Hàm đếm số lượng voucher còn hạn
 function countValidVouchers(vouchers) {
@@ -135,7 +171,7 @@ async function updateStatusVoucher(id, status) {
         const response = await axios.put(`${URL_API_SERVER_V1}/vouchers/${id}/${status}`);
         if (response.data) {
             alert("Cập nhật trạng thái thành công");
-            getVouchers(); // Tải lại danh sách voucher
+            getVouchers(pageNumber, size, sort); // Tải lại danh sách voucher
         } else {
             alert("Cập nhật trạng thái thất bại");
         }
@@ -147,7 +183,7 @@ async function updateStatusVoucher(id, status) {
 // Lấy voucher theo ID
 async function fetchVoucherById(id) {
     try {
-        const response = await axios.get(`${URL_API_SERVER_V1}/vouchers/${id}`);
+        const response = await axios.get(`${URL_API_SERVER_V1}/vouchers/voucherId/${id}`);
         if (response.status === 200) {
             voucherById = response.data;
         } else {
@@ -196,8 +232,8 @@ btnModify.addEventListener('click', () => {
     }
 });
 
-// Hàm gọi khi tải trang
-document.addEventListener('DOMContentLoaded', () => {
-    getVouchers(); // Tải danh sách voucher
-    handleAddNewVoucher(); // Gán sự kiện cho nút "Thêm mới"
-});
+// Khởi tạo ứng dụng
+window.onload = () => {
+    getVouchers(pageNumber, size, sort);
+    handleAddNewVoucher();
+};
