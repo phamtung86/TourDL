@@ -4,6 +4,8 @@ import org.example.modal.Voucher;
 import org.example.service.IVoucherService;
 import org.example.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class VoucherController {
         return voucherService.getVouchers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/voucherId/{id}")
     public Voucher getVoucherById(@PathVariable int id) {
         Optional<Voucher> isExists = voucherService.findVoucherById(id);
         if (isExists.isPresent()) {
@@ -66,6 +68,11 @@ public class VoucherController {
     @PutMapping("/{id}/{status}")
     public boolean updateStatusVoucher(@PathVariable("id") int id, @PathVariable("status") int status){
         return voucherService.updateStatusVoucher(id, status);
+    }
+    
+    @GetMapping("/page")
+    public Page<Voucher> pageVouchers(Pageable pageable){
+    	return voucherService.pageVouchers(pageable);
     }
 
 }

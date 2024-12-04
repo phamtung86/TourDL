@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class TourDTO {
 	private String tourId;
 
-	private String tourName;
+	private String name;
 
 	private double tourPrice;
 

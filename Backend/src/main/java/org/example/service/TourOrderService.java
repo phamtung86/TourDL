@@ -44,36 +44,41 @@ public class TourOrderService implements ITourOrderService {
 
     // lay doanh thu
     @Override
-    public double getRevenue(String type) {
+    public Double getRevenue(String type) {
         Timestamp startDate;
         Timestamp endDate;
 
         // Tính toán phạm vi ngày, tháng, năm tùy theo type
         String timeType = type.toUpperCase();
+        Double revenue = null;
         switch (timeType) {
             case "DAY":
                 // Chuyển LocalDate thành LocalDateTime và sau đó thành Timestamp
                 startDate = Timestamp.valueOf(LocalDate.now().atStartOfDay()); // Tính từ 00:00:00 của ngày hiện tại
                 endDate = Timestamp.valueOf(LocalDate.now().atTime(23, 59, 59)); // Tính đến 23:59:59 của ngày hiện tại
-                return tourOrderReponsitory.totalRevenueByDay(startDate, endDate);
+                revenue = tourOrderReponsitory.totalRevenueByDay(startDate, endDate);
+                return revenue != null ? revenue : 0;
 
             case "MONTH":
                 // Tính từ ngày đầu tháng đến ngày cuối tháng
                 startDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(1).atStartOfDay()); // Ngày đầu tháng
                 endDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(23, 59, 59)); // Ngày cuối tháng
-                return tourOrderReponsitory.totalRevenueByMonth(startDate, endDate);
+                revenue =  tourOrderReponsitory.totalRevenueByMonth(startDate, endDate);
+                return revenue != null ? revenue : 0;
 
             case "YEAR":
                 // Tính từ ngày đầu năm đến ngày cuối năm
                 startDate = Timestamp.valueOf(LocalDate.now().withDayOfYear(1).atStartOfDay()); // Ngày đầu năm
                 endDate = Timestamp.valueOf(LocalDate.now().withDayOfYear(LocalDate.now().lengthOfYear()).atTime(23, 59, 59)); // Ngày cuối năm
-                return tourOrderReponsitory.totalRevenueByYear(startDate, endDate);
+                revenue = tourOrderReponsitory.totalRevenueByYear(startDate, endDate);
+                return revenue != null ? revenue : 0;
 
             default:
                 // Trường hợp mặc định, tính doanh thu trong ngày
                 startDate = Timestamp.valueOf(LocalDate.now().atStartOfDay());
                 endDate = Timestamp.valueOf(LocalDate.now().atTime(23, 59, 59));
-                return tourOrderReponsitory.totalRevenueByDay(startDate, endDate);
+                revenue = tourOrderReponsitory.totalRevenueByDay(startDate, endDate);
+                return revenue != null ? revenue : 0;
         }
     }
 

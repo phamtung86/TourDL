@@ -9,7 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
-    <script src="https://kit.fontawesome.com/7769952fd3.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/7769952fd3.js" crossorigin="anonymous"></script>
   <%- include('../partials/head') %>
 </head>
 
@@ -22,21 +22,30 @@
           <div class='voucher__admin--report'>
             <div class="voucher__admin--report--title--icon">
               <div class='voucher__admin--report--title'>Tổng số voucher</div>
-              <i class="fa-solid fa-calendar-minus" style="color: #74C0FC;"></i>
+              <div class="div__icon__report--total">
+                <i class="fa-solid fa-ticket-simple" style="color: #74C0FC;"></i>
+              </div>
             </div>
             <div class='voucher__admin--report--value total-voucher'></div>
           </div>
           <div class='voucher__admin--report'>
             <div class="voucher__admin--report--title--icon">
               <div class='voucher__admin--report--title'>Đã hết hạn</div>
-              <i class="fa-solid fa-calendar-minus" style="color: #74C0FC;"></i>
+              <div class="div__icon__report--expiry">
+                <i class="fa-regular fa-calendar-xmark" style="color: #FFD43B;"></i>
+              </div>
             </div>
             <div class='voucher__admin--report--value expiry-voucher'>
 
             </div>
           </div>
           <div class='voucher__admin--report'>
-            <div class='voucher__admin--report--title'>Đang mở</div>
+            <div class="voucher__admin--report--title--icon">
+              <div class='voucher__admin--report--title'>Đang mở</div>
+              <div class="div__icon__report--open">
+                <i class="fa-regular fa-calendar-check" style="color: #29a37e;"></i>
+              </div>
+            </div>
             <div class='voucher__admin--report--value valid-voucher'>
 
             </div>
@@ -50,16 +59,16 @@
           <div class='box__action--button'>
             <span class='box__action--title'>Hành động</span>
             <button class='action__button action__add' data-link="/voucher/add">
-              <FontAwesomeIcon icon={faPlus} /> Thêm mới
+              <i class="fa-solid fa-plus"></i> Thêm mới
             </button>
             <button class='action__button action__lock' data-link="/voucher/modify">
-              <FontAwesomeIcon icon={faPenToSquare} /> Sửa
+              <i class="fa-solid fa-pen-to-square"></i> Sửa
             </button>
             <button class='action__button action__delete'>
-              <FontAwesomeIcon icon={faLock} /> Khóa
+              <i class="fa-solid fa-lock"></i> Khóa
             </button>
             <button class='action__button action__refresh'>
-              <FontAwesomeIcon icon={faRotate} /> Làm mới
+              <i class="fa-solid fa-arrows-rotate"></i> Làm mới
             </button>
           </div>
         </div>
@@ -74,7 +83,11 @@
             <div class="voucher__admin--table--title">Ngày hết hạn</div>
           </div>
           <div class='voucher__admin--table--body'>
+            <!-- hien thi data voucher -->
           </div>
+        </div>
+        <div class="pagination">
+          <!-- Noi hien thi nut phan trang  -->
         </div>
       </div>
   </div>

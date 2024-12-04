@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ITourOrderService {
     List<TourOrderDTO> getAllTourOrder();
-    double getRevenue(String type);
+    Double getRevenue(String type);
     List<TourOrderDTO> listTopTours(String type);
     int countTourOrderByMonth();
     void createNewTourOrder(TourOrder tourOrder, String tourId);

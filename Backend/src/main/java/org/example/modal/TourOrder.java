@@ -24,7 +24,7 @@ public class TourOrder {
     private int id;
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private Double totalPrice;
 
     @Column(name = "note")
     private String note;
