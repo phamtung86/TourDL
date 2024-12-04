@@ -63,24 +63,50 @@
               <div class="tour-filter__form">
                 <h5 class="tour-filter__title">Ngân sách:</h5>
                 <ul class="tour-filter__box">
-                  <li class="tour-filter__option">Dưới 5 triệu</li>
-                  <li class="tour-filter__option">Từ 5 - 10 triệu</li>
-                  <li class="tour-filter__option">Từ 10 - 20 triệu</li>
-                  <li class="tour-filter__option">Trên 20 triệu</li>
+                  <li
+                    class="tour-filter__option"
+                    data-minBudget="0"
+                    data-maxBudget="5000000"
+                  >
+                    Dưới 5 triệu
+                  </li>
+                  <li
+                    class="tour-filter__option"
+                    data-minBudget="5000000"
+                    data-maxBudget="10000000"
+                  >
+                    Từ 5 - 10 triệu
+                  </li>
+                  <li
+                    class="tour-filter__option"
+                    data-minBudget="10000000"
+                    data-maxBudget="20000000"
+                  >
+                    Từ 10 - 20 triệu
+                  </li>
+                  <li class="tour-filter__option" data-minBudget="20000000">
+                    Trên 20 triệu
+                  </li>
                 </ul>
                 <h5 class="tour-filter__title">Điểm khởi hành:</h5>
-                <div class="tour-filter__box-input">
+                <div class="tour-filter__box-input province">
                   <span>Tất cả</span>
                   <span class="icon">
                     <i class="fa-solid fa-chevron-up"></i>
                   </span>
+                  <ul class="tour-filter__option-box">
+                    <li class="tour-filter__option-item active">Tất cả</li>
+                  </ul>
                 </div>
                 <h5 class="tour-filter__title">Điểm đến:</h5>
-                <div class="tour-filter__box-input">
-                  <span>Đà nẵng</span>
+                <div class="tour-filter__box-input province">
+                  <span>Tất cả</span>
                   <span class="icon">
                     <i class="fa-solid fa-chevron-up"></i>
                   </span>
+                  <ul class="tour-filter__option-box">
+                    <li class="tour-filter__option-item active">Tất cả</li>
+                  </ul>
                 </div>
                 <h5 class="tour-filter__title">Ngày đi:</h5>
                 <div class="tour-filter__box-input">
