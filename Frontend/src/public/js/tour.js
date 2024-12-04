@@ -37,18 +37,18 @@ function renderTours(data) {
     const htmlContainer = document.querySelector('.voucher__admin--table--body');
     const html = data.map((tour) => {
         return `
-            <div class=voucher__admin--table--rows key=${tour.id}>
+            <div class=voucher__admin--table--rows key=${tour.tourId}>
                 <div class="voucher__admin--table--data">
-                    <input type="radio" name='select__voucher' id="voucher-id" value="${tour.id}" />
+                    <input type="radio" name='select__voucher' id="voucher-id" value="${tour.tourId}" />
                 </div>
-                <div class="voucher__admin--table--data">${tour.id}</div>
+                <div class="voucher__admin--table--data">${tour.tourId}</div>
                 <div class="voucher__admin--table--data">${tour.name}</div>
-                <div class="voucher__admin--table--data"><img src="${tour.imageLink}"></div>
-                <div class="voucher__admin--table--data">${tour.price}</div>
-                <div class="voucher__admin--table--data">${tour.departurePoint}</div>
-                <div class="voucher__admin--table--data">${tour.destination}</div>
+                <div class="voucher__admin--table--data"><img src="${tour.tourImageLink}"></div>
+                <div class="voucher__admin--table--data">${tour.tourPrice}</div>
+                <div class="voucher__admin--table--data">${tour.tourDeparturePoint}</div>
+                <div class="voucher__admin--table--data">${tour.tourDestination}</div>
                 <div class="voucher__admin--table--data">${tour.transport.name}</div>
-                <div class="voucher__admin--table--data">${tour.tourType.name}</div>
+                <div class="voucher__admin--table--data">${tour.tourType.tourTypeName}</div>
             </div>
         `;
     }).join('');
@@ -68,7 +68,7 @@ function prePage(){
 // Hàm xử lý tìm kiếm tour
 function searchTours(keyword) {
     const filteredTours = tours.filter(tour =>
-        tour.id.toString().includes(keyword) || // Tìm theo mã
+        tour.tourId.toString().includes(keyword) || // Tìm theo mã
         tour.name.toLowerCase().includes(keyword.toLowerCase()) // Tìm theo tên
     );
     renderTours(filteredTours); // Render kết quả tìm kiếm

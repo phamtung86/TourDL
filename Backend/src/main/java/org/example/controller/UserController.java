@@ -93,7 +93,7 @@ public class UserController {
 
         // Gửi email chứa token reset mật khẩu
         SimpleMailMessage mail = sendMailService.constructResetTokenEmail(
-                getAppUrl(request), request.getLocale(), token.getToken(), user);
+                "http://localhost:3124", request.getLocale(), token.getToken(), user);
         mailSender.send(mail);
 
         // Trả về thông báo thành công

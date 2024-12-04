@@ -1,4 +1,5 @@
 // Lấy tất cả các nút điều hướng
+var link = "/dashboard"
 let btnNavLink = document.querySelectorAll('.nav__link');
 
 // Gán sự kiện click cho các nút điều hướng
@@ -7,7 +8,7 @@ btnNavLink.forEach((item) => {
     event.stopPropagation();
     
     // Lấy đường dẫn từ thuộc tính data-link
-    let link = event.currentTarget.dataset.link;
+    link = event.currentTarget.dataset.link;
 
     // Lưu đường dẫn vào localStorage để duy trì trạng thái checked
     localStorage.setItem('activeLink', link);
