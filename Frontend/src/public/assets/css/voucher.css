@@ -3,7 +3,8 @@
     padding: 10px;
 }
 .voucher__admin--table{
-    /* padding: 10px; */
+   max-height: 500px;
+   overflow-y: auto;
 }
 .voucher__admin--table--header,
 .voucher__admin--table--rows{
@@ -31,14 +32,13 @@
     font-weight: 750;
     font-size: 18px;
     border-radius: 10px 10px 0px 0px;
+    z-index: 1;
 }
 .voucher__admin--table--body{
-    width: 100%;;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+    min-height: 400px;
 }
 .voucher__admin--table--title,
 .voucher__admin--table--data{
@@ -194,6 +194,10 @@ width: 150px;
 .action__button{
     cursor: pointer;
 }
+.pagination{
+    position: sticky;
+    bottom: 0;
+}
 .page-item{
     width: 60%;
     margin: auto;
@@ -208,4 +212,32 @@ width: 150px;
     padding: 10px;
     font-size: 15px;
     font-weight: 550;
+    border-radius: 10px;
+    background-color: #009efb;
+    cursor: pointer;
+    color: white;
+}
+.page-numbers{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+.page-number-active{
+    background-color: #009efb;
+    color: white;
+}
+
+.page-item{
+    background-color: rgba(196, 196, 196, 0.678);
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.disabled{
+    cursor: not-allowed;
+    color: black;
+    opacity: 0.5;
 }

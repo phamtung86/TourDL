@@ -1,7 +1,7 @@
 let vouchers = []; // Mảng lưu trữ dữ liệu voucher sau khi tải về từ API
 let voucherById = [];
 let pageCurrent = 1;
-let size = 5;
+let size = 10;
 let sort = "id,asc";
 let totalPages = 0;
 
@@ -30,8 +30,10 @@ async function getVouchers(pageNumber, size, sort) {
         const response = await axios.get(`http://localhost:8080/api/v1/vouchers/page?pageNumber=${pageNumber}&size=${size}&sort=${sort}`);
         if (response.status === 200) {
             vouchers = response.data.content;
+            console.log(response);
+            
             totalPages = response.data.totalPages;
-            document.querySelector(".total-voucher").innerHTML = vouchers.length;
+            document.querySelector(".total-voucher").innerHTML = response.data.totalElements;
 
             if (vouchers.length > 0) {
                 renderVouchers(vouchers);
@@ -69,7 +71,7 @@ const getPaginationItems = (currentPage, totalPages) => {
     // Tạo HTML
     let pageHtml = `
         <div class="page-item">
-            <button class="prev-page" ${currentPage === 1 ? "disabled" : ""}>Trước</button>
+            <button class="prev-page ${currentPage === 1 ? "disabled" : ""}">Trước</button>
     `;
 
     paginationItems.forEach((item) => {
@@ -77,14 +79,14 @@ const getPaginationItems = (currentPage, totalPages) => {
             pageHtml += `<span class="dots">${item}</span>`;
         } else {
             pageHtml += ` 
-                <button class="page-numbers ${item === currentPage ? "active" : ""}" data-page="${item}">
+                <button class="page-numbers ${item === currentPage ? "page-number-active" : ""}" data-page="${item}">
                     ${item}
                 </button>`;
         }
     });
 
     pageHtml += `
-            <button class="next-page" ${currentPage === totalPages ? "disabled" : ""}>Tiếp</button>
+            <button class="next-page ${currentPage === totalPages ? "disabled" : ""}" >Tiếp</button>
         </div>
     `;
 
@@ -218,7 +220,7 @@ async function updateStatusVoucher(id, status) {
         const response = await axios.put(`${URL_API_SERVER_V1}/vouchers/${id}/${status}`);
         if (response.data) {
             alert("Cập nhật trạng thái thành công");
-            getVouchers(currentPage, size, sort); // Tải lại danh sách voucher
+            getVouchers(pageCurrent, size, sort); // Tải lại danh sách voucher
         } else {
             alert("Cập nhật trạng thái thất bại");
         }
@@ -240,6 +242,37 @@ async function fetchVoucherById(id) {
         console.error("Lỗi khi lấy voucher:", error);
     }
 }
+
+// Xử lý khi nhấn nút "Làm mới"
+const btnRefresh = document.querySelector('.action__refresh');
+btnRefresh.addEventListener('click', async () => {
+    const selectedRadio = document.querySelector('input[name="select__voucher"]:checked');
+    if (selectedRadio) {
+        const selectedVoucherId = selectedRadio.value;
+        await fetchVoucherById(selectedVoucherId); // Chờ khi dữ liệu được lấy về
+        if (checkExpiryVoucher(voucherById.expiryDate)) {
+            updateStatusVoucher(selectedVoucherId, 1); // Cập nhật trạng thái voucher thành "hoạt động"
+        } else {
+            if (window.confirm("Voucher đã hết hạn. Bạn cần gia hạn thêm mới có thể làm mới voucher")) {
+                window.location.href = `/voucher/modify/${selectedVoucherId}`;
+            }
+        }
+    } else {
+        alert("Bạn chưa chọn voucher để làm mới");
+    }
+});
+
+// Xử lý khi nhấn nút "Sửa"
+const btnModify = document.querySelector(".action__lock");
+btnModify.addEventListener('click', () => {
+    const selectedRadio = document.querySelector('input[name="select__voucher"]:checked');
+    if (selectedRadio) {
+        const selectedVoucherId = selectedRadio.value;
+        window.location.href = `/voucher/modify/${selectedVoucherId}`;
+    } else {
+        alert("Bạn chưa chọn voucher để sửa");
+    }
+});
 
 // Kiểm tra hết hạn voucher
 function checkExpiryVoucher(expiryDate) {
