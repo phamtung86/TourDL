@@ -1,10 +1,57 @@
 // Variables
 // HTML
 const tourList = document.querySelector('.tour-list__item-container');
+const totalTours = document.querySelector('.tour-list__text');
+const sortToursButton = document.querySelector('.tour-list__sort-box');
+const sortDropDown = document.querySelector('.tour-list__box-option');
+const optionProvinces = document.querySelectorAll('.tour-filter__option-box');
+const tourFilterBox = document.querySelectorAll(
+  '.tour-filter__box-input.province'
+);
+const tourFilterDropdown = document.querySelectorAll(
+  '.tour-filter__option-box'
+);
+
 // Other
 let pageNumber = -1; // Tổng số trang
 let currentPageNumber = 1; // Số trang hiện tại
 let isLoadingAPI = false; // Cờ check đang load trang hay k
+
+// Function event click
+let toggleEventButton = (button, dropDown, idButton, classDropdown) => {
+  // Event
+  button.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropDown.classList.toggle('active');
+  });
+
+  document.addEventListener('click', (event) => {
+    if (
+      !event.target.matches(`.${idButton}`) &&
+      !event.target.closest(`.${classDropdown}`)
+    ) {
+      dropDown.classList.remove('active');
+    }
+  });
+};
+
+// Gán event click
+toggleEventButton(
+  sortToursButton,
+  sortDropDown,
+  sortToursButton.classList[0],
+  sortDropDown.classList[0]
+);
+
+tourFilterBox.forEach((filterBox, index) => {
+  toggleEventButton(
+    filterBox,
+    tourFilterDropdown[index],
+    filterBox.classList[0],
+    tourFilterDropdown[index].classList[0]
+  );
+});
+
 // Function get api
 //* Lấy dữ liệu tours từ API
 let resTourList = async (pageNumber) => {
@@ -14,6 +61,24 @@ let resTourList = async (pageNumber) => {
     );
     res = res.data;
     return { status: 0, data: res };
+  } catch (error) {
+    return { status: 3, message: 'Hệ thống website hiện đang bị lỗi' };
+  }
+};
+
+// Gọi API tỉnh thành miễn phí từ bên cung cấp thứ 3
+let resProvinces = async () => {
+  try {
+    let res = await axios.get(
+      `https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1`
+    );
+    return {
+      status: 0,
+      data: {
+        size: res.data.data.nItems,
+        provinces: res.data.data.data,
+      },
+    };
   } catch (error) {
     return { status: 3, message: 'Hệ thống website hiện đang bị lỗi' };
   }
@@ -70,8 +135,7 @@ let generationToursHTML = (tours) => {
         <div class="tour-list__item-info">
           <div class="tour-list__item--top">
             <h5 class="tour-list__item-heading">
-              Đà nẵng - Rừng dừa bảy mẫu - Hội an Đà nẵng - Rừng dừa
-              bảy mẫu - Hội an Đà nẵng - Rừng dừa bảy mẫu - Hội an
+              ${tour.name}
             </h5>
             <ul class="tour-list__item-box">
               <li class="tour-list__item-col">
@@ -140,6 +204,19 @@ let generationToursHTML = (tours) => {
   });
   tourList.innerHTML += toursHTML; // Hiển thị dữ liệu tour
 };
+
+let generationProvincesHTML = (dataProvinces) => {
+  let provinces = ``;
+  dataProvinces.forEach((province) => {
+    provinces += `
+    <li class="tour-filter__option-item">${province.name}</li>
+    `;
+  });
+  optionProvinces.forEach((listProvinces) => {
+    listProvinces.innerHTML += provinces;
+  });
+};
+
 // Function render HTML
 let renderTourList = async () => {
   let res = await resTourList(1);
@@ -149,9 +226,19 @@ let renderTourList = async () => {
   }
   let data = res.data;
   pageNumber = data.totalPages; // Gán số trang -> khi scroll gọi lại số lần api
+  totalTours.innerHTML = `Chúng tôi tìm thấy <span>${data.totalElements}</span> chương trình tour cho quý khách`;
   let tours = data.content;
   // Gọi hàm chuyển đổi dữ liệu từ API -> HTML
   generationToursHTML(tours);
+};
+
+let renderProvinces = async () => {
+  let res = await resProvinces();
+  if (res.status !== 0) {
+    alert(res.message);
+  }
+  res = res.data;
+  generationProvincesHTML(res.provinces);
 };
 
 // Hàm render khi cuộn sử dụng theo infinite scroll
@@ -181,6 +268,7 @@ let handleScrollRender = async () => {
 // Hàm tải HTML vào trong trang website
 const loadHTML = async () => {
   await renderTourList(); // Tải tours
+  await renderProvinces(); // Tải danh sách tỉnh thành
 };
 
 // Event action
