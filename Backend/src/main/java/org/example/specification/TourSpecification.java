@@ -93,7 +93,7 @@ public class TourSpecification {
 				where = where.and(startDateCondition);
 			}
 		}
-		return null;
+		return where;
 	}
 }
 
