@@ -12,6 +12,16 @@ const tourFilterDropdown = document.querySelectorAll(
   '.tour-filter__option-box'
 );
 
+const tourFilterOptionBudget = document.querySelectorAll(
+  '.tour-filter__option.budget'
+);
+const tourFilterOptionType = document.querySelectorAll(
+  '.tour-filter__option.type'
+);
+const tourFilterOptionTransport = document.querySelectorAll(
+  '.tour-filter__option.transport'
+);
+
 // Other
 let pageNumber = -1; // Tổng số trang
 let currentPageNumber = 1; // Số trang hiện tại
@@ -35,22 +45,63 @@ let toggleEventButton = (button, dropDown, idButton, classDropdown) => {
   });
 };
 
-// Gán event click
-toggleEventButton(
-  sortToursButton,
-  sortDropDown,
-  sortToursButton.classList[0],
-  sortDropDown.classList[0]
-);
-
-tourFilterBox.forEach((filterBox, index) => {
+const loadEventHTML = () => {
+  // Gán event click
   toggleEventButton(
-    filterBox,
-    tourFilterDropdown[index],
-    filterBox.classList[0],
-    tourFilterDropdown[index].classList[0]
+    sortToursButton,
+    sortDropDown,
+    sortToursButton.classList[0],
+    sortDropDown.classList[0]
   );
-});
+
+  tourFilterBox.forEach((filterBox, index) => {
+    toggleEventButton(
+      filterBox,
+      tourFilterDropdown[index],
+      filterBox.classList[0],
+      tourFilterDropdown[index].classList[0]
+    );
+  });
+  tourFilterOptionBudget.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) {
+        e.target.classList.remove('active');
+      } else {
+        tourFilterOptionBudget.forEach((button) => {
+          button.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      }
+    });
+  });
+  tourFilterOptionTransport.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) {
+        e.target.classList.remove('active');
+      } else {
+        tourFilterOptionTransport.forEach((button) => {
+          button.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      }
+    });
+  });
+  tourFilterOptionType.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) {
+        e.target.classList.remove('active');
+      } else {
+        tourFilterOptionType.forEach((button) => {
+          button.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      }
+    });
+  });
+};
 
 // Function get api
 //* Lấy dữ liệu tours từ API
@@ -100,6 +151,11 @@ let generationToursHTML = (tours) => {
         .toString()
         .padStart(2, '0')}/${month.toString().padStart(2, '0')}</li>`;
     });
+    // Đổi icon với mỗi phương tiện
+    let transport =
+      tour.transport.name === 'Máy bay'
+        ? `<i class="fa-solid fa-plane"></i>`
+        : `<i class="fa-solid fa-bus"></i>`;
     // Xác định loại tour để hiển thị
     tourType = tour.tourType.tourTypeId;
     tourTypeClass = '';
@@ -164,7 +220,8 @@ let generationToursHTML = (tours) => {
               </li>
               <li class="tour-list__item-col">
                 <span class="icon">
-                  <i class="fa-solid fa-plane"></i>
+                  
+                  ${transport}
                 </span>
                 <span> Phương tiện:</span>
                 <span class="tour-list__item-value"> ${tour.transport.name}
@@ -277,4 +334,5 @@ window.addEventListener('scroll', handleScrollRender);
 // Hiển thị dữ liệu sau khi đã tải trang
 window.onload = () => {
   loadHTML();
+  loadEventHTML();
 };
