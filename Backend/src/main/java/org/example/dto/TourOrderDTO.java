@@ -1,4 +1,5 @@
 package org.example.dto;
+
 import org.example.modal.Tour;
 import org.example.modal.TourOrder;
 
@@ -7,106 +8,107 @@ import java.text.DecimalFormat;
 import java.util.Date;
 
 public class TourOrderDTO {
-    private int id;
-    private String totalPrice;
-    private String note;
-    private Timestamp orderDate;
-    private int totalMember;
-    private Tour tour;
-    private long quantity;
-    private int month;
-    // Constructor để chuyển từ TourOrder sang TourOrderDTO
-    public TourOrderDTO(TourOrder tourOrder) {
-        this.id = tourOrder.getId();
-        DecimalFormat df = new DecimalFormat("#");
-        this.totalPrice = df.format(tourOrder.getTotalPrice());
-        this.note = tourOrder.getNote();
-        this.orderDate = tourOrder.getOrderDate();
-        this.totalMember = tourOrder.getTotalMember();
-        this.tour = tourOrder.getTour();
-    }
+	private int id;
+	private String totalPrice;
+	private String note;
+	private Timestamp orderDate;
+	private int totalMember;
+	private Tour tour;
+	private long quantity;
+	private int month;
 
-    public TourOrderDTO(int id,long quantity, double totalPrice, Tour tour) {
-        this.id = id;
-        this.quantity = quantity;
-        DecimalFormat df = new DecimalFormat("#");
-        this.totalPrice = df.format(totalPrice);
-        this.tour = tour;
-    }
+	// Constructor để chuyển từ TourOrder sang TourOrderDTO
+	public TourOrderDTO(TourOrder tourOrder) {
+		this.id = tourOrder.getId();
+		DecimalFormat df = new DecimalFormat("#");
+		this.totalPrice = df.format(tourOrder.getTotalPrice());
+		this.note = tourOrder.getNote();
+		this.orderDate = tourOrder.getOrderDate();
+		this.totalMember = tourOrder.getTotalMember();
+		this.tour = tourOrder.getTour();
+	}
 
-    public TourOrderDTO(double totalPrice, Date orderDateDate) {
-        DecimalFormat df = new DecimalFormat("#");
-        this.totalPrice = df.format(totalPrice);
-         this.orderDate = new Timestamp(orderDateDate.getTime());
-    }
+	public TourOrderDTO(int id, long quantity, double totalPrice, Tour tour) {
+		this.id = id;
+		this.quantity = quantity;
+		DecimalFormat df = new DecimalFormat("#");
+		this.totalPrice = df.format(totalPrice);
+		this.tour = tour;
+	}
 
-    public TourOrderDTO(double totalPrice, int month) {
-        DecimalFormat df = new DecimalFormat("#");
-        this.totalPrice = df.format(totalPrice);
-        this.month = month;
-    }
+	public TourOrderDTO(double totalPrice, Date orderDateDate) {
+		DecimalFormat df = new DecimalFormat("#");
+		this.totalPrice = df.format(totalPrice);
+		this.orderDate = new Timestamp(orderDateDate.getTime());
+	}
 
-    public int getId() {
-        return id;
-    }
+	public TourOrderDTO(double totalPrice, int month) {
+		DecimalFormat df = new DecimalFormat("#");
+		this.totalPrice = df.format(totalPrice);
+		this.month = month;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setOrderDate(Timestamp orderDate) {
-        this.orderDate = orderDate;
-    }
+	public void setNote(String note) {
+		this.note = note;
+	}
 
-    public void setTotalMember(int totalMember) {
-        this.totalMember = totalMember;
-    }
+	public void setOrderDate(Timestamp orderDate) {
+		this.orderDate = orderDate;
+	}
 
-    public void setTour(Tour tour) {
-        this.tour = tour;
-    }
+	public void setTotalMember(int totalMember) {
+		this.totalMember = totalMember;
+	}
 
-    public int getMonth() {
-        return month;
-    }
+	public void setTour(Tour tour) {
+		this.tour = tour;
+	}
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
+	public int getMonth() {
+		return month;
+	}
 
-    public void setTotalPrice(String totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+	public void setMonth(int month) {
+		this.month = month;
+	}
 
-    public long getQuantity() {
-        return quantity;
-    }
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
-    public void setQuantity(long quantity) {
-        this.quantity = quantity;
-    }
+	public long getQuantity() {
+		return quantity;
+	}
 
-    public String getTotalPrice() {
-        return totalPrice;
-    }
+	public void setQuantity(long quantity) {
+		this.quantity = quantity;
+	}
 
-    public String getNote() {
-        return note;
-    }
+	public String getTotalPrice() {
+		return totalPrice;
+	}
 
-    public Timestamp getOrderDate() {
-        return orderDate;
-    }
+	public String getNote() {
+		return note;
+	}
 
-    public int getTotalMember() {
-        return totalMember;
-    }
+	public Timestamp getOrderDate() {
+		return orderDate;
+	}
 
-    public Tour getTour() {
-        return tour;
-    }
+	public int getTotalMember() {
+		return totalMember;
+	}
+
+	public Tour getTour() {
+		return tour;
+	}
 }

@@ -12,19 +12,16 @@ import java.util.List;
 
 @Configuration
 public class OpenAPIConfig {
-    @Bean
-    public OpenAPI openAPI() {
-        return new OpenAPI().info(new Info().title("API Document Test")
-                        .version("1.0").description("API Document")
-                        .license(new License().name("API License").url("https://github.com/M/Example/API-Document")))
-                .servers(List.of(new Server().url("http://localhost:8080/")));
-    }
+	@Bean
+	public OpenAPI openAPI() {
+		return new OpenAPI()
+				.info(new Info().title("API Document Test").version("1.0").description("API Document")
+						.license(new License().name("API License").url("https://github.com/M/Example/API-Document")))
+				.servers(List.of(new Server().url("http://localhost:8080/")));
+	}
 
-    @Bean
-    public GroupedOpenApi groupedOpenApi() {
-        return GroupedOpenApi.builder()
-                .group("Api-service-1")
-                .packagesToScan("org.example.controller")
-                .build();
-    }
+	@Bean
+	public GroupedOpenApi groupedOpenApi() {
+		return GroupedOpenApi.builder().group("Api-service-1").packagesToScan("org.example.controller").build();
+	}
 }

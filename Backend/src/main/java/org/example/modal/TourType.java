@@ -21,16 +21,15 @@ import lombok.ToString;
 @NoArgsConstructor
 public class TourType {
 
-    @Column(name = "id")
-    @Id
-    private int id;
+	@Column(name = "id")
+	@Id
+	private int id;
 
-    @Column(name = "name")
-    private String name;
-    
-    @OneToMany
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private List<Tour> tours;
-    
+	@Column(name = "name")
+	private String name;
+
+	@OneToMany
+	@JoinColumn(name = "id", referencedColumnName = "id")
+	private List<Tour> tours;
 
 }

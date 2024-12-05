@@ -11,14 +11,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VoucherReponsitory extends JpaRepository<Voucher, Integer> {
-	
+
 	@Query("SELECT v FROM Voucher v")
 	Page<Voucher> pageVouchers(Pageable pageable);
 
+	@Query("SELECT COUNT(v) FROM Voucher v")
+	Integer totalVouchers();
 
-    @Query("SELECT COUNT(v) FROM Voucher v")
-    Integer totalVouchers();
-    @Modifying
-    @Query("UPDATE Voucher v SET v.status = :status WHERE v.id = :id")
-    int updateStatus(@Param("id") int id, @Param("status") int status);
+	@Modifying
+	@Query("UPDATE Voucher v SET v.status = :status WHERE v.id = :id")
+	int updateStatus(@Param("id") int id, @Param("status") int status);
 }

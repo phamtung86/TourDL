@@ -14,65 +14,67 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/vouchers")
 public class VoucherController {
-    @Autowired
-    private IVoucherService voucherService;
-    @GetMapping
-    public List<Voucher> getAllVoucher() {
-        return voucherService.getVouchers();
-    }
+	@Autowired
+	private IVoucherService voucherService;
 
-    @GetMapping("/voucherId/{id}")
-    public Voucher getVoucherById(@PathVariable int id) {
-        Optional<Voucher> isExists = voucherService.findVoucherById(id);
-        if (isExists.isPresent()) {
-            return isExists.get();
-        }
-        return null;
-    }
+	@GetMapping
+	public List<Voucher> getAllVoucher() {
+		return voucherService.getVouchers();
+	}
 
-    @GetMapping("/TotalVoucher")
-    public int getTotalVoucher() {
-        return voucherService.totalVouchers();
-    }
+	@GetMapping("/voucherId/{id}")
+	public Voucher getVoucherById(@PathVariable int id) {
+		Optional<Voucher> isExists = voucherService.findVoucherById(id);
+		if (isExists.isPresent()) {
+			return isExists.get();
+		}
+		return null;
+	}
 
-    @PostMapping
-    public boolean addNewVoucher(@RequestBody Voucher voucher) {
-        Voucher newVoucher = voucherService.createVoucher(voucher);
-        if (newVoucher != null) {
-            return true;
-        }
-        return false;
-    }
+	@GetMapping("/TotalVoucher")
+	public int getTotalVoucher() {
+		return voucherService.totalVouchers();
+	}
 
-    // update voucher
+	@PostMapping
+	public boolean addNewVoucher(@RequestBody Voucher voucher) {
+		Voucher newVoucher = voucherService.createVoucher(voucher);
+		if (newVoucher != null) {
+			return true;
+		}
+		return false;
+	}
 
-    @PutMapping("/{id}")
-    public boolean updateVoucher(@PathVariable("id") int id, @RequestBody Voucher voucher) {
-        Optional<Voucher> isExists = voucherService.findVoucherById(id);
-        if (isExists.isPresent()) {
-            voucherService.updateVoucher(id, voucher);
-            return true;
-        }
-        return false;
-    }
+	// update voucher
 
-    @DeleteMapping("/{id}")
-    public boolean deleteVoucher(@PathVariable("id") int id) {
-        Optional<Voucher> isExists = voucherService.findVoucherById(id);
-        if (isExists.isPresent()) {
-            voucherService.deleteVoucher(id);
-            return true;
-        }
-        return false;
-    }
-    @PutMapping("/{id}/{status}")
-    public boolean updateStatusVoucher(@PathVariable("id") int id, @PathVariable("status") int status){
-        return voucherService.updateStatusVoucher(id, status);
-    }
-    
-    @GetMapping("/page")
-    public Page<Voucher> pageVouchers(Pageable pageable){
-    	return voucherService.pageVouchers(pageable);
-    }
+	@PutMapping("/{id}")
+	public boolean updateVoucher(@PathVariable("id") int id, @RequestBody Voucher voucher) {
+		Optional<Voucher> isExists = voucherService.findVoucherById(id);
+		if (isExists.isPresent()) {
+			voucherService.updateVoucher(id, voucher);
+			return true;
+		}
+		return false;
+	}
+
+	@DeleteMapping("/{id}")
+	public boolean deleteVoucher(@PathVariable("id") int id) {
+		Optional<Voucher> isExists = voucherService.findVoucherById(id);
+		if (isExists.isPresent()) {
+			voucherService.deleteVoucher(id);
+			return true;
+		}
+		return false;
+	}
+
+	@PutMapping("/{id}/{status}")
+	public boolean updateStatusVoucher(@PathVariable("id") int id, @PathVariable("status") int status) {
+		return voucherService.updateStatusVoucher(id, status);
+	}
+
+	@GetMapping("/page")
+	public Page<Voucher> pageVouchers(Pageable pageable) {
+		return voucherService.pageVouchers(pageable);
+	}
 
 }

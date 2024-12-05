@@ -13,63 +13,62 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 
 @Service
-public class SendMailServiceImpl implements ISendMailService{
-    @Autowired
-    private PasswordTokenRepository passwordTokenRepository;
+public class SendMailServiceImpl implements ISendMailService {
+	@Autowired
+	private PasswordTokenRepository passwordTokenRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
+	@Autowired
+	private JavaMailSender mailSender;
 
-    @Autowired
-    private MessageSource messages;
+	@Autowired
+	private MessageSource messages;
 
-    @Value("${support.email}")
-    private String supportEmail;
+	@Value("${support.email}")
+	private String supportEmail;
 
-    @Override
-    public void sendPasswordResetEmail(String contextPath, Locale locale, String token, Users user) {
-        SimpleMailMessage email = constructResetTokenEmail(contextPath, locale, token, user);
-        mailSender.send(email); // Gửi email qua JavaMailSender
-    }
+	@Override
+	public void sendPasswordResetEmail(String contextPath, Locale locale, String token, Users user) {
+		SimpleMailMessage email = constructResetTokenEmail(contextPath, locale, token, user);
+		mailSender.send(email); // Gửi email qua JavaMailSender
+	}
 
-    @Override
-    public String validatePasswordResetToken(String token) {
-        PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
-        System.out.println(passToken);
-        return !isTokenFound(passToken)
-                ? "invalidToken"
-                : isTokenExpired(passToken)
-                ? "expired"
-                : null;
-    }
+	@Override
+	public String validatePasswordResetToken(String token) {
+		PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
+		System.out.println(passToken);
+		return !isTokenFound(passToken) ? "invalidToken" : isTokenExpired(passToken) ? "expired" : null;
+	}
 
-    @Override
-    public boolean isTokenFound(PasswordResetToken passToken) {
-        return passToken != null;
-    }
+	@Override
+	public boolean isTokenFound(PasswordResetToken passToken) {
+		return passToken != null;
+	}
 
-    @Override
-    public boolean isTokenExpired(PasswordResetToken passToken) {
-        long currentTimeMillis = System.currentTimeMillis();
-        long expiryTimeMillis = passToken.getExpiryDate().getTime();
-        return expiryTimeMillis < currentTimeMillis;
-    }
-    @Override
-    public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, Users user) {
-        if (locale == null) {
-            locale = Locale.US;  // Fallback cho locale mặc định
-        }
-        String url = contextPath + "/changePassword?token=" + token;
-        String message = messages.getMessage("message.resetPassword", null, "Vui lòng click vào đường link dưới đây để khôi phục mật khẩu", locale);
-        return constructEmail("Reset Password", message + " \r\n" + url, user);
-    }
-    @Override
-    public SimpleMailMessage constructEmail(String subject, String body, Users user) {
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject(subject);
-        email.setText(body);
-        email.setTo(user.getEmail());
-        email.setFrom(supportEmail);
-        return email;
-    }
+	@Override
+	public boolean isTokenExpired(PasswordResetToken passToken) {
+		long currentTimeMillis = System.currentTimeMillis();
+		long expiryTimeMillis = passToken.getExpiryDate().getTime();
+		return expiryTimeMillis < currentTimeMillis;
+	}
+
+	@Override
+	public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, Users user) {
+		if (locale == null) {
+			locale = Locale.US; // Fallback cho locale mặc định
+		}
+		String url = contextPath + "/changePassword?token=" + token;
+		String message = messages.getMessage("message.resetPassword", null,
+				"Vui lòng click vào đường link dưới đây để khôi phục mật khẩu", locale);
+		return constructEmail("Reset Password", message + " \r\n" + url, user);
+	}
+
+	@Override
+	public SimpleMailMessage constructEmail(String subject, String body, Users user) {
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setSubject(subject);
+		email.setText(body);
+		email.setTo(user.getEmail());
+		email.setFrom(supportEmail);
+		return email;
+	}
 }
