@@ -35,21 +35,18 @@
             border: 1px solid $border-color;
             &.active {
               background-color: #0b5da7;
-              padding: 6px 0px;
-              border-radius: 6px;
-              text-align: center;
-              font-size: 1.4em -0.1em;
-              font-weight: bold;
-              width: 100%;
               color: #fff;
               border: 1px solid #0b5da7;
               &:hover {
+                cursor: default;
+                color: #fff;
+                background-color: #0b5da7;
               }
             }
             &:hover {
               cursor: pointer;
               color: #0b5da7;
-              background: #daefff;
+              background-color: #daefff;
               border: 1px solid #0b5da7;
               transition: ease-in-out 0.2s all;
             }
