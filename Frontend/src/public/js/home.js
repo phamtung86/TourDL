@@ -22,6 +22,8 @@ const tourFilterOptionTransport = document.querySelectorAll(
   '.tour-filter__option.transport'
 );
 
+const buttonFilter = document.querySelector('.tour-filter__submit');
+
 // Other
 let pageNumber = -1; // Tổng số trang
 let currentPageNumber = 1; // Số trang hiện tại
@@ -53,7 +55,7 @@ const loadEventHTML = () => {
     sortToursButton.classList[0],
     sortDropDown.classList[0]
   );
-
+  // Thêm event click chọn trong mỗi option của bộ lọc
   tourFilterBox.forEach((filterBox, index) => {
     toggleEventButton(
       filterBox,
@@ -101,6 +103,77 @@ const loadEventHTML = () => {
       }
     });
   });
+
+  // Add sự kiện click lấy giá trị trong mỗi option của điểm đến và đi tour-filter__option-item
+  let optionItemsOfDeparturePoint = document.querySelectorAll(
+    '.tour-filter__box-input.departure-point .tour-filter__option-box .tour-filter__option-item'
+  );
+  let boxOptionItemsOfDeparturePoint = document.querySelector(
+    '.tour-filter__box-input.departure-point>.tour-filter__box-text'
+  );
+  optionItemsOfDeparturePoint.forEach((optionItem) => {
+    optionItem.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) return;
+      optionItemsOfDeparturePoint.forEach((option) => {
+        option.classList.remove('active');
+      });
+      e.target.classList.add('active');
+      boxOptionItemsOfDeparturePoint.innerText = e.target.innerText;
+    });
+  });
+  //destination
+  let optionItemsOfDestination = document.querySelectorAll(
+    '.tour-filter__box-input.destination .tour-filter__option-box .tour-filter__option-item'
+  );
+  let boxOptionItemsOfDestination = document.querySelector(
+    '.tour-filter__box-input.destination>.tour-filter__box-text'
+  );
+  optionItemsOfDestination.forEach((optionItem) => {
+    optionItem.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) return;
+      optionItemsOfDestination.forEach((option) => {
+        option.classList.remove('active');
+      });
+      e.target.classList.add('active');
+      boxOptionItemsOfDestination.innerText = e.target.innerText;
+    });
+  });
+
+  buttonFilter.addEventListener('click', async (e) => {
+    e.preventDefault();
+    let budget = document.querySelector('.tour-filter__option.budget.active');
+    let departurePoint = document.querySelector(
+      '.tour-filter__box-input.departure-point>.tour-filter__box-text'
+    );
+    let destination = document.querySelector(
+      '.tour-filter__box-input.destination>.tour-filter__box-text'
+    );
+    console.log(
+      departurePoint.innerText.toString(),
+      destination.innerText.toString()
+    );
+
+    let type = document.querySelector('.tour-filter__option.type.active');
+    let transport = document.querySelector(
+      '.tour-filter__option.transport.active'
+    );
+    let option = {
+      pageNumber: 1,
+      sort: 'id',
+      departure: `${departurePoint.innerText.toString()}`,
+      destination: `${destination.innerText.toString()}`,
+      tourType: !type ? `` : type.dataset.id,
+      transportId: !transport ? `` : transport.dataset.id,
+    };
+    let res = await filterTours(option);
+    if (res.status !== 0) {
+      console.log(res.error);
+      alert(res.message);
+    }
+    console.log(res.data);
+  });
 };
 
 // Function get api
@@ -113,7 +186,11 @@ let resTourList = async (pageNumber) => {
     res = res.data;
     return { status: 0, data: res };
   } catch (error) {
-    return { status: 3, message: 'Hệ thống website hiện đang bị lỗi' };
+    return {
+      status: 3,
+      message: 'Hệ thống website hiện đang bị lỗi',
+      error: error,
+    };
   }
 };
 
@@ -131,7 +208,26 @@ let resProvinces = async () => {
       },
     };
   } catch (error) {
-    return { status: 3, message: 'Hệ thống website hiện đang bị lỗi' };
+    return { status: 3, message: 'Lấy API không thành công', error: error };
+  }
+};
+
+// Gọi API lọc tỉnh thành theo các tham số
+let filterTours = async (params) => {
+  try {
+    let res = await axios.get(`
+      ${URL_API_SERVER_V1}/tours/filter-tour&page=${params.pageNumber}&size=10&sort=${params.sort},asc&tourType=${params.tourType}&transportId=${params.transportId}
+      
+    `);
+    //&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}
+    res = res.data;
+    return { status: 0, data: res };
+  } catch (error) {
+    return {
+      status: 3,
+      message: 'Hệ thống website hiện đang bị lỗi',
+      error: error,
+    };
   }
 };
 
@@ -279,6 +375,7 @@ let renderTourList = async () => {
   let res = await resTourList(1);
   if (res.status !== 0) {
     alert(res.message);
+    console.log(res.error); // Console.log lỗi
     tourList.innerHTML = ``;
   }
   let data = res.data;
@@ -293,6 +390,7 @@ let renderProvinces = async () => {
   let res = await resProvinces();
   if (res.status !== 0) {
     alert(res.message);
+    console.log(res.error);
   }
   res = res.data;
   generationProvincesHTML(res.provinces);
@@ -332,7 +430,7 @@ const loadHTML = async () => {
 window.addEventListener('scroll', handleScrollRender);
 
 // Hiển thị dữ liệu sau khi đã tải trang
-window.onload = () => {
-  loadHTML();
+window.onload = async () => {
+  await loadHTML();
   loadEventHTML();
 };
