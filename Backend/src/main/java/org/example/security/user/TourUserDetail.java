@@ -1,4 +1,5 @@
 package org.example.security.user;
+
 import org.example.modal.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -7,94 +8,92 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class TourUserDetail implements UserDetails {
-    private int id;
-    private String email;
-    private String password;
-    private Collection <GrantedAuthority> authorities;
-    public static String mapRoleToString(int role){
-        if (role == 0) {
-            return "ROLE_USER";
-        }
-        return "ROLE_ADMIN";
-    }
-    public static TourUserDetail buildUserDetails(Users user){
-        String role = mapRoleToString(user.getRole());
-        GrantedAuthority authority = new SimpleGrantedAuthority(role);
+	private int id;
+	private String email;
+	private String password;
+	private Collection<GrantedAuthority> authorities;
 
-        return new TourUserDetail(
-                user.getId(),
-                user.getEmail(),
-                user.getPassWord(),
-                Collections.singletonList(authority)
-        );
-    }
+	public static String mapRoleToString(int role) {
+		if (role == 0) {
+			return "ROLE_USER";
+		}
+		return "ROLE_ADMIN";
+	}
 
-    public TourUserDetail() {
-    }
+	public static TourUserDetail buildUserDetails(Users user) {
+		String role = mapRoleToString(user.getRole());
+		GrantedAuthority authority = new SimpleGrantedAuthority(role);
 
-    public TourUserDetail(int id, String email, String password, Collection<GrantedAuthority> authorities) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
+		return new TourUserDetail(user.getId(), user.getEmail(), user.getPassWord(),
+				Collections.singletonList(authority));
+	}
 
-    public int getId() {
-        return id;
-    }
+	public TourUserDetail() {
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public TourUserDetail(int id, String email, String password, Collection<GrantedAuthority> authorities) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.authorities = authorities;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setAuthorities(Collection<GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	public void setAuthorities(Collection<GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
+	@Override
+	public String getUsername() {
+		return email;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return UserDetails.super.isAccountNonExpired();
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return UserDetails.super.isAccountNonLocked();
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return UserDetails.super.isCredentialsNonExpired();
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return UserDetails.super.isEnabled();
+	}
 }

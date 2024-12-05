@@ -8,11 +8,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserReponsitory extends JpaRepository<Users, Integer> {
-    @Query("SELECT COUNT(u.id) FROM Users u WHERE u.role = 0")
-    int totalAccountUser();
-    @Query("SELECT u FROM Users u WHERE u.email = :param OR u.userName = :param")
-    Users findByEmailOrUsername(@Param("param") String param);
-    boolean existsByEmail(String email);
-    boolean existsByUserName(String userName);
-    Users findByEmail(String email);
+	@Query("SELECT COUNT(u.id) FROM Users u WHERE u.role = 0")
+	int totalAccountUser();
+
+	@Query("SELECT u FROM Users u WHERE u.email = :param OR u.userName = :param")
+	Users findByEmailOrUsername(@Param("param") String param);
+
+	boolean existsByEmail(String email);
+
+	boolean existsByUserName(String userName);
+
+	Users findByEmail(String email);
 }

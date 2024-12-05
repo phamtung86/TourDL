@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PasswordTokenServiceimpl implements IPasswordTokenService {
-    @Autowired
-    private PasswordTokenRepository passwordTokenRepository;
-    @Override
-    public void createNewPasswordToken(PasswordResetToken passwordResetToken) {
-        passwordTokenRepository.save(passwordResetToken);
-    }
+	@Autowired
+	private PasswordTokenRepository passwordTokenRepository;
+
+	@Override
+	public void createNewPasswordToken(PasswordResetToken passwordResetToken) {
+		passwordTokenRepository.save(passwordResetToken);
+	}
 }

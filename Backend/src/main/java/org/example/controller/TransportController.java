@@ -14,19 +14,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1")
 public class TransportController {
-    @Autowired
-    private ITransportService transportService;
+	@Autowired
+	private ITransportService transportService;
 
-    @GetMapping("/transports")
-    public List<Transport> ListTransports() {
-        return transportService.listAllTransports();
-    }
-    @GetMapping("/maptransports")
-    public Map<Integer, Transport> mapTransport() {
-        return transportService.mapTransports();
-    }
-    @GetMapping("/StasTransportUsed")
-    public List<TransportDTO> listTransportsUsedInMonth(){
-        return transportService.listTransportsUsedInMonth();
-    }
+	@GetMapping("/transports")
+	public List<Transport> ListTransports() {
+		return transportService.listAllTransports();
+	}
+
+	@GetMapping("/maptransports")
+	public Map<Integer, Transport> mapTransport() {
+		return transportService.mapTransports();
+	}
+
+	@GetMapping("/StasTransportUsed")
+	public List<TransportDTO> listTransportsUsedInMonth() {
+		return transportService.listTransportsUsedInMonth();
+	}
 }

@@ -28,58 +28,55 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("api/auth")
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtils jwtUtils;
+	private final AuthenticationManager authenticationManager;
+	private final JwtUtils jwtUtils;
 
-    @Value("${auth.token.expirationInMils}")
-    private int expTime; // thời gian hết hạn token tính bằng mili giây
+	@Value("${auth.token.expirationInMils}")
+	private int expTime; // thời gian hết hạn token tính bằng mili giây
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
-        this.authenticationManager = authenticationManager;
-        this.jwtUtils = jwtUtils;
-    }
+	public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+		this.authenticationManager = authenticationManager;
+		this.jwtUtils = jwtUtils;
+	}
 
-    @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest request) {
-        try {
-            // Xác thực thông tin đăng nhập
-            Authentication authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(
-                            request.getEmail(), request.getPassword()
-                    ));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+	@PostMapping("/login")
+	public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest request) {
+		try {
+			// Xác thực thông tin đăng nhập
+			Authentication authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Tạo JWT token
-            String jwt = jwtUtils.generateTokenForUser(authentication);
+			// Tạo JWT token
+			String jwt = jwtUtils.generateTokenForUser(authentication);
 
-            // Lấy thông tin người dùng
-            TourUserDetail tourUserDetail = (TourUserDetail) authentication.getPrincipal();
+			// Lấy thông tin người dùng
+			TourUserDetail tourUserDetail = (TourUserDetail) authentication.getPrincipal();
 
-            // Lấy thời gian tạo token và thời gian hết hạn
-            long issuedAt = Instant.now().getEpochSecond();
-            long expirationTime = issuedAt + (expTime / 1000); // chuyển mili giây thành giây
+			// Lấy thời gian tạo token và thời gian hết hạn
+			long issuedAt = Instant.now().getEpochSecond();
+			long expirationTime = issuedAt + (expTime / 1000); // chuyển mili giây thành giây
 
-            // Chuyển đổi thời gian tạo token và thời gian hết hạn thành ZonedDateTime với múi giờ VN (Asia/Ho_Chi_Minh)
-            ZonedDateTime issuedAtZonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(issuedAt), ZoneId.of("Asia/Ho_Chi_Minh"));
-            ZonedDateTime expirationTimeZonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(expirationTime), ZoneId.of("Asia/Ho_Chi_Minh"));
+			// Chuyển đổi thời gian tạo token và thời gian hết hạn thành ZonedDateTime với
+			// múi giờ VN (Asia/Ho_Chi_Minh)
+			ZonedDateTime issuedAtZonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(issuedAt),
+					ZoneId.of("Asia/Ho_Chi_Minh"));
+			ZonedDateTime expirationTimeZonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(expirationTime),
+					ZoneId.of("Asia/Ho_Chi_Minh"));
 
-            // Định dạng thời gian theo kiểu "yyyy-MM-dd HH:mm:ss"
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedIssuedAt = issuedAtZonedDateTime.format(formatter);
-            String formattedExpirationTime = expirationTimeZonedDateTime.format(formatter);
-            // Tạo đối tượng JwtResponse bao gồm thông tin thời gian
-            JwtResponse jwtResponse = new JwtResponse(
-                    tourUserDetail.getId(),
-                    jwt,
-                    formattedIssuedAt,
-                    formattedExpirationTime
-            );
+			// Định dạng thời gian theo kiểu "yyyy-MM-dd HH:mm:ss"
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String formattedIssuedAt = issuedAtZonedDateTime.format(formatter);
+			String formattedExpirationTime = expirationTimeZonedDateTime.format(formatter);
+			// Tạo đối tượng JwtResponse bao gồm thông tin thời gian
+			JwtResponse jwtResponse = new JwtResponse(tourUserDetail.getId(), jwt, formattedIssuedAt,
+					formattedExpirationTime);
 
-            // Trả về phản hồi với JWT và thông tin thời gian
-            return ResponseEntity.ok(new ApiResponse("Login Successful", jwtResponse));
-        } catch (AuthenticationException e) {
-            // Xử lý khi đăng nhập thất bại
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(e.getMessage(), null));
-        }
-    }
+			// Trả về phản hồi với JWT và thông tin thời gian
+			return ResponseEntity.ok(new ApiResponse("Login Successful", jwtResponse));
+		} catch (AuthenticationException e) {
+			// Xử lý khi đăng nhập thất bại
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(e.getMessage(), null));
+		}
+	}
 }

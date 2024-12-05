@@ -16,30 +16,29 @@ import java.sql.Timestamp;
 @ToString
 @NoArgsConstructor
 public class TourOrder {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    @Column(name = "total_price")
-    private Double totalPrice;
+	@Column(name = "total_price")
+	private Double totalPrice;
 
-    @Column(name = "note")
-    private String note;
+	@Column(name = "note")
+	private String note;
 
-    @Column(name = "order_date")
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp orderDate;
+	@Column(name = "order_date")
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Timestamp orderDate;
 
-    @Column(name = "total_member")
-    private int totalMember;
+	@Column(name = "total_member")
+	private int totalMember;
 
-    @OneToOne
-    @JoinColumn(name = "tour_id", referencedColumnName = "id")
-    private Tour tour;
-
+	@OneToOne
+	@JoinColumn(name = "tour_id", referencedColumnName = "id")
+	private Tour tour;
 
 }

@@ -1,35 +1,41 @@
 package org.example.service;
 
+import org.example.form.TourFilterForm;
 import org.example.modal.Tour;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
+
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public interface ITourService {
 
-    //get all tour
-    List<Tour> getAllTours();
+	// get all tour
+	List<Tour> getAllTours();
 
-    // create tour
-    Tour createNewTour(Tour tour);
+	// create tour
+	Tour createNewTour(Tour tour);
 
-    // delete Tour By ID
-    boolean deleteTourById(String id);
+	// delete Tour By ID
+	boolean deleteTourById(String id);
 
-    // phan trang tour
-    Page<Tour> getPageTours(Pageable pageable);
+	// phan trang tour
+	Page<Tour> getPageTours(Pageable pageable, Date date);
 
-    // update tour by id
-    //Tour updateTour(String id, Tour tourDetails);
+	// update tour by id
+	// Tour updateTour(String id, Tour tourDetails);
 
-    // search tour by name
-    List<Tour> getTourByName(String Name);
+	// search tour by name
+	List<Tour> getTourByName(String Name);
 
-    // bo loc tim kiem
-    Page<Tour> filterTours(Pageable pageable, BigDecimal minBudget,BigDecimal maxBudget, String departure, String destination, Integer tourType, Integer transportId);
-    Long totalTour();
-    List<Long> getTotalByType();
+	// bo loc tim kiem
+	Page<Tour> filterTours(Pageable pageable, TourFilterForm tourFilterForm, String departure, String destination,
+			Integer tourType, Integer transportId, Date startDate);
+
+	Long totalTour();
+
+	List<Long> getTotalByType();
 }

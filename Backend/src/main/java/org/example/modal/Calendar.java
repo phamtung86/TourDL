@@ -17,20 +17,20 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Calendar {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    @Column(name = "start_date", nullable = false, updatable = false)
-    @CreationTimestamp
-    private Timestamp startDate;
+	@Column(name = "start_date", nullable = false, updatable = false)
+	@CreationTimestamp
+	private Timestamp startDate;
 
-    @Column(name = "slot", nullable = false)
-    private int slot;
-    @Column(name = "voucher_id")
-    private Integer voucherId;
-    @ManyToOne
-    @JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
-    private Tour tour;
+	@Column(name = "slot", nullable = false)
+	private int slot;
+	@Column(name = "voucher_id")
+	private Integer voucherId;
+	@ManyToOne
+	@JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
+	private Tour tour;
 }

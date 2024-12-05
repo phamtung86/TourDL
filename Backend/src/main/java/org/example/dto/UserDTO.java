@@ -11,9 +11,9 @@ import lombok.ToString;
 @NoArgsConstructor
 public class UserDTO {
 
-    private String oldPassword;
+	private String oldPassword;
 
-    private  String token;
+	private String token;
 
-    private String newPassword;
+	private String newPassword;
 }

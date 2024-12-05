@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PasswordTokenRepository extends JpaRepository<PasswordResetToken, Integer> {
-    @Query("SELECT t FROM PasswordResetToken t WHERE t.token = :Param")
-    PasswordResetToken findByToken(@Param("Param") String token);
+	@Query("SELECT t FROM PasswordResetToken t WHERE t.token = :Param")
+	PasswordResetToken findByToken(@Param("Param") String token);
 }

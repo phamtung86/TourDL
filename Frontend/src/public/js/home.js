@@ -135,7 +135,7 @@ let generationToursHTML = (tours) => {
         <div class="tour-list__item-info">
           <div class="tour-list__item--top">
             <h5 class="tour-list__item-heading">
-              ${tour.name}
+            ${tour.name}
             </h5>
             <ul class="tour-list__item-box">
               <li class="tour-list__item-col">

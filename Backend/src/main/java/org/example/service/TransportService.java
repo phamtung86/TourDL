@@ -12,21 +12,22 @@ import java.util.stream.Collectors;
 
 @Service
 public class TransportService implements ITransportService {
-    @Autowired
-    private TransportReponsitory transportReponsitory;
+	@Autowired
+	private TransportReponsitory transportReponsitory;
 
-    @Override
-    public List<Transport> listAllTransports() {
-        return transportReponsitory.findAll();
-    }
+	@Override
+	public List<Transport> listAllTransports() {
+		return transportReponsitory.findAll();
+	}
 
-    @Override
-    public Map<Integer, Transport> mapTransports() {
-        List<Transport> transports = transportReponsitory.findAll();
-        return transports.stream().collect(Collectors.toMap(Transport::getId, transport -> transport));
-    }
-    @Override
-    public List<TransportDTO> listTransportsUsedInMonth(){
-        return transportReponsitory.countByTransportIdForMonth();
-    }
+	@Override
+	public Map<Integer, Transport> mapTransports() {
+		List<Transport> transports = transportReponsitory.findAll();
+		return transports.stream().collect(Collectors.toMap(Transport::getId, transport -> transport));
+	}
+
+	@Override
+	public List<TransportDTO> listTransportsUsedInMonth() {
+		return transportReponsitory.countByTransportIdForMonth();
+	}
 }

@@ -8,12 +8,19 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface ICalendarService {
-    List<Calendar> getAllCalendar();
-    Calendar createNewCalendar(Calendar calendar);
-    List<Calendar> findCalendarbyTour( String tourID);
-    List<CalendarDTO> getExpiredCalendars();
-    List<CalendarDTO> getCalendarsWithinThreeDaysFromNow();
-    List<CalendarDTO> getCalendarsInCurrentAndNextMonth();
-    List<Date> getAllStartedDate();
-    List<Object> calendarInMonth(int month ,int year, String tourId);
+	List<Calendar> getAllCalendar();
+
+	Calendar createNewCalendar(Calendar calendar);
+
+	List<Calendar> findCalendarbyTour(String tourID);
+
+	List<CalendarDTO> getExpiredCalendars();
+
+	List<CalendarDTO> getCalendarsWithinThreeDaysFromNow();
+
+	List<CalendarDTO> getCalendarsInCurrentAndNextMonth();
+
+	List<Date> getAllStartedDate();
+
+	List<Object> calendarInMonth(int month, int year, String tourId);
 }
