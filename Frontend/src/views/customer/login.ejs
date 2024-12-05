@@ -14,12 +14,12 @@
 <body>
     <div class="login-container">
         <div class="container-left">
-            <p>Chào mừng bạn đến với tour du lịch 3TV TRAVEL</p>
+            <img src="/assets/image/logo/travelling.png" alt="" class="img-background">
+            <!-- <p>Chào mừng bạn đến với tour du lịch 3TV TRAVEL</p>
             <span>
                 Nơi mang đến cho bạn một trải nghiệm tuyệt vời về thiên nhiên hùng vĩ và nền văn hóa đặc sắc.
-                <br>
                 Với hành trình độc đáo, chúng tôi cam kết sẽ mang đến cho bạn một kỳ nghỉ khó quên.
-            </span>
+            </span> -->
         </div>
         <div class="container-right">
             <div class="logo">
@@ -28,7 +28,7 @@
                 </a>
             </div>
             <form>
-                <p>đăng nhập để trải nghiêm cùng chúng tôi</p>
+                <p>Đăng nhập để trải nghiêm cùng chúng tôi</p>
                 <div class="form-value">
                     <div class="inputbox">
                         <label class="lb-content" for="username">Tên tài khoản</label> <br>
@@ -37,8 +37,11 @@
                     </div>
                     <div class="inputbox">
                         <label class="lb-content" for="password">Mật khẩu</label> <br>
-                        <input class="ip-cen" type="password" id="password" name="password" required
-                            placeholder="Mật khẩu">
+                        <div class="password-wrapper">
+                            <input class="ip-cen" type="password" id="password" name="password" required
+                                placeholder="Mật khẩu">
+                            <ion-icon class="toggle-password" name="eye-off-outline"></ion-icon>
+                        </div>
                     </div>
                     <div class="inputcheck">
                         <div class="input-remember">
@@ -53,6 +56,9 @@
             </form>
         </div>
     </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="/js/login.js"></script>
 </body>
 
 </html>

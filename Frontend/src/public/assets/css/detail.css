@@ -98,11 +98,6 @@ ul {
 
 
 .tour-header {
-    /* display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px; */
     margin: auto;
     padding: 0 1rem;
     width: 80%;
@@ -112,6 +107,78 @@ ul {
     font-size: 2.3rem;
     margin: 1.7rem 0;
     line-height: 4rem;
+}
+
+.tabs-detail {
+    width: 100%;
+    position: fixed;
+    background-color: white;
+    margin-bottom: 1.5rem;
+    top: 0;
+    z-index: 3;
+    border: 1px solid f8f8f8;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .24);
+    transition: opacity .3s, visibility .3s;
+    opacity: 0;
+    /* Tabs hiển thị ban đầu */
+    visibility: visible;
+    /* Tabs hiển thị ban đầu */
+}
+
+.tabs-detail_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 79%;
+    margin: auto;
+}
+
+.tabs-detail_container ul {
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.tabs-detail_container ul li {
+    padding: 2rem .75rem 1rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+    position: relative;
+    color: #0b5da7;
+    text-decoration: none;
+    position: relative;
+}
+
+.tabs-detail_container ul li a {
+    transition: color .3s;
+    font-weight: 700;
+    font-size: 20px;
+    color: #171717;
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.tabs-detail_container ul li a:hover {
+    color: #007BFF;
+}
+
+.tabs-detail_container ul li a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #007BFF;
+    transition: width 0.3s ease-out;
+}
+
+.tabs-detail_container ul li a:hover::after {
+    width: 100%;
 }
 
 .tour-detail {
@@ -181,11 +248,6 @@ ul {
 }
 
 .overview-content {
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1.25rem;
-    gap: 1.25rem;
-    width: 100%; */
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
@@ -196,7 +258,6 @@ ul {
 .overview-item {
     display: flex;
     flex-direction: column;
-    /* font-size: 26px; */
     width: 100%;
 }
 
@@ -216,7 +277,6 @@ ul {
     font-size: 1.6rem;
     font-weight: 700;
     margin: .8rem 0;
-    /* font-size: 17px; */
 }
 
 .overview-item p {
@@ -245,10 +305,7 @@ ul {
     width: 100%;
     background: #fff;
     border-radius: 10px;
-    /* box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px; */
     overflow: hidden;
-    /* align-items: center; */
-    /* justify-content: center; */
 }
 
 
@@ -407,7 +464,6 @@ button:hover {
 
 h4 {
     display: block;
-    /* margin-block-start: 1.33em; */
     margin-block-end: 1.3em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
@@ -463,53 +519,6 @@ h4 {
     background-color: #0066FF;
 }
 
-/* .tour-detail_content-right .btn-book {
-    width: 100%;
-    background: #e01600;
-    color: #fff;
-    text-transform: none;
-    padding: 1rem 0;
-    border: none;
-    cursor: pointer;
-    border-radius: .5rem;
-}
-
-.btn-pickDate-mobile {
-    background-color: #0b5da7 !important;
-    color: #fff !important;
-    border: 1px solid #0b5da7 !important;
-    gap: 1rem;
-}
-
-.btn-pickDate {
-    background-color: #fff !important;
-    color: #0b5da7 !important;
-    border: 1px solid #0b5da7 !important;
-    outline: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn-pickDate-mobile {
-    background-color: #0b5da7 !important;
-    color: #fff !important;
-    border: 1px solid #0b5da7 !important;
-    gap: 1rem;
-}
-
-.rounded-lg {
-    border-radius: 1rem;
-}
-
-.button {
-    border: 1px solid #b1b1b1;
-    border-radius: .5rem;
-    margin: 0;
-    font-weight: 600;
-} */
-
 /* end container */
 
 
@@ -518,7 +527,7 @@ h4 {
     width: 100%;
     max-height: 400px;
     background-color: black;
-    height: 100px;
+    height: 3000px;
     margin-top: 1.5rem;
 }
 
