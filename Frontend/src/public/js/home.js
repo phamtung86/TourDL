@@ -28,6 +28,24 @@ const buttonFilter = document.querySelector('.tour-filter__submit');
 let pageNumber = -1; // Tổng số trang
 let currentPageNumber = 1; // Số trang hiện tại
 let isLoadingAPI = false; // Cờ check đang load trang hay k
+let apiGetTours = '';
+
+//* Hàm set lại options params cho url filter tours
+let setAPIGetTours = (params) => {
+  apiGetTours = `
+    ${URL_API_SERVER_V1}/tours/filter-tour?size=10&sort=${params.sort},asc&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}&tourType=${params.tourType}&transportId=${params.transportId}
+  `;
+};
+
+setAPIGetTours({
+  sort: 'id',
+  minBudget: '',
+  maxBudget: '',
+  departure: '',
+  destination: '',
+  tourType: '',
+  transportId: '',
+});
 
 // Function event click
 let toggleEventButton = (button, dropDown, idButton, classDropdown) => {
@@ -44,6 +62,17 @@ let toggleEventButton = (button, dropDown, idButton, classDropdown) => {
     ) {
       dropDown.classList.remove('active');
     }
+  });
+};
+// * Hàm tạo hiệu ứng cuộn trên box date
+let eventScrollDate = () => {
+  // Cuộn chuột trong Start date
+  let boxStartDate = document.querySelectorAll('.tour-list__item-startDay');
+  boxStartDate.forEach((item) => {
+    item.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      item.scrollLeft += event.deltaY;
+    });
   });
 };
 
@@ -140,39 +169,60 @@ const loadEventHTML = () => {
       boxOptionItemsOfDestination.innerText = e.target.innerText;
     });
   });
-
   buttonFilter.addEventListener('click', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Bỏ sự kiện mặc định của button
+    let minBudget = '';
+    let maxBudget = '';
     let budget = document.querySelector('.tour-filter__option.budget.active');
+    if (budget) {
+      minBudget = budget.dataset.minbudget;
+      maxBudget = budget.dataset.maxbudget;
+    }
     let departurePoint = document.querySelector(
       '.tour-filter__box-input.departure-point>.tour-filter__box-text'
     );
     let destination = document.querySelector(
       '.tour-filter__box-input.destination>.tour-filter__box-text'
     );
-    console.log(
-      departurePoint.innerText.toString(),
-      destination.innerText.toString()
-    );
-
+    let textDeparturePoint = departurePoint.innerText.toString();
+    let textDestination = destination.innerText.toString();
+    textDeparturePoint === 'Tất cả'
+      ? (textDeparturePoint = '')
+      : (textDeparturePoint = textDeparturePoint);
+    textDestination === 'Tất cả'
+      ? (textDestination = '')
+      : (textDestination = textDestination);
     let type = document.querySelector('.tour-filter__option.type.active');
     let transport = document.querySelector(
       '.tour-filter__option.transport.active'
     );
+    // Tạo option mới cho url filter tours
     let option = {
-      pageNumber: 1,
       sort: 'id',
-      departure: `${departurePoint.innerText.toString()}`,
-      destination: `${destination.innerText.toString()}`,
+      minBudget: minBudget,
+      maxBudget: !maxBudget ? '' : maxBudget,
+      departure: textDeparturePoint,
+      destination: textDestination,
       tourType: !type ? `` : type.dataset.id,
       transportId: !transport ? `` : transport.dataset.id,
     };
-    let res = await filterTours(option);
+    setAPIGetTours(option);
+    let res = await resTourList(1);
     if (res.status !== 0) {
-      console.log(res.error);
       alert(res.message);
+      console.log(res.error); // Console.log lỗi
+      tourList.innerHTML = ``;
     }
-    console.log(res.data);
+    let data = res.data;
+    // Reset trạng thái về ban đầu
+    currentPageNumber = 1;
+    pageNumber = data.totalPages; // Gán số trang -> khi scroll gọi lại số lần api
+    totalTours.innerHTML = `Chúng tôi tìm thấy <span>${data.totalElements}</span> chương trình tour cho quý khách`;
+    let tours = data.content;
+    // Gọi hàm chuyển đổi dữ liệu từ API -> HTML
+    tourList.innerHTML = ``; // Bỏ các dữ liệu tour cũ trước đó
+    generationToursHTML(tours);
+    window.addEventListener('scroll', handleScrollRender); // Gán lại sự kiện scroll
   });
 };
 
@@ -180,9 +230,7 @@ const loadEventHTML = () => {
 //* Lấy dữ liệu tours từ API
 let resTourList = async (pageNumber) => {
   try {
-    let res = await axios.get(
-      `${URL_API_SERVER_V1}/tours/page?pageNumber=${pageNumber}&size=10&sort=id,asc`
-    );
+    let res = await axios.get(`${apiGetTours}&pageNumber=${pageNumber}`);
     res = res.data;
     return { status: 0, data: res };
   } catch (error) {
@@ -209,25 +257,6 @@ let resProvinces = async () => {
     };
   } catch (error) {
     return { status: 3, message: 'Lấy API không thành công', error: error };
-  }
-};
-
-// Gọi API lọc tỉnh thành theo các tham số
-let filterTours = async (params) => {
-  try {
-    let res = await axios.get(`
-      ${URL_API_SERVER_V1}/tours/filter-tour&page=${params.pageNumber}&size=10&sort=${params.sort},asc&tourType=${params.tourType}&transportId=${params.transportId}
-      
-    `);
-    //&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}
-    res = res.data;
-    return { status: 0, data: res };
-  } catch (error) {
-    return {
-      status: 3,
-      message: 'Hệ thống website hiện đang bị lỗi',
-      error: error,
-    };
   }
 };
 
@@ -316,7 +345,6 @@ let generationToursHTML = (tours) => {
               </li>
               <li class="tour-list__item-col">
                 <span class="icon">
-                  
                   ${transport}
                 </span>
                 <span> Phương tiện:</span>
@@ -329,15 +357,9 @@ let generationToursHTML = (tours) => {
                 </span>
                 <span>Ngày khởi hành:</span>
                 <div class="tour-list__item-day-container">
-                  <span class="tour-list__button --left">
-                    <i class="fa-solid fa-caret-left"></i>
-                  </span>
                   <ul class="tour-list__item-startDay">
                     ${calendarsHTML}
                   </ul>
-                  <span class="tour-list__button --right active">
-                    <i class="fa-solid fa-caret-right"></i>
-                  </span>
                 </div>
               </li>
             </ul>
@@ -356,6 +378,7 @@ let generationToursHTML = (tours) => {
     `;
   });
   tourList.innerHTML += toursHTML; // Hiển thị dữ liệu tour
+  eventScrollDate();
 };
 
 let generationProvincesHTML = (dataProvinces) => {
