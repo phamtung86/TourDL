@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -25,8 +23,8 @@ public class UserTourOrderController {
 	@Autowired
 	private ModelMapper modelMapper;
 	@GetMapping
-	public Page<UserTourOrderDTO> pageUTOs(Pageable pageable) {
-	    Page<UserTourOrder> pageUTOs = userTourOrderService.pageUTOs(pageable);
+	public Page<UserTourOrderDTO> pageUTOs(Pageable pageable, @RequestParam(required = false) int status) {
+	    Page<UserTourOrder> pageUTOs = userTourOrderService.pageUTOs(pageable,status);
 
 	    // Ánh xạ từ List<UserTourOrder> sang List<UserTourOrderDTO>
 	    List<UserTourOrderDTO> pageUTOsDTO = pageUTOs.getContent().stream()
@@ -36,6 +34,17 @@ public class UserTourOrderController {
 	    // Tạo Page<UserTourOrderDTO> từ List<UserTourOrderDTO>
 	    Page<UserTourOrderDTO> dtoPage = new PageImpl<>(pageUTOsDTO, pageable, pageUTOs.getTotalElements());
 	    return dtoPage;
+	}
+	@GetMapping("/utos-by-order")
+	public UserTourOrderDTO fifindUserTourOrderById(@RequestParam int userId, @RequestParam int orderId){
+		UserTourOrder uto = userTourOrderService.findUserTourOrderById(userId,orderId);
+		UserTourOrderDTO userTourOrderDTO = modelMapper.map(uto, UserTourOrderDTO.class);
+		return userTourOrderDTO;
+	}
+
+	@PutMapping
+	public void updateStaus (@RequestParam int userId, @RequestParam int orderId, @RequestParam int status) {
+		userTourOrderService.updateStatus(userId,orderId,status);
 	}
 
 }

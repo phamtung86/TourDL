@@ -54,6 +54,8 @@ function renderVoucher(voucher) {
     document.getElementById('voucherValue').value = voucher.value;
     document.getElementById('voucherStartDate').value = formatDateForInput(voucher.startDate);
     document.getElementById('voucherExpiryDate').value = formatDateForInput(voucher.expiryDate);
+    console.log(document.getElementById('voucherType').value);
+    
 }
 
 // Hàm kiểm tra tính hợp lệ của type và value

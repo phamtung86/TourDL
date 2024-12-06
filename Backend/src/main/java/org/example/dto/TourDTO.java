@@ -2,6 +2,7 @@ package org.example.dto;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import org.example.modal.TourType;
 import org.example.modal.Transport;
 
@@ -26,6 +27,10 @@ public class TourDTO {
 	private String tourDestination;
 
 	private String tourDeparturePoint;
+
+	private String destinationSlug;
+
+	private String departureSlug;
 
 	private Transport transport;
 
