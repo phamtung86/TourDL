@@ -88,6 +88,17 @@ const initWebRouters = (app) => {
     return res.render('customer/register.ejs');
   });
 
+  // trang order
+  router.get('/admin-order', (req, res) => {
+    return res.render('admin/order.ejs');
+  });
+
+  router.get('/admin-order/user/:userId/order/:orderID', (req, res) => {
+    const userId = req.params.userId;
+    const orderId = req.params.orderID;
+    return res.render('admin/orderAdminDetail.ejs', {userId,orderId});
+  });
+
   return app.use('/', router);
 };
 

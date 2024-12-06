@@ -31,7 +31,7 @@ public class UserTourOrder {
 	private TourOrder tourOrder;
 
 	@Column(name = "status")
-	private String status;
+	private int status; // 0: Dang cho xu ly - 1: Da tiep nhan - 2: Da hoan thanh - -1:Da huy
 
 	@Column(name = "tour_start_date")
 	private Date tourStartDate;

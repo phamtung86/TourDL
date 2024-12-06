@@ -51,7 +51,7 @@ public class TourSpecification {
 		}
 
 		if (!StringUtil.isNullOrEmpty(departure)) {
-			CustomSpecification departureCondition = new CustomSpecification(type, "departurePoint", departure);
+			CustomSpecification departureCondition = new CustomSpecification(type, "departureSlug", departure);
 			if (where == null) {
 				where = Specification.where(departureCondition);
 			} else {
@@ -60,7 +60,7 @@ public class TourSpecification {
 		}
 
 		if (!StringUtil.isNullOrEmpty(destination)) {
-			CustomSpecification destinationCondition = new CustomSpecification(type, "destination", destination);
+			CustomSpecification destinationCondition = new CustomSpecification(type, "destinationSlug", destination);
 			if (where == null) {
 				where = Specification.where(destinationCondition);
 			} else {
@@ -124,11 +124,11 @@ class CustomSpecification implements Specification<Tour> {
 			if (field.equalsIgnoreCase("maxBudget")) {
 				return criteriaBuilder.lessThanOrEqualTo(root.get("price"), value.toString());
 			}
-			if (field.equalsIgnoreCase("departurePoint")) {
-				return criteriaBuilder.like(root.get("departurePoint"), "%" + value.toString() + "%");
+			if (field.equalsIgnoreCase("departureSlug")) {
+				return criteriaBuilder.like(root.get("departureSlug"), "%" + value.toString() + "%");
 			}
-			if (field.equalsIgnoreCase("destination")) {
-				return criteriaBuilder.like(root.get("destination"), "%" + value.toString() + "%");
+			if (field.equalsIgnoreCase("destinationSlug")) {
+				return criteriaBuilder.like(root.get("destinationSlug"), "%" + value.toString() + "%");
 			}
 			if (field.equalsIgnoreCase("tourType")) {
 				Join<Tour, TourType> tourTypeJoin = root.join("tourType");
