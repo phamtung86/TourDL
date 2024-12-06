@@ -1,14 +1,15 @@
 package org.example.service;
 
-import org.example.dto.TourDTO;
 import org.example.form.TourFilterForm;
 import org.example.modal.Tour;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
+
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface ITourService {
 
@@ -32,15 +33,9 @@ public interface ITourService {
 
 	// bo loc tim kiem
 	Page<Tour> filterTours(Pageable pageable, TourFilterForm tourFilterForm, String departure, String destination,
-						   Integer tourType, Integer transportId, Date startDate);
+			Integer tourType, Integer transportId, Date startDate);
 
 	Long totalTour();
 
 	List<Long> getTotalByType();
-
-	Page<TourDTO> getTours(int page, int size);
-
-	Optional<TourDTO> getTourById(String tourId);
-	Tour updateTour(String tourId, Tour updatedTour);
 }
-

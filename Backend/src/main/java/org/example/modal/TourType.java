@@ -31,9 +31,5 @@ public class TourType {
 	@OneToMany
 	@JoinColumn(name = "id", referencedColumnName = "id")
 	private List<Tour> tours;
-	public TourType(int id, String name){
-		this.id = id;
-		this.name = name;
-	}
 
 }

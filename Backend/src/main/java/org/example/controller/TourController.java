@@ -7,7 +7,9 @@ import org.example.service.ITourService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,6 +35,11 @@ public class TourController {
 		return tourService.getAllTours();
 	}
 
+	// get tour by name
+	@GetMapping("/search")
+	public List<Tour> getTourByName(@RequestParam("tourName") String tourName) {
+		return tourService.getTourByName(tourName);
+	}
 
 	// add tour
 	@PostMapping
@@ -53,6 +59,14 @@ public class TourController {
 		}
 	}
 
+	// update tour by id
+	@PutMapping("/{id}")
+	public ResponseEntity<Tour> updateTour(@PathVariable("id") String id, @RequestBody Tour tourUpdate) {
+//        Tour updatedTour = tourService.updateTour(id, tourUpdate);
+//        return ResponseEntity.ok(updatedTour);
+		return null;
+	}
+
 	// Phan trang tour
 	@GetMapping("/page")
 	public Page<TourDTO> getToursByPage(Pageable pageable) {
@@ -69,7 +83,6 @@ public class TourController {
 
 		return dtoTours;
 	}
-
 
 	@GetMapping("/filter-tour")
 	public Page<TourDTO> filterTours(Pageable pageable, @RequestParam(required = false) TourFilterForm tourFilterForm,
@@ -93,31 +106,5 @@ public class TourController {
 	public long getTotal() {
 		return tourService.totalTour();
 	}
-	@GetMapping("/totalType")
-	public List<Long> getTotalType(){
-		return tourService.getTotalByType();
-	}
-	@GetMapping("/admin/page")
-	public ResponseEntity<Page<TourDTO>> getTours(
-			@RequestParam(name = "page",defaultValue = "0") int page,
-			@RequestParam(name = "size",defaultValue = "5") int size
-	) {
-		Page<TourDTO> tours = tourService.getTours(page, size);
-		return ResponseEntity.ok(tours);
-	}
-	@GetMapping("tour/{tourId}")
-	public ResponseEntity<TourDTO> getTourById(@PathVariable("tourId") String tourId){
-		Optional<TourDTO> tour =tourService.getTourById(tourId);
-        return tour.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-	@PutMapping("tour/{tourId}")
-	public ResponseEntity<Tour> updateTour(@PathVariable("tourId") String tourId, @RequestBody Tour updatedTour) {
-		Tour tour = tourService.updateTour(tourId, updatedTour);
-		if (tour != null) {
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
-
 
 }

@@ -1,17 +1,15 @@
 package org.example.service;
-import java.util.*;
-
-import org.example.dto.TourDTO;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 import org.example.form.TourFilterForm;
 import org.example.modal.Calendar;
 import org.example.modal.Tour;
-import org.example.modal.TourType;
-import org.example.modal.Transport;
 import org.example.reponsitory.TourReponsitory;
 import org.example.specification.TourSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -117,52 +115,7 @@ public class TourService implements ITourService {
 
 	@Override
 	public List<Long> getTotalByType() {
-		List<Long> totalTourByType = new ArrayList<>();
-		Long tk = 0L;
-		Long gt = 0L;
-		Long tc = 0L;
-		Long cc = 0L;
-
-		for (Tour tour : tourReponsitory.findAll()){
-			switch (tour.getTourType().getId()){
-				case 1 : tk++; break;
-				case 2 : gt++; break;
-				case 3 : tc++; break;
-				case 4 : cc++; break;
-			}
-		}
-		totalTourByType.add(tk);
-		totalTourByType.add(gt);
-		totalTourByType.add(tc);
-		totalTourByType.add(cc);
-		return totalTourByType;
+		return List.of();
 	}
 
-	@Override
-	public Page<TourDTO> getTours(int page ,int size) {
-		Pageable pageable = PageRequest.of(page, size);
-		return tourReponsitory.findAll(pageable).map(TourDTO::new);
-	}
-
-	@Override
-	public Optional<TourDTO> getTourById(String tourId) {
-		return tourReponsitory.findById(tourId).map(TourDTO::new);
-	}
-
-	@Override
-	public Tour updateTour(String tourId, Tour updatedTour) {
-		Optional<Tour> existingTourOpt = tourReponsitory.findById(tourId);
-		if (existingTourOpt.isPresent()) {
-			Tour existingTour = existingTourOpt.get();
-			existingTour.setName(updatedTour.getName());
-			existingTour.setPrice(updatedTour.getPrice());
-			existingTour.setDestination(updatedTour.getDestination());
-			existingTour.setDeparturePoint(updatedTour.getDeparturePoint());
-			existingTour.setImageLink(updatedTour.getImageLink());
-			existingTour.setTourType(new TourType(updatedTour.getTourType().getId(), updatedTour.getName()));
-			existingTour.setTransport(new Transport(updatedTour.getTransport().getId(),updatedTour.getTransport().getName()));
-			return tourReponsitory.save(existingTour);
-		}
-		return null; // Nếu không tìm thấy tour với ID, trả về null hoặc bạn có thể ném exception
-	}
 }
