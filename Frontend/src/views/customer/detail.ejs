@@ -22,7 +22,7 @@ các phần gồm có detail.ejs detail.css
     <link rel="stylesheet" href="/assets/css/detail.css">
     <link rel="stylesheet" href="/assets/css/grid.css">
     <!-- end link css -->
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Trang chi tiết</title>
 </head>
 
@@ -48,8 +48,7 @@ các phần gồm có detail.ejs detail.css
     <!-- Body Content -->
     <section class="detailpage-main">
         <div class="tour-header">
-            <h2>Để header ở đây
-            </h2>
+            <h2>Để header ở đây</h2>
         </div>
 
         <div class="tabs-detail">
@@ -68,24 +67,8 @@ các phần gồm có detail.ejs detail.css
         <div class="tour-detail">
             <div class="tour-detail-content">
                 <div class="tour-detail_content-left">
-                    <div class="img-gallery">
-                        <div class="img-thumbnails">
-                            <div class="ithumbnails">
-                                <img src="assets/image/tour/caurong.jpg" class="thumbnails">
-                            </div>
-                            <div class="ithumbnails">
-                                <img src="assets/image/tour/caurong.jpg" class="thumbnails">
-                            </div>
-                            <div class="ithumbnails">
-                                <img src="assets/image/tour/caurong.jpg" class="thumbnails">
-                            </div>
-                            <div class="ithumbnails">
-                                <img src="assets/image/tour/caurong.jpg" class="thumbnails">
-                            </div>
-                        </div>
-                        <div class="img-main">
-                            <img src="assets/image/tour/caurong.jpg" alt="">
-                        </div>
+                    <div class="img-main">
+                        <img src="assets/image/tour/caurong.jpg" alt="picture">
                     </div>
 
                     <div id="tour-info">
@@ -96,16 +79,8 @@ các phần gồm có detail.ejs detail.css
                                     <!-- Sidebar -->
                                     <div class="calendar-sidebar">
                                         <h3>Chọn tháng</h3>
-                                        <ul>
-                                            <li class="active">12/2024</li>
-                                            <li>1/2025</li>
-                                            <li>2/2025</li>
-                                            <li>3/2025</li>
-                                            <li>4/2025</li>
-                                            <li>5/2025</li>
-                                            <li>6/2025</li>
-                                            <li>7/2025</li>
-                                            <li>8/2025</li>
+                                        <ul id="monthList">
+                                            danh sách tháng/năm
                                         </ul>
                                     </div>
 
@@ -113,9 +88,9 @@ các phần gồm có detail.ejs detail.css
                                     <div class="calendar">
                                         <!-- Header -->
                                         <div class="calendar-header">
-                                            <button class="prev-month">❮</button>
-                                            <h2 class="month-name">Tên tháng/năm</h2>
-                                            <button class="next-month">❯</button>
+                                            <button class="prev-month" id="prevMonth">❮</button>
+                                            <h2 class="month-name" id="monthName">Tên tháng/năm</h2>
+                                            <button class="next-month" id="nextMonth">❯</button>
                                         </div>
 
                                         <!-- Weekdays -->
@@ -130,21 +105,7 @@ các phần gồm có detail.ejs detail.css
                                         </div>
 
                                         <!-- Days -->
-                                        <div class="calendar-days">
-                                            <div class="day empty"></div>
-                                            <div class="day">25</div>
-                                            <div class="day">26</div>
-                                            <div class="day">27</div>
-                                            <div class="day">28</div>
-                                            <div class="day">29</div>
-                                            <div class="day">30</div>
-                                            <div class="day">1</div>
-                                            <div class="day price selected">3<br><span>13,500K</span></div>
-                                            <div class="day price">10<br><span>13,500K</span></div>
-                                            <div class="day price">17<br><span>13,500K</span></div>
-                                            <div class="day price">24<br><span>14,500K</span></div>
-                                            <div class="day price">31<br><span>15,500K</span></div>
-                                        </div>
+                                        <div class="calendar-days" id="calendarDays"></div>
                                     </div>
                                 </div>
                             </div>
