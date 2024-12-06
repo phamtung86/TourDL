@@ -5,6 +5,8 @@ import org.example.modal.Tour;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.modal.Voucher;
+
 import java.sql.Timestamp;
 
 @Data
@@ -21,16 +23,13 @@ public class CalendarDTO {
 	private Timestamp calendarStartDate;
 	private int calendarSlot;
 	private String tourId;
-	private int voucherID;
+	private Voucher voucher;
 
 	public CalendarDTO(Calendar calendar) {
+		this.calendarId=calendar.getId();
 		this.tourId = calendar.getTour().getId();
 		this.calendarStartDate = calendar.getStartDate();
-		if (calendar.getVoucherId() == null) {
-			this.voucherID = 0;
-		} else {
-			this.voucherID = calendar.getVoucherId();
-		}
+		this.voucher = calendar.getVoucher();
 	}
 
 }

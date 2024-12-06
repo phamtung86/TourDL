@@ -12,7 +12,7 @@ public interface ICalendarService {
 
 	Calendar createNewCalendar(Calendar calendar);
 
-	List<Calendar> findCalendarbyTour(String tourID);
+	List<CalendarDTO> findCalendarbyTour(String tourID);
 
 	List<CalendarDTO> getExpiredCalendars();
 

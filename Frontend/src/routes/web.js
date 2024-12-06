@@ -42,10 +42,24 @@ const initWebRouters = (app) => {
     const voucherId = req.params.id;
     return res.render('admin/voucherModify.ejs', { voucherId });
   });
+  router.get('/calendar/add', (req, res) => {
+    return res.render('admin/calendarAdd.ejs');
+  });
+  router.get('/calendar/modify/:id', (req, res) => {
+    const calendarId = req.params.id;
+    return res.render('admin/calendarModify.ejs', { calendarId });
+  });
+  
   // trang quản lý tài khoản
   router.get('/customer', (req, res) => {
     return res.render('admin/customer.ejs');
   });
+  router.get('/tour/calendar/:id', (req, res) => {
+    const tourId = req.params.id;
+    return res.render('admin/tourCalendar.ejs',{tourId});
+  });
+  
+
 
   // trang cập nhật tài khoản người dùng
   router.get('/customerModify/:id', (req, res) => {

@@ -12,7 +12,7 @@
   <div class="tour-crud">
     <%- include('./menuBar.ejs') %>
       <div class="tour__admin--add-form" id="addTourForm">
-        <h1>Thêm Mới Tour</h1>
+        <h1>Sửa Thông Tin Tour</h1>
         <form class="crudFrom">
           <div class="lable_input">
             <label class="from_lable" for="tourId">ID Tour:</label>
@@ -43,12 +43,17 @@
           </div>
           <div class="lable_input">
             <label class="from_lable" for="tourStartPoint">Điểm Khởi Hành:</label>
-            <input type="text" class="tour_input" id="tourStartPoint" name="tourStartPoint" required>
-          </div>
-          <div class="lable_input">
+            <select class="tour_input" id="tourStartPoint" name="tourStartPoint" required>
+                <option value="">Chọn điểm khởi hành</option>
+            </select>
+        </div>
+        
+        <div class="lable_input">
             <label class="from_lable" for="tourEndPoint">Điểm Đến:</label>
-            <input type="text" class="tour_input" id="tourEndPoint" name="tourEndPoint" required>
-          </div>
+            <select class="tour_input" id="tourEndPoint" name="tourEndPoint" required>
+                <option value="">Chọn điểm đến</option>
+            </select>
+        </div>
           <div class="lable_input">
             <label class="from_lable" for="tourTransport">Phương Tiện:</label>
             <select class="tour-input-transport">

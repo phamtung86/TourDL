@@ -24,15 +24,18 @@ public class CalendarController {
 	}
 
 	@PostMapping("/Calendars")
-	public ResponseEntity<Calendar> createCalendar(@RequestBody Calendar calendar) {
-		Calendar newCalendar = calendarService.createNewCalendar(calendar);
-		return new ResponseEntity<>(newCalendar, HttpStatus.CREATED);
-	}
+	public ResponseEntity<?> createCalendar(@RequestBody Calendar calendar) {
+        try {
+            Calendar newCalendar = calendarService.createNewCalendar(calendar);
+            return new ResponseEntity<>(newCalendar, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
 
 	@GetMapping("/Calendars/{tourId}")
-	public List<Calendar> listCalendarByTourId(@PathVariable("tourId") String id) {
-		List<Calendar> calendarsbyTourId = calendarService.findCalendarbyTour(id);
-		return calendarsbyTourId;
+	public List<CalendarDTO> listCalendarByTourId(@PathVariable("tourId") String tourId) {
+        return calendarService.findCalendarbyTour(tourId);
 	}
 
 	// API để lấy các calendar đã hết hạn
