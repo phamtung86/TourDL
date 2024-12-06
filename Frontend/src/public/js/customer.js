@@ -80,20 +80,6 @@ function filterUsers(keyword) {
 }
 
 /**
- * Xử lý sự kiện chỉnh sửa người dùng
- */
-function handleEditClick() {
-    const selectedRadio = document.querySelector('input[name="userSelection"]:checked');
-    if (selectedRadio) {
-        const userId = selectedRadio.value;
-        window.location.href = `/customerModify/${userId}`;
-    } else {
-        alert("Vui lòng chọn một người dùng để sửa.");
-    }
-}
-
-
-/**
  * Gán các sự kiện DOM
  */
 function handleEvents() {
@@ -103,11 +89,6 @@ function handleEvents() {
         const keyword = event.target.value.trim();
         filterUsers(keyword);
     });
-
-    // Sự kiện nhấn nút "Sửa"
-    const editButton = document.querySelector('.action__edit');
-    editButton.addEventListener('click', handleEditClick);
-
 }
 
 /**

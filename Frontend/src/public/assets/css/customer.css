@@ -168,10 +168,6 @@
     border-radius: 10px;
 }
 
-/* .action__add{
-    background-color: #39c449;
-    color: white;
-} */
 .action__refresh {
     background-color: #009efb;
     color: white;
@@ -179,11 +175,6 @@
 
 .action__look {
     background-color: darkviolet;
-    color: white;
-}
-
-.action__edit {
-    background-color: red;
     color: white;
 }
 

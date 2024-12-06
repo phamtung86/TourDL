@@ -42,12 +42,6 @@ const initWebRouters = (app) => {
     return res.render('admin/customer.ejs');
   });
 
-  // trang cập nhật tài khoản người dùng
-  router.get('/customerModify/:id', (req, res) => {
-    const customerId = req.params.id;
-    return res.render('admin/customerModify.ejs', { customerId });
-  });
-
   router.get('/tour', (req, res) => {
     return res.render('admin/tour.ejs');
   });

@@ -10,40 +10,23 @@ document.querySelector('.toggle-password').addEventListener('click', function ()
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("form");
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
+document.querySelector(".btn-submit").addEventListener("click", async (event) => {
+    event.preventDefault(); // Ngăn form reload trang
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault(); // Ngăn không reload trang
+    try {
+        const response = await axios.post("http://localhost:8080/api/auth/login", {
+            email,
+            password
+        });
 
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value;
+        // Lưu token vào localStorage (nếu cần)
+        localStorage.setItem("token", response.data.data.token);
 
-        // Kiểm tra đầu vào
-        if (!username || !password) {
-            alert("Vui lòng nhập đầy đủ thông tin tài khoản và mật khẩu.");
-            return;
-        }
-
-        try {
-            // Gửi yêu cầu POST với Axios
-            const response = await axios.post("http://localhost:8080/api/User/users", {
-                username: username,
-                password: password
-            });
-
-            // Xử lý phản hồi từ server
-            if (response.data.success) {
-                alert("Đăng nhập thành công!");
-                window.location.href = "/dashboard"; // Chuyển hướng nếu cần
-            } else {
-                alert(response.data.message || "Sai thông tin đăng nhập.");
-            }
-        } catch (error) {
-            console.error("Đã xảy ra lỗi:", error);
-            alert("Không thể kết nối đến server. Vui lòng thử lại sau.");
-        }
-    });
+        alert("Đăng nhập thành công!");
+        window.location.href = "/"; // Điều hướng đến trang home
+    } catch (error) {
+        alert(error.response.data.message || "Đăng nhập thất bại, vui lòng thử lại!");
+    }
 });

@@ -87,7 +87,7 @@ ul {
     border: 1px rgb(168, 172, 170) solid;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
 }
 
 .title-form {
@@ -129,7 +129,7 @@ ul {
     margin-bottom: 5px;
     /* background: #f2f3f5; */
     font-size: 16px;
-    font-family: 'Times New Roman', Times, serif;
+    /* font-family: 'Roboto', sans-serif; */
 }
 
 .toggle-password {
