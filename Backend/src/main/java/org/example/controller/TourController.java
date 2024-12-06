@@ -85,7 +85,7 @@ public class TourController {
 	}
 
 	@GetMapping("/filter-tour")
-	public Page<TourDTO> filterTours(Pageable pageable, @RequestParam(required = false) TourFilterForm tourFilterForm,
+	public Page<TourDTO> filterTours(Pageable pageable, TourFilterForm tourFilterForm,
 			@RequestParam(required = false) String departure, @RequestParam(required = false) String destination,
 			@RequestParam(required = false) Integer tourType, @RequestParam(required = false) Integer transportId,
 			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {

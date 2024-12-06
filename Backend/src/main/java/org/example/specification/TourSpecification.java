@@ -12,6 +12,7 @@ import org.example.modal.Tour;
 import org.example.modal.TourType;
 import org.example.form.TourFilterForm;
 import org.example.modal.Calendar;
+import org.example.modal.Transport;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -134,7 +135,7 @@ class CustomSpecification implements Specification<Tour> {
 				return criteriaBuilder.equal(tourTypeJoin.get("id"), Integer.valueOf(value.toString()));
 			}
 			if (field.equalsIgnoreCase("transportId")) {
-				Join<Tour, TourType> transportJoin = root.join("Transport");
+				Join<Tour, Transport> transportJoin = root.join("transport");
 				return criteriaBuilder.equal(transportJoin.get("id"), Integer.valueOf(value.toString()));
 			}
 			if (field.equalsIgnoreCase("startDate")) {

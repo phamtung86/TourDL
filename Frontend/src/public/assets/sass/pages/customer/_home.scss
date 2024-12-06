@@ -63,12 +63,26 @@
           position: relative;
           &:hover {
             cursor: pointer;
-            background: #daefff;
+            background-color: #daefff;
             border: 1px solid #0b5da7;
             transition: ease-in-out 0.2s all;
             span {
               color: #0b5da7;
             }
+            .tour-filter__input-date {
+              color: #0b5da7;
+              background-color: #daefff;
+              transition: ease-in-out 0.2s all;
+              cursor: pointer;
+            }
+          }
+          .tour-filter__input-date {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: $fs-small;
+            font-weight: bold;
+            color: #000;
           }
           span {
             font-size: $fs-small - 0.1em;

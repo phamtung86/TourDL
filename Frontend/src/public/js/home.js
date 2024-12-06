@@ -32,9 +32,7 @@ let apiGetTours = '';
 
 //* Hàm set lại options params cho url filter tours
 let setAPIGetTours = (params) => {
-  apiGetTours = `
-    ${URL_API_SERVER_V1}/tours/filter-tour?size=10&sort=${params.sort},asc&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}&tourType=${params.tourType}&transportId=${params.transportId}
-  `;
+  apiGetTours = `${URL_API_SERVER_V1}/tours/filter-tour?size=10&sort=${params.sort},asc&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}&tourType=${params.tourType}&transportId=${params.transportId}`;
 };
 
 setAPIGetTours({
@@ -186,6 +184,7 @@ const loadEventHTML = () => {
     );
     let textDeparturePoint = departurePoint.innerText.toString();
     let textDestination = destination.innerText.toString();
+    console.log(textDeparturePoint, textDestination);
     textDeparturePoint === 'Tất cả'
       ? (textDeparturePoint = '')
       : (textDeparturePoint = textDeparturePoint);
@@ -212,6 +211,7 @@ const loadEventHTML = () => {
       alert(res.message);
       console.log(res.error); // Console.log lỗi
       tourList.innerHTML = ``;
+      return;
     }
     let data = res.data;
     // Reset trạng thái về ban đầu
@@ -230,7 +230,9 @@ const loadEventHTML = () => {
 //* Lấy dữ liệu tours từ API
 let resTourList = async (pageNumber) => {
   try {
-    let res = await axios.get(`${apiGetTours}&pageNumber=${pageNumber}`);
+    let api = `${apiGetTours.toString()}&pageNumber=${pageNumber}`;
+    console.log(api);
+    let res = await axios.get(api);
     res = res.data;
     return { status: 0, data: res };
   } catch (error) {
@@ -400,6 +402,7 @@ let renderTourList = async () => {
     alert(res.message);
     console.log(res.error); // Console.log lỗi
     tourList.innerHTML = ``;
+    return;
   }
   let data = res.data;
   pageNumber = data.totalPages; // Gán số trang -> khi scroll gọi lại số lần api
