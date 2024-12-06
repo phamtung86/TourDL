@@ -21,4 +21,8 @@ public class Transport {
 	@Column(name = "name")
 	private String name;
 
+    public Transport(int id, String name) {
+		this.id = id;
+		this.name = name;
+    }
 }

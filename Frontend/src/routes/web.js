@@ -31,10 +31,17 @@ const initWebRouters = (app) => {
   router.get('/voucher/add', (req, res) => {
     return res.render('admin/voucherAdd.ejs');
   });
+  router.get('/tour/add', (req, res) => {
+    return res.render('admin/tourAdd.ejs');
+  });
 
   router.get('/voucher/modify/:id', (req, res) => {
     const voucherId = req.params.id;
     return res.render('admin/voucherModify.ejs', { voucherId });
+  });
+  router.get('/tour/modify/:id', (req, res) => {
+    const tourId = req.params.id;
+    return res.render('admin/tourModify.ejs', { tourId });
   });
 
   // trang quản lý tài khoản

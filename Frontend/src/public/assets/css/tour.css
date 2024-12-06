@@ -174,3 +174,31 @@ padding: 10px;
     color: #0b0909; /* Đổi màu chữ khi hover */
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Thêm hiệu ứng sáng lên (shadow) */
 }
+.button--page {
+    display: flex; /* Hiển thị theo hàng ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    gap: 10px; /* Khoảng cách giữa các phần tử */
+    margin: 20px 0; /* Khoảng cách trên/dưới */
+  }
+  
+  .button--page button {
+    background-color: #4CAF50; /* Màu nền xanh lá */
+    color: white; /* Màu chữ trắng */
+    border: none; /* Loại bỏ viền */
+    border-radius: 5px; /* Bo tròn các góc */
+    padding: 10px 20px; /* Khoảng cách bên trong nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Thay đổi con trỏ khi hover */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+  }
+  
+  .button--page button:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+  }
+  
+  .numberPage {
+    font-size: 18px; /* Kích thước chữ */
+    font-weight: bold; /* In đậm chữ */
+    color: #333; /* Màu chữ */
+  }
