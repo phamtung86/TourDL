@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "tour_order")
@@ -41,4 +42,6 @@ public class TourOrder {
 	@JoinColumn(name = "tour_id", referencedColumnName = "id")
 	private Tour tour;
 
+	@OneToMany(mappedBy = "tourOrder")
+	private List<Member> members;
 }
