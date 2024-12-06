@@ -4,24 +4,24 @@ import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequest {
 	@NotBlank(message = "Email cannot be blank")
-	private String emailOrUserName;
+	private String email;
 	@NotBlank(message = "password cannot be blank")
 	private String password;
 
-	public LoginRequest(String emailOrUserName, String password) {
-		this.emailOrUserName = emailOrUserName;
+	public LoginRequest(String email, String password) {
+		this.email = email;
 		this.password = password;
 	}
 
 	public LoginRequest() {
 	}
 
-	public @NotBlank(message = "Email cannot be blank") String getEmailOrUserName() {
-		return emailOrUserName;
+	public @NotBlank(message = "Email cannot be blank") String getEmail() {
+		return email;
 	}
 
-	public void setEmail(@NotBlank(message = "Email cannot be blank") String emailOrUserName) {
-		this.emailOrUserName = emailOrUserName;
+	public void setEmail(@NotBlank(message = "Email cannot be blank") String email) {
+		this.email = email;
 	}
 
 	public @NotBlank(message = "password cannot be blank") String getPassword() {
