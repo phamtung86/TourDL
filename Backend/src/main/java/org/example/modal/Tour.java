@@ -38,6 +38,10 @@ public class Tour {
 	@Column(name = "departure_point")
 	private String departurePoint;
 
+	@Column(name="destination_slug")
+	private String destinationSlug;
+	@Column(name = "departure_slug")
+	private String departureSlug;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "transport_id")
 	private Transport transport;

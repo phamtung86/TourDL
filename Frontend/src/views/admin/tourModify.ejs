@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Thêm mới tour</title>
+  <title>Sửa Thông Tin Tour</title>
   <%- include('../partials/head') %>
     <link rel="stylesheet" href="/assets/css/tourAdd.css">
     <link rel="stylesheet" href="/assets/css/index.css">
@@ -52,7 +53,7 @@
             <label class="from_lable" for="tourTransport">Phương Tiện:</label>
             <select class="tour-input-transport">
               <option value="1">Xe Máy</option>
-              <option value="0">Máy Bay</option>
+              <option value="2">Máy Bay</option>
             </select>
           </div>
           <div class="lable_input">
@@ -73,7 +74,7 @@
       <%- include('../partials/baseScript')%>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="/js/tourAdd.js"></script>
+  <script src="/js/tourModify.js"></script>
 </body>
 
 </html>
