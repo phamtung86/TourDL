@@ -44,7 +44,7 @@ public class AuthController {
 		try {
 			// Xác thực thông tin đăng nhập
 			Authentication authentication = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+					.authenticate(new UsernamePasswordAuthenticationToken(request.getEmailOrUserName(), request.getPassword()));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
 			// Tạo JWT token

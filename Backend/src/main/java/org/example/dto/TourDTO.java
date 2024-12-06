@@ -2,6 +2,7 @@ package org.example.dto;
 
 import java.util.List;
 
+import org.example.modal.Tour;
 import org.example.modal.TourType;
 import org.example.modal.Transport;
 
@@ -19,15 +20,23 @@ public class TourDTO {
 
 	private String tourImageLink;
 
-	private String tourFileName;
-
 	private String tourDestination;
 
 	private String tourDeparturePoint;
 
-	private Transport transport;
+	private String nameTransport;
 
-	private TourTypeDTO tourType;
+	private String nameType;
 
-	private List<CalendarDTO> calendar;
+
+	public TourDTO(Tour tour){
+		this.tourId = tour.getId();
+		this.name=tour.getName();
+		this.tourPrice = tour.getPrice();
+		this.tourImageLink = tour.getImageLink();
+		this.tourDestination=tour.getDestination();
+		this.tourDeparturePoint = tour.getDeparturePoint();
+		this.nameTransport = tour.getTransport().getName();
+		this.nameType=tour.getTourType().getName();
+	}
 }

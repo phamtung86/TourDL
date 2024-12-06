@@ -1,78 +1,112 @@
-/* Tạo một container lớn hơn và căn giữa */
-.form-container {
-    width: 80%;  /* Điều chỉnh độ rộng, có thể thay đổi giá trị này tùy thuộc vào màn hình */
-    max-width: 900px; /* Giới hạn chiều rộng tối đa */
-    margin: 0 auto; /* Căn giữa form */
-    padding: 20px;
-    box-sizing: border-box;
+.tour-crud{
+    display: flex;
+    width: 100%;
 }
-
-.tour-form {
-    background-color: #fff;
-    padding: 30px; /* Thêm không gian xung quanh các phần tử trong form */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;  /* Đảm bảo form chiếm toàn bộ chiều rộng của container */
+.tour__admin--add-form {
+    width: 85%;
 }
-
-.tour-form .form-group {
-    margin-bottom: 20px; /* Tăng khoảng cách giữa các trường nhập */
-}
-
-.tour-form label {
+.tour__admin--add-form.show {
     display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 16px; /* Điều chỉnh kích thước chữ */
+    top: 60px;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
     color: #333;
 }
 
-.tour-form input,
-.tour-form select,
-.tour-form textarea {
-    width: 100%;
-    padding: 12px; /* Tăng padding trong các input */
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    outline: none;
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #444;
 }
 
-.tour-form input:focus,
-.tour-form select:focus,
-.tour-form textarea:focus {
-    border-color: #007bff; /* Chỉnh sửa khi focus vào các input */
+.crudFrom {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.tour-form .form-actions {
+.lable_input {
     display: flex;
-    justify-content: flex-end;
-    gap: 15px;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
-.tour-form .btn-submit,
-.tour-form .btn-reset {
-    padding: 12px 25px;
+.from_lable {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.tour_input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.tour_input:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.tour-input,.tour-input-type,.tour-input-transport {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.tour-input:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.form-button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.form-button-cancel, .form-button-submit {
+    padding: 10px 20px;
     font-size: 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.tour-form .btn-submit {
+.form-button-cancel {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.form-button-cancel:hover {
+    background-color: #c82333;
+}
+
+.form-button-submit {
     background-color: #007bff;
     color: #fff;
 }
 
-.tour-form .btn-reset {
-    background-color: #6c757d;
-    color: #fff;
-}
-
-.tour-form .btn-submit:hover {
+.form-button-submit:hover {
     background-color: #0056b3;
-}
-
-.tour-form .btn-reset:hover {
-    background-color: #5a6268;
 }
