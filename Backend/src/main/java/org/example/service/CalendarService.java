@@ -2,7 +2,11 @@ package org.example.service;
 
 import org.example.dto.CalendarDTO;
 import org.example.modal.Calendar;
+import org.example.modal.Tour;
+import org.example.modal.Voucher;
 import org.example.reponsitory.CalendarReponsitory;
+import org.example.reponsitory.TourReponsitory;
+import org.example.reponsitory.VoucherReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +14,16 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CalendarService implements ICalendarService {
 	@Autowired
 	private CalendarReponsitory calendarReponsitory;
+	@Autowired
+	private TourReponsitory tourReponsitory;
+	@Autowired
+	private VoucherReponsitory voucherReponsitory;
 
 	// getAll
 	@Override
@@ -25,21 +34,34 @@ public class CalendarService implements ICalendarService {
 	// CreateCalendarService
 	@Override
 	public Calendar createNewCalendar(Calendar calendar) {
+		Tour tour = tourReponsitory.findById(calendar.getTour().getId())
+				.orElseThrow(() -> new RuntimeException("Tour not found"));
+		calendar.setTour(tour);
+
+		// Lấy thông tin Voucher từ CSDL
+		Voucher voucher = voucherReponsitory.findById(calendar.getVoucher().getId())
+				.orElseThrow(() -> new RuntimeException("Voucher not found"));
+		calendar.setVoucher(voucher);
 		return calendarReponsitory.save(calendar);
+
 
 	}
 
 	// FindCalendarbyTourId
 	@Override
-	public List<Calendar> findCalendarbyTour(String tourID) {
+	public List<CalendarDTO> findCalendarbyTour(String tourID) {
 		List<Calendar> calendars = new ArrayList<>();
-		for (Calendar calendar : getAllCalendar()) {
-			if (calendar.getTour().equals(tourID)) {
+		List<CalendarDTO> calendarDTOS = new ArrayList<>();
+		for (Calendar calendar : calendarReponsitory.findAll()) {
+			if (calendar.getTour().getId().equals(tourID)) {
 				calendars.add(calendar);
 			}
-
 		}
-		return calendars;
+		for (Calendar calendar: calendars){
+			CalendarDTO calendarDTO = new CalendarDTO(calendar);
+			calendarDTOS.add(calendarDTO);
+		}
+		return calendarDTOS;
 	}
 
 	@Override

@@ -124,9 +124,20 @@ btnModify.addEventListener('click', () => {
         const selectedTourId = selectedRadio.value;
         window.location.href = `/tour/modify/${selectedTourId}`;
     } else {
-        alert("Bạn chưa chọn voucher để sửa");
+        alert("Bạn chưa chọn tour để sửa");
     }
 });
+const btnCalendar = document.querySelector(".action__delete")
+btnCalendar.addEventListener('click', () => {
+    const selectedRadio = document.querySelector('input[name="select__voucher"]:checked');
+    if (selectedRadio) {
+        const selectedTourId = selectedRadio.value;
+        window.location.href = `/tour/calendar/${selectedTourId}`;
+    } else {
+        alert("Bạn chưa chọn tour");
+    }
+});
+
 
 // Hàm gọi khi tải trang
 document.addEventListener('DOMContentLoaded', () => {

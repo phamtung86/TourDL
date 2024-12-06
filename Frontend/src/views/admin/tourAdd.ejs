@@ -15,7 +15,7 @@
         <form class="crudFrom">
           <div class="lable_input">
             <label class="from_lable" for="tourId">ID Tour:</label>
-            <input type="text" class="tour_input" id="tourId" name="tourId" required>
+            <input type="text" class="tour_input" id="tourId" name="tourId" readonly>
           </div>
           <div class="lable_input">
             <label class="from_lable" for="tourName">Tên Tour:</label>
@@ -42,17 +42,22 @@
           </div>
           <div class="lable_input">
             <label class="from_lable" for="tourStartPoint">Điểm Khởi Hành:</label>
-            <input type="text" class="tour_input" id="tourStartPoint" name="tourStartPoint" required>
-          </div>
-          <div class="lable_input">
+            <select class="tour_input" id="tourStartPoint" name="tourStartPoint" required>
+                <option value="">Chọn điểm khởi hành</option>
+            </select>
+        </div>
+        
+        <div class="lable_input">
             <label class="from_lable" for="tourEndPoint">Điểm Đến:</label>
-            <input type="text" class="tour_input" id="tourEndPoint" name="tourEndPoint" required>
-          </div>
+            <select class="tour_input" id="tourEndPoint" name="tourEndPoint" required>
+                <option value="">Chọn điểm đến</option>
+            </select>
+        </div>
           <div class="lable_input">
             <label class="from_lable" for="tourTransport">Phương Tiện:</label>
             <select class="tour-input-transport">
               <option value="1">Xe Máy</option>
-              <option value="0">Máy Bay</option>
+              <option value="2">Máy Bay</option>
             </select>
           </div>
           <div class="lable_input">

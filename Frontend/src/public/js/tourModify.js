@@ -2,31 +2,83 @@
 const urlPath = window.location.pathname;
 const tourId = urlPath.split('/').pop(); // Lấy ID từ URL
 
-// Lấy thông tin tour từ API
+// Hàm lấy tỉnh thành
+async function fetchProvinces() {
+    try {
+        const response = await fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1'); // URL API trả về dữ liệu tỉnh thành
+        const data = await response.json();
+
+        // Kiểm tra dữ liệu trả về có hợp lệ không
+        if (data.exitcode === 1 && Array.isArray(data.data.data)) {
+            const startPointSelect = document.getElementById('tourStartPoint');
+            const endPointSelect = document.getElementById('tourEndPoint');
+
+            // Xóa các option cũ
+            startPointSelect.innerHTML = '<option value="">Chọn điểm khởi hành</option>';
+            endPointSelect.innerHTML = '<option value="">Chọn điểm đến</option>';
+
+            // Thêm các option mới từ dữ liệu API
+            data.data.data.forEach(province => {
+                const optionStart = document.createElement('option');
+                optionStart.value = province.name; // Dùng _id làm giá trị
+                optionStart.textContent = province.name; // Tên tỉnh thành
+                startPointSelect.appendChild(optionStart);
+
+                const optionEnd = document.createElement('option');
+                optionEnd.value = province.name;
+                optionEnd.textContent = province.name;
+                endPointSelect.appendChild(optionEnd);
+            });
+        } else {
+            console.error('Dữ liệu không hợp lệ:', data);
+        }
+    } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu tỉnh thành:', error);
+    }
+}
+
+// Hàm lấy thông tin tour từ API
 async function getTourById(id) {
     try {
         const response = await axios.get(`http://localhost:8080/api/v1/tours/tour/${id}`);
         if (response.status === 200) {
             const tour = response.data;
 
-            // Cập nhật các giá trị của các trường
+            // Cập nhật các trường thông tin
             document.getElementById('tourId').value = tour.tourId;
             document.getElementById('tourName').value = tour.name;
             document.getElementById('tourPrice').value = tour.tourPrice;
-            document.getElementById('tourEndPoint').value = tour.tourDestination;
-            document.getElementById('tourStartPoint').value = tour.tourDeparturePoint;
             document.getElementById('tourIamge').value = tour.tourImageLink;
 
-            if(tour.nameTransport=="Xe"){document.querySelector('.tour-input-transport').value =1;}
-            else{
-                document.querySelector('.tour-input-transport').value =0 
-            }
-            switch(tour.nameType){
-                case "Tiết Kiệm" : document.querySelector('.tour-input-type').value =1; break;
-                case "Giá tốt" :  document.querySelector('.tour-input-type').value =2; break;
-                case "Tiêu chuẩn" :  document.querySelector('.tour-input-type').value =3; break;
-                case "Cao cấp" :  document.querySelector('.tour-input-type').value =4; break;
-            }
+            // Xử lý phương tiện di chuyển
+            document.querySelector('.tour-input-transport').value = tour.nameTransport === "Xe" ? 1 : 2;
+
+            // Xử lý loại tour
+            const typeMap = {
+                "Tiết Kiệm": 1,
+                "Giá tốt": 2,
+                "Tiêu chuẩn": 3,
+                "Cao cấp": 4
+            };
+            document.querySelector('.tour-input-type').value = typeMap[tour.nameType] || "";
+
+            // Đặt giá trị cho Điểm Khởi Hành và Điểm Đến sau khi fetchProvinces hoàn tất
+            const startPointSelect = document.getElementById('tourStartPoint');
+            const endPointSelect = document.getElementById('tourEndPoint');
+
+            // Chờ cho fetchProvinces hoàn tất và cập nhật các lựa chọn cho startPointSelect và endPointSelect
+            await fetchProvinces();
+
+            // Lọc và gán giá trị nếu tồn tại
+            const startPointOption = Array.from(startPointSelect.options).find(
+                option => option.textContent.trim() === tour.tourDeparturePoint.trim()
+            );
+            if (startPointOption) startPointSelect.value = startPointOption.value;
+
+            const endPointOption = Array.from(endPointSelect.options).find(
+                option => option.textContent.trim() === tour.tourDestination.trim()
+            );
+            if (endPointOption) endPointSelect.value = endPointOption.value;
 
         } else {
             console.error('Lỗi khi lấy thông tin tour');
@@ -45,24 +97,23 @@ async function updateTour(id) {
     const des = document.getElementById('tourEndPoint').value;
     const depart = document.getElementById('tourStartPoint').value;
     const image = document.getElementById('tourIamge').value;
+
     const updatedTour = {
         id: tourId,
         name: tourName,
-        price: tourPrice, // Giá được chuyển thành kiểu float
+        price: tourPrice,
         imageLink: image,
         fileName: "",
         destination: des,
         departurePoint: depart,
         transport: {
-            id: document.querySelector('.tour-input-transport').value // Lấy giá trị từ select của phương tiện
+            id: document.querySelector('.tour-input-transport').value
         },
         tourType: {
-            id: document.querySelector('.tour-input-type').value // Lấy giá trị từ select của loại tour
+            id: document.querySelector('.tour-input-type').value
         },
         calendar: []
-
     };
-console.log(updatedTour);
 
     try {
         const response = await axios.put(`http://localhost:8080/api/v1/tours/tour/${id}`, updatedTour);
@@ -78,15 +129,24 @@ console.log(updatedTour);
 }
 
 // Khi trang tải xong
-document.addEventListener('DOMContentLoaded', () => {
-    getTourById(tourId);  // Lấy thông tin tour khi trang tải xong
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await fetchProvinces(); // Đảm bảo danh sách tỉnh thành đã tải
+        getTourById(tourId); // Lấy thông tin tour sau khi danh sách tỉnh đã có
+    } catch (error) {
+        console.error('Lỗi khi tải dữ liệu trang:', error);
+    }
 });
 
 // Lắng nghe sự kiện submit của form
-const form = document.querySelector('.crudFrom'); // Chọn form dựa trên class của form
+const form = document.querySelector('.crudFrom'); 
 if (form) {
     form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Ngăn hành vi mặc định của form
+        event.preventDefault();
         updateTour(tourId); // Gọi hàm updateTour với ID của tour
     });
 }
+const cancelAddTourBtn = document.getElementById('cancelAddTour');
+cancelAddTourBtn.addEventListener('click', () => {
+    window.location.href = '/tour'; // Quay lại trang danh sách tour
+});

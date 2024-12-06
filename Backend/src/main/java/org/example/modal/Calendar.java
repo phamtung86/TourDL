@@ -28,9 +28,12 @@ public class Calendar {
 
 	@Column(name = "slot", nullable = false)
 	private int slot;
-	@Column(name = "voucher_id")
-	private Integer voucherId;
-	@ManyToOne
-	@JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
+
+	@ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
+	@JoinColumn(name ="voucher_id", referencedColumnName = "id")
+	private Voucher voucher;
+
+	@ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
+	@JoinColumn(name = "tour_id", referencedColumnName = "id")
 	private Tour tour;
 }
