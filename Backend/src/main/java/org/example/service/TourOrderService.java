@@ -102,16 +102,12 @@ public class TourOrderService implements ITourOrderService {
 		case "MONTH":
 			startDate = Timestamp.valueOf(LocalDate.now().withDayOfMonth(1).atStartOfDay()); // Ngày đầu tháng
 			endDate = Timestamp
-					.valueOf(LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(23, 59, 59)); // Ngày
-																													// cuối
-																													// tháng
+					.valueOf(LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(23, 59, 59)); // Ngày cuối tháng
 			return tourOrderReponsitory.getTopTourOrdersByMonth(startDate, endDate, pageable);
 		case "YEAR":
 			startDate = Timestamp.valueOf(LocalDate.now().withDayOfYear(1).atStartOfDay()); // Ngày đầu năm
 			endDate = Timestamp
-					.valueOf(LocalDate.now().withDayOfYear(LocalDate.now().lengthOfYear()).atTime(23, 59, 59)); // Ngày
-																												// cuối
-																												// năm
+					.valueOf(LocalDate.now().withDayOfYear(LocalDate.now().lengthOfYear()).atTime(23, 59, 59)); // Ngày cuối năm
 			return tourOrderReponsitory.getTopTourOrdersByYear(startDate, endDate, pageable);
 		default:
 			startDate = Timestamp.valueOf(LocalDate.now().atStartOfDay());
