@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dto.TourDTOv2;
 import org.example.form.TourFilterForm;
 import org.example.modal.Tour;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface ITourService {
 
@@ -38,4 +40,8 @@ public interface ITourService {
 	Long totalTour();
 
 	List<Long> getTotalByType();
+	Page<TourDTOv2> getTours(int page, int size);
+
+	Optional<TourDTOv2> getTourById(String tourId);
+	Tour updateTour(String tourId, Tour updatedTour);
 }
