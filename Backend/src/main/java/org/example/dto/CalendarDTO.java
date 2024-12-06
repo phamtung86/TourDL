@@ -26,10 +26,10 @@ public class CalendarDTO {
 	public CalendarDTO(Calendar calendar) {
 		this.tourId = calendar.getTour().getId();
 		this.calendarStartDate = calendar.getStartDate();
-		if (calendar.getVoucherId() == null) {
+		if (calendar.getVoucher() == null) {
 			this.voucherID = 0;
 		} else {
-			this.voucherID = calendar.getVoucherId();
+			this.voucherID = calendar.getVoucher().getId();
 		}
 	}
 }

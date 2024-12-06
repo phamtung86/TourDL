@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 import java.sql.Timestamp;
 
@@ -28,8 +29,9 @@ public class Calendar {
 
 	@Column(name = "slot", nullable = false)
 	private int slot;
-	@Column(name = "voucher_id")
-	private Integer voucherId;
+	@ManyToOne
+	@JoinColumn(name = "voucher_id", referencedColumnName = "id", nullable = false)
+	private Voucher voucher;
 	@ManyToOne
 	@JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
 	private Tour tour;
