@@ -6,6 +6,8 @@ import org.example.modal.TourOrder;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -32,15 +34,16 @@ public class TourOrderDTO {
 		this.note = tourOrder.getNote();
 		this.orderDate = tourOrder.getOrderDate();
 		this.totalMember = tourOrder.getTotalMember();
-//		this.tour = tourOrder.getTour();
+		Tour t = tourOrder.getTour();
+		tour = new TourDTO(t.getId(),t.getName(),t.getPrice(),t.getImageLink(),t.getFileName(),t.getDestination(),t.getDeparturePoint(),t.getTransport());
 	}
 
-	public TourOrderDTO(int id, long quantity, double totalPrice, Tour tour) {
+	public TourOrderDTO(int id, long quantity, double totalPrice, Tour t) {
 		this.id = id;
 		this.quantity = quantity;
 		DecimalFormat df = new DecimalFormat("#");
 		this.totalPrice = df.format(totalPrice);
-//		this.tour = tour;
+		this.tour = new TourDTO(t.getId(),t.getName(),t.getPrice(),t.getImageLink(),t.getFileName(),t.getDestination(),t.getDeparturePoint(),t.getTransport());
 	}
 
 	public TourOrderDTO(double totalPrice, Date orderDateDate) {

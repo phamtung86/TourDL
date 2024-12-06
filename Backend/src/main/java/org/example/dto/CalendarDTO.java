@@ -32,4 +32,5 @@ public class CalendarDTO {
 			this.voucherID = calendar.getVoucherId();
 		}
 	}
+
 }

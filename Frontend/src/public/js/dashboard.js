@@ -73,8 +73,8 @@ async function getTopTour(type) {
                 : '0';
               return `
                     <tr>
-                        <td class="list-tour-data">${item.tour.id}</td>
-                        <td class="list-tour-data"><img src="${item.tour.imageLink}" alt=""/></td>
+                        <td class="list-tour-data">${item.tour.tourId}</td>
+                        <td class="list-tour-data"><img src="${item.tour.tourImageLink}" alt=""/></td>
                         <td class="list-tour-data">${item.tour.name}</td>
                         <td class="list-tour-data">${item.quantity}</td>
                         <td class="list-tour-data">${formattedTotalPrice} ₫</td>                                              

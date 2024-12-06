@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "user_tour_order")
@@ -32,6 +33,8 @@ public class UserTourOrder {
 	@Column(name = "status")
 	private String status;
 
+	@Column(name = "tour_start_date")
+	private Date tourStartDate;
 	@Embeddable
 	@Getter
 	@Setter
