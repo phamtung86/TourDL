@@ -42,7 +42,7 @@
           </div>
           <div class="header__button">
             <a href="#" class="button button__link">Đăng nhập</a>
-            <a href="#" class="button button__link">Đăng ký</a>
+            <a href="/register" class="button button__link">Đăng ký</a>
           </div>
         </div>
       </div>
@@ -64,33 +64,38 @@
                 <h5 class="tour-filter__title">Ngân sách:</h5>
                 <ul class="tour-filter__box">
                   <li
-                    class="tour-filter__option"
+                    class="tour-filter__option budget"
                     data-minBudget="0"
                     data-maxBudget="5000000"
                   >
                     Dưới 5 triệu
                   </li>
                   <li
-                    class="tour-filter__option"
+                    class="tour-filter__option budget"
                     data-minBudget="5000000"
                     data-maxBudget="10000000"
                   >
                     Từ 5 - 10 triệu
                   </li>
                   <li
-                    class="tour-filter__option"
+                    class="tour-filter__option budget"
                     data-minBudget="10000000"
                     data-maxBudget="20000000"
                   >
                     Từ 10 - 20 triệu
                   </li>
-                  <li class="tour-filter__option" data-minBudget="20000000">
+                  <li
+                    class="tour-filter__option budget"
+                    data-minBudget="20000000"
+                  >
                     Trên 20 triệu
                   </li>
                 </ul>
                 <h5 class="tour-filter__title">Điểm khởi hành:</h5>
-                <div class="tour-filter__box-input province">
-                  <span>Tất cả</span>
+                <div class="tour-filter__box-input province departure-point">
+                  <span class="tour-filter__box-text" data-value=""
+                    >Tất cả</span
+                  >
                   <span class="icon">
                     <i class="fa-solid fa-chevron-up"></i>
                   </span>
@@ -99,8 +104,8 @@
                   </ul>
                 </div>
                 <h5 class="tour-filter__title">Điểm đến:</h5>
-                <div class="tour-filter__box-input province">
-                  <span>Tất cả</span>
+                <div class="tour-filter__box-input province destination">
+                  <span class="tour-filter__box-text">Tất cả</span>
                   <span class="icon">
                     <i class="fa-solid fa-chevron-up"></i>
                   </span>
@@ -110,19 +115,30 @@
                 </div>
                 <h5 class="tour-filter__title">Ngày đi:</h5>
                 <div class="tour-filter__box-input">
-                  <span>T7, 20 tháng 12</span>
+                  <!-- <span>T7, 20 tháng 12</span> -->
+                  <input
+                    type="date"
+                    name="startDate"
+                    class="tour-filter__input-date"
+                  />
                 </div>
                 <h5 class="tour-filter__title">Dòng tour:</h5>
                 <ul class="tour-filter__box">
-                  <li class="tour-filter__option">Cao cấp</li>
-                  <li class="tour-filter__option">Tiêu chuẩn</li>
-                  <li class="tour-filter__option">Tiết kiệm</li>
-                  <li class="tour-filter__option">Giá tốt</li>
+                  <li class="tour-filter__option type" data-id="4">Cao cấp</li>
+                  <li class="tour-filter__option type" data-id="3">
+                    Tiêu chuẩn
+                  </li>
+                  <li class="tour-filter__option type" data-id="1">
+                    Tiết kiệm
+                  </li>
+                  <li class="tour-filter__option type" data-id="2">Giá tốt</li>
                 </ul>
                 <h5 class="tour-filter__title">Phương tiện:</h5>
                 <ul class="tour-filter__box">
-                  <li class="tour-filter__option">Xe máy</li>
-                  <li class="tour-filter__option">Máy bay</li>
+                  <li class="tour-filter__option transport" data-id="1">Xe</li>
+                  <li class="tour-filter__option transport" data-id="2">
+                    Máy bay
+                  </li>
                 </ul>
                 <button class="tour-filter__submit">Áp dụng</button>
               </div>

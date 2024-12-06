@@ -12,10 +12,38 @@ const tourFilterDropdown = document.querySelectorAll(
   '.tour-filter__option-box'
 );
 
+const tourFilterOptionBudget = document.querySelectorAll(
+  '.tour-filter__option.budget'
+);
+const tourFilterOptionType = document.querySelectorAll(
+  '.tour-filter__option.type'
+);
+const tourFilterOptionTransport = document.querySelectorAll(
+  '.tour-filter__option.transport'
+);
+
+const buttonFilter = document.querySelector('.tour-filter__submit');
+
 // Other
 let pageNumber = -1; // Tổng số trang
 let currentPageNumber = 1; // Số trang hiện tại
 let isLoadingAPI = false; // Cờ check đang load trang hay k
+let apiGetTours = '';
+
+//* Hàm set lại options params cho url filter tours
+let setAPIGetTours = (params) => {
+  apiGetTours = `${URL_API_SERVER_V1}/tours/filter-tour?size=10&sort=${params.sort},asc&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}&tourType=${params.tourType}&transportId=${params.transportId}`;
+};
+
+setAPIGetTours({
+  sort: 'id',
+  minBudget: '',
+  maxBudget: '',
+  departure: '',
+  destination: '',
+  tourType: '',
+  transportId: '',
+});
 
 // Function event click
 let toggleEventButton = (button, dropDown, idButton, classDropdown) => {
@@ -34,35 +62,185 @@ let toggleEventButton = (button, dropDown, idButton, classDropdown) => {
     }
   });
 };
+// * Hàm tạo hiệu ứng cuộn trên box date
+let eventScrollDate = () => {
+  // Cuộn chuột trong Start date
+  let boxStartDate = document.querySelectorAll('.tour-list__item-startDay');
+  boxStartDate.forEach((item) => {
+    item.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      item.scrollLeft += event.deltaY;
+    });
+  });
+};
 
-// Gán event click
-toggleEventButton(
-  sortToursButton,
-  sortDropDown,
-  sortToursButton.classList[0],
-  sortDropDown.classList[0]
-);
-
-tourFilterBox.forEach((filterBox, index) => {
+const loadEventHTML = () => {
+  // Gán event click
   toggleEventButton(
-    filterBox,
-    tourFilterDropdown[index],
-    filterBox.classList[0],
-    tourFilterDropdown[index].classList[0]
+    sortToursButton,
+    sortDropDown,
+    sortToursButton.classList[0],
+    sortDropDown.classList[0]
   );
-});
+  // Thêm event click chọn trong mỗi option của bộ lọc
+  tourFilterBox.forEach((filterBox, index) => {
+    toggleEventButton(
+      filterBox,
+      tourFilterDropdown[index],
+      filterBox.classList[0],
+      tourFilterDropdown[index].classList[0]
+    );
+  });
+  tourFilterOptionBudget.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) {
+        e.target.classList.remove('active');
+      } else {
+        tourFilterOptionBudget.forEach((button) => {
+          button.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      }
+    });
+  });
+  tourFilterOptionTransport.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) {
+        e.target.classList.remove('active');
+      } else {
+        tourFilterOptionTransport.forEach((button) => {
+          button.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      }
+    });
+  });
+  tourFilterOptionType.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) {
+        e.target.classList.remove('active');
+      } else {
+        tourFilterOptionType.forEach((button) => {
+          button.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      }
+    });
+  });
+
+  // Add sự kiện click lấy giá trị trong mỗi option của điểm đến và đi tour-filter__option-item
+  let optionItemsOfDeparturePoint = document.querySelectorAll(
+    '.tour-filter__box-input.departure-point .tour-filter__option-box .tour-filter__option-item'
+  );
+  let boxOptionItemsOfDeparturePoint = document.querySelector(
+    '.tour-filter__box-input.departure-point>.tour-filter__box-text'
+  );
+  optionItemsOfDeparturePoint.forEach((optionItem) => {
+    optionItem.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) return;
+      optionItemsOfDeparturePoint.forEach((option) => {
+        option.classList.remove('active');
+      });
+      e.target.classList.add('active');
+      boxOptionItemsOfDeparturePoint.innerText = e.target.innerText;
+    });
+  });
+  //destination
+  let optionItemsOfDestination = document.querySelectorAll(
+    '.tour-filter__box-input.destination .tour-filter__option-box .tour-filter__option-item'
+  );
+  let boxOptionItemsOfDestination = document.querySelector(
+    '.tour-filter__box-input.destination>.tour-filter__box-text'
+  );
+  optionItemsOfDestination.forEach((optionItem) => {
+    optionItem.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) return;
+      optionItemsOfDestination.forEach((option) => {
+        option.classList.remove('active');
+      });
+      e.target.classList.add('active');
+      boxOptionItemsOfDestination.innerText = e.target.innerText;
+    });
+  });
+  buttonFilter.addEventListener('click', async (e) => {
+    e.preventDefault(); // Bỏ sự kiện mặc định của button
+    let minBudget = '';
+    let maxBudget = '';
+    let budget = document.querySelector('.tour-filter__option.budget.active');
+    if (budget) {
+      minBudget = budget.dataset.minbudget;
+      maxBudget = budget.dataset.maxbudget;
+    }
+    let departurePoint = document.querySelector(
+      '.tour-filter__box-input.departure-point>.tour-filter__box-text'
+    );
+    let destination = document.querySelector(
+      '.tour-filter__box-input.destination>.tour-filter__box-text'
+    );
+    let textDeparturePoint = departurePoint.innerText.toString();
+    let textDestination = destination.innerText.toString();
+    console.log(textDeparturePoint, textDestination);
+    textDeparturePoint === 'Tất cả'
+      ? (textDeparturePoint = '')
+      : (textDeparturePoint = textDeparturePoint);
+    textDestination === 'Tất cả'
+      ? (textDestination = '')
+      : (textDestination = textDestination);
+    let type = document.querySelector('.tour-filter__option.type.active');
+    let transport = document.querySelector(
+      '.tour-filter__option.transport.active'
+    );
+    // Tạo option mới cho url filter tours
+    let option = {
+      sort: 'id',
+      minBudget: minBudget,
+      maxBudget: !maxBudget ? '' : maxBudget,
+      departure: textDeparturePoint,
+      destination: textDestination,
+      tourType: !type ? `` : type.dataset.id,
+      transportId: !transport ? `` : transport.dataset.id,
+    };
+    setAPIGetTours(option);
+    let res = await resTourList(1);
+    if (res.status !== 0) {
+      alert(res.message);
+      console.log(res.error); // Console.log lỗi
+      tourList.innerHTML = ``;
+      return;
+    }
+    let data = res.data;
+    // Reset trạng thái về ban đầu
+    currentPageNumber = 1;
+    pageNumber = data.totalPages; // Gán số trang -> khi scroll gọi lại số lần api
+    totalTours.innerHTML = `Chúng tôi tìm thấy <span>${data.totalElements}</span> chương trình tour cho quý khách`;
+    let tours = data.content;
+    // Gọi hàm chuyển đổi dữ liệu từ API -> HTML
+    tourList.innerHTML = ``; // Bỏ các dữ liệu tour cũ trước đó
+    generationToursHTML(tours);
+    window.addEventListener('scroll', handleScrollRender); // Gán lại sự kiện scroll
+  });
+};
 
 // Function get api
 //* Lấy dữ liệu tours từ API
 let resTourList = async (pageNumber) => {
   try {
-    let res = await axios.get(
-      `${URL_API_SERVER_V1}/tours/page?pageNumber=${pageNumber}&size=10&sort=id,asc`
-    );
+    let api = `${apiGetTours.toString()}&pageNumber=${pageNumber}`;
+    console.log(api);
+    let res = await axios.get(api);
     res = res.data;
     return { status: 0, data: res };
   } catch (error) {
-    return { status: 3, message: 'Hệ thống website hiện đang bị lỗi' };
+    return {
+      status: 3,
+      message: 'Hệ thống website hiện đang bị lỗi',
+      error: error,
+    };
   }
 };
 
@@ -80,7 +258,7 @@ let resProvinces = async () => {
       },
     };
   } catch (error) {
-    return { status: 3, message: 'Hệ thống website hiện đang bị lỗi' };
+    return { status: 3, message: 'Lấy API không thành công', error: error };
   }
 };
 
@@ -100,6 +278,11 @@ let generationToursHTML = (tours) => {
         .toString()
         .padStart(2, '0')}/${month.toString().padStart(2, '0')}</li>`;
     });
+    // Đổi icon với mỗi phương tiện
+    let transport =
+      tour.transport.name === 'Máy bay'
+        ? `<i class="fa-solid fa-plane"></i>`
+        : `<i class="fa-solid fa-bus"></i>`;
     // Xác định loại tour để hiển thị
     tourType = tour.tourType.tourTypeId;
     tourTypeClass = '';
@@ -164,7 +347,7 @@ let generationToursHTML = (tours) => {
               </li>
               <li class="tour-list__item-col">
                 <span class="icon">
-                  <i class="fa-solid fa-plane"></i>
+                  ${transport}
                 </span>
                 <span> Phương tiện:</span>
                 <span class="tour-list__item-value"> ${tour.transport.name}
@@ -176,15 +359,9 @@ let generationToursHTML = (tours) => {
                 </span>
                 <span>Ngày khởi hành:</span>
                 <div class="tour-list__item-day-container">
-                  <span class="tour-list__button --left">
-                    <i class="fa-solid fa-caret-left"></i>
-                  </span>
                   <ul class="tour-list__item-startDay">
                     ${calendarsHTML}
                   </ul>
-                  <span class="tour-list__button --right active">
-                    <i class="fa-solid fa-caret-right"></i>
-                  </span>
                 </div>
               </li>
             </ul>
@@ -203,6 +380,7 @@ let generationToursHTML = (tours) => {
     `;
   });
   tourList.innerHTML += toursHTML; // Hiển thị dữ liệu tour
+  eventScrollDate();
 };
 
 let generationProvincesHTML = (dataProvinces) => {
@@ -222,7 +400,9 @@ let renderTourList = async () => {
   let res = await resTourList(1);
   if (res.status !== 0) {
     alert(res.message);
+    console.log(res.error); // Console.log lỗi
     tourList.innerHTML = ``;
+    return;
   }
   let data = res.data;
   pageNumber = data.totalPages; // Gán số trang -> khi scroll gọi lại số lần api
@@ -236,6 +416,7 @@ let renderProvinces = async () => {
   let res = await resProvinces();
   if (res.status !== 0) {
     alert(res.message);
+    console.log(res.error);
   }
   res = res.data;
   generationProvincesHTML(res.provinces);
@@ -275,6 +456,7 @@ const loadHTML = async () => {
 window.addEventListener('scroll', handleScrollRender);
 
 // Hiển thị dữ liệu sau khi đã tải trang
-window.onload = () => {
-  loadHTML();
+window.onload = async () => {
+  await loadHTML();
+  loadEventHTML();
 };
