@@ -35,21 +35,18 @@
             border: 1px solid $border-color;
             &.active {
               background-color: #0b5da7;
-              padding: 6px 0px;
-              border-radius: 6px;
-              text-align: center;
-              font-size: 1.4em -0.1em;
-              font-weight: bold;
-              width: 100%;
               color: #fff;
               border: 1px solid #0b5da7;
               &:hover {
+                cursor: default;
+                color: #fff;
+                background-color: #0b5da7;
               }
             }
             &:hover {
               cursor: pointer;
               color: #0b5da7;
-              background: #daefff;
+              background-color: #daefff;
               border: 1px solid #0b5da7;
               transition: ease-in-out 0.2s all;
             }
@@ -328,31 +325,13 @@
                     display: flex;
                     align-items: center;
                     justify-content: flex-start;
-                    .tour-list__button {
-                      padding: 8px;
-                      background-color: #e5e5e5;
-                      border-radius: 6px;
-                      color: #000;
-                      filter: brightness(1);
-                      &.active {
-                        filter: brightness(0.8);
-                        &:hover {
-                          cursor: pointer;
-                        }
-                      }
-                      &.--left {
-                        margin-right: 4px;
-                      }
-                      &.--right {
-                        margin-left: 4px;
-                      }
-                    }
                     .tour-list__item-startDay {
                       display: flex;
                       align-items: center;
                       justify-content: flex-start;
                       max-width: 300px;
-                      overflow-x: scroll;
+                      overflow-x: auto;
+                      scroll-behavior: smooth;
                       &::-webkit-scrollbar {
                         display: none;
                       }
