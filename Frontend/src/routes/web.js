@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
 const adminController = require('../controllers/dashboardController');
+const axios = require('../utils/axios.js');
 const initWebRouters = (app) => {
   router.get('/', (req, res) => {
     return res.render('customer/home.ejs');
-  });
-  router.get('/adb', (req, res) => {
-    return res.send('KhanhVinh');
   });
   router.get('/get-test', async (req, res) => {
     try {
@@ -18,11 +16,6 @@ const initWebRouters = (app) => {
     }
   });
   router.get('/Dashboard', adminController.getDashBoard);
-
-  // trang quản lí phương tiện
-  router.get('/transport', (req, res) => {
-    return res.render('admin/transport.ejs');
-  });
 
   router.get('/voucher', (req, res) => {
     return res.render('admin/voucher.ejs');
@@ -49,22 +42,14 @@ const initWebRouters = (app) => {
     const calendarId = req.params.id;
     return res.render('admin/calendarModify.ejs', { calendarId });
   });
-  
+
   // trang quản lý tài khoản
   router.get('/customer', (req, res) => {
     return res.render('admin/customer.ejs');
   });
   router.get('/tour/calendar/:id', (req, res) => {
     const tourId = req.params.id;
-    return res.render('admin/tourCalendar.ejs',{tourId});
-  });
-  
-
-
-  // trang cập nhật tài khoản người dùng
-  router.get('/customerModify/:id', (req, res) => {
-    const customerId = req.params.id;
-    return res.render('admin/customerModify.ejs', { customerId });
+    return res.render('admin/tourCalendar.ejs', { tourId });
   });
   router.get('/tour', (req, res) => {
     return res.render('admin/tour.ejs');
@@ -74,11 +59,14 @@ const initWebRouters = (app) => {
   });
 
   // trang chi tiết đặt tour
-  router.get('/detail', (req, res) => {
+  router.get('/detail/:id', async (req, res) => {
+    let response = await axios.get(
+      `http://localhost:3124/api/v1/tours/${req.params.id}`
+    );
     return res.render('customer/detail.ejs');
   });
 
-  // trang đăng nhập 
+  // trang đăng nhập
   router.get('/login', (req, res) => {
     return res.render('customer/login.ejs');
   });
@@ -96,7 +84,7 @@ const initWebRouters = (app) => {
   router.get('/admin-order/user/:userId/order/:orderID', (req, res) => {
     const userId = req.params.userId;
     const orderId = req.params.orderID;
-    return res.render('admin/orderAdminDetail.ejs', {userId,orderId});
+    return res.render('admin/orderAdminDetail.ejs', { userId, orderId });
   });
 
   return app.use('/', router);

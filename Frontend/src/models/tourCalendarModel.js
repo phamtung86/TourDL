@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      TourCalendar.belongsTo(models.Tour, {
+        foreignKey: 'tour_Id',
+        as: 'tour',
+      });
     }
   }
   TourCalendar.init(
@@ -27,8 +31,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      tour_id: {
+      tour_Id: {
         type: DataTypes.STRING,
+        allowNull: true,
+      },
+      slot: {
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
     },

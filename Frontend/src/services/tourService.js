@@ -83,7 +83,58 @@ let getTourByCustomer = () => {
   });
 };
 
+let getInfoTourDetail = (inputId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await db.Tour.findOne({
+        where: {
+          id: inputId,
+        },
+        attributes: {
+          exclude: [
+            'transport_id',
+            'tour_type_id',
+            'destination',
+            'destination_slug',
+            'file_name',
+          ],
+        },
+        include: [
+          {
+            model: db.TourCalendar,
+            as: 'tourCalendars',
+            attributes: ['id', 'start_date', 'slot'],
+          },
+          {
+            model: db.TourDetail,
+            as: 'tourDetail',
+            attributes: {
+              exclude: ['id', 'file_name', 'url', 'tour_id'],
+            },
+          },
+        ],
+        raw: false,
+        nest: true,
+      });
+      if (!data)
+        return resolve({
+          status: 1,
+          message: 'Không tìm thấy',
+        });
+      return resolve({
+        status: 0,
+        message: 'OK',
+        data: data,
+      });
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getTourByType: getTourByType,
   getTourByCustomer: getTourByCustomer,
+  getInfoTourDetail: getInfoTourDetail,
 };

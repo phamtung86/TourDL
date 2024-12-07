@@ -41,7 +41,7 @@
             </a>
           </div>
           <div class="header__button">
-            <a href="#" class="button button__link">Đăng nhập</a>
+            <a href="/login" class="button button__link">Đăng nhập</a>
             <a href="/register" class="button button__link">Đăng ký</a>
           </div>
         </div>
@@ -100,17 +100,23 @@
                     <i class="fa-solid fa-chevron-up"></i>
                   </span>
                   <ul class="tour-filter__option-box">
-                    <li class="tour-filter__option-item active">Tất cả</li>
+                    <li data-slug="" class="tour-filter__option-item active">
+                      Tất cả
+                    </li>
                   </ul>
                 </div>
                 <h5 class="tour-filter__title">Điểm đến:</h5>
                 <div class="tour-filter__box-input province destination">
-                  <span class="tour-filter__box-text">Tất cả</span>
+                  <span data-value="" class="tour-filter__box-text"
+                    >Tất cả</span
+                  >
                   <span class="icon">
                     <i class="fa-solid fa-chevron-up"></i>
                   </span>
                   <ul class="tour-filter__option-box">
-                    <li class="tour-filter__option-item active">Tất cả</li>
+                    <li data-slug="" class="tour-filter__option-item active">
+                      Tất cả
+                    </li>
                   </ul>
                 </div>
                 <h5 class="tour-filter__title">Ngày đi:</h5>
@@ -154,27 +160,29 @@
                 <div class="tour-list__sort">
                   <span>Sắp xếp theo:</span>
                   <div class="tour-list__sort-box">
-                    <span>Ngày khởi hành gần nhất</span>
+                    <span
+                      class="tour-list__sort-box-text"
+                      data-value="price,asc"
+                      >Giá từ thấp đến cao</span
+                    >
                     <span class="icon">
                       <i class="fa-solid fa-chevron-up"></i>
                     </span>
                     <ul class="tour-list__box-option">
                       <li class="tour-list__box-item">
-                        <a href="#" class="tour-list__box-link">Tất cả</a>
-                      </li>
-                      <li class="tour-list__box-item">
-                        <a href="#" class="tour-list__box-link"
-                          >Giá từ cao đến thấp</a
-                        >
-                      </li>
-                      <li class="tour-list__box-item">
-                        <a href="#" class="tour-list__box-link"
+                        <a
+                          data-value="price,asc"
+                          href="#"
+                          class="tour-list__box-link active"
                           >Giá từ thấp đến cao</a
                         >
                       </li>
                       <li class="tour-list__box-item">
-                        <a href="#" class="tour-list__box-link active"
-                          >Ngày khởi hành gần nhất</a
+                        <a
+                          data-value="price,desc"
+                          href="#"
+                          class="tour-list__box-link"
+                          >Giá từ cao đến thấp</a
                         >
                       </li>
                     </ul>

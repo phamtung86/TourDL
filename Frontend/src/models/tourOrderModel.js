@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       TourOrder.belongsTo(models.Tour, {
         foreignKey: 'tour_id',
-        as: 'tours',
+        as: 'tour',
       });
     }
   }
