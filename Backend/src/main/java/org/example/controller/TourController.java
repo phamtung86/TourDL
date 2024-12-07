@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -81,20 +82,21 @@ public class TourController {
 
 	@GetMapping("/filter-tour")
 	public Page<TourDTO> filterTours(Pageable pageable, TourFilterForm tourFilterForm,
-			@RequestParam(name="departure" ,required = false) String departure, @RequestParam(name="destination",required = false) String destination,
-			@RequestParam(name="tourType",required = false) Integer tourType, @RequestParam(name="transportId" ,required = false) Integer transportId,
-			@RequestParam(name ="startDate" ,required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
+									 @RequestParam(name="departure", required = false) String departure,
+									 @RequestParam(name="destination", required = false) String destination,
+									 @RequestParam(name="tourType", required = false) Integer tourType,
+									 @RequestParam(name="transportId", required = false) Integer transportId,
+									 @RequestParam(name="startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
+
 		Page<Tour> pageTours = tourService.filterTours(pageable, tourFilterForm, departure, destination, tourType, transportId, startDate);
 
 		// Ánh xạ từ List<Tour> sang List<TourDTO>
-		List<TourDTO> toursDTO = pageTours.getContent().stream().map(tour -> modelMapper.map(tour, TourDTO.class))
-				.collect(Collectors.toList());
-
-		// Tạo Page<TourDTO> từ List<TourDTO>
-		Page<TourDTO> dtoTours = new PageImpl<>(toursDTO, pageable, pageTours.getTotalElements());
-		
-		
-		return dtoTours;
+		List<TourDTO> dtoTours = modelMapper.map(pageTours.getContent(), new TypeToken<List<TourDTO>>(){}.getType());
+//		System.out.println(pageable);
+//		System.out.println(pageTours.getTotalPages());
+		Page<TourDTO> dtoTour = new PageImpl<>(dtoTours, pageable, pageTours.getTotalElements());
+//		System.out.println(dtoTours);
+		return dtoTour;
 	}
 
 	@GetMapping("/total")

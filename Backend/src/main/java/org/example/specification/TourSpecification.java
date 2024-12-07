@@ -13,6 +13,7 @@ import org.example.modal.TourType;
 import org.example.form.TourFilterForm;
 import org.example.modal.Calendar;
 import org.example.modal.Transport;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,7 +51,7 @@ public class TourSpecification {
 			}
 		}
 
-		if (!StringUtil.isNullOrEmpty(departure)) {
+		if (!StringUtil.isNullOrEmpty(departure) && !departure.trim().isEmpty()) {
 			CustomSpecification departureCondition = new CustomSpecification(type, "departureSlug", departure);
 			if (where == null) {
 				where = Specification.where(departureCondition);
@@ -59,7 +60,7 @@ public class TourSpecification {
 			}
 		}
 
-		if (!StringUtil.isNullOrEmpty(destination)) {
+		if (!StringUtil.isNullOrEmpty(destination) && !destination.trim().isEmpty()) {
 			CustomSpecification destinationCondition = new CustomSpecification(type, "destinationSlug", destination);
 			if (where == null) {
 				where = Specification.where(destinationCondition);
@@ -68,7 +69,7 @@ public class TourSpecification {
 			}
 		}
 
-		if (tourType != null && tourType.toString().trim().length() > 0) {
+		if (tourType != null && !tourType.toString().trim().isEmpty()) {
 			CustomSpecification tourTypeCondition = new CustomSpecification(type, "tourType", tourType);
 			if (where == null) {
 				where = Specification.where(tourTypeCondition);
@@ -77,7 +78,7 @@ public class TourSpecification {
 			}
 		}
 
-		if (transportId != null && transportId.toString().trim().length() > 0) {
+		if (transportId != null && !transportId.toString().trim().isEmpty()) {
 			CustomSpecification transportCondition = new CustomSpecification(type, "transportId", transportId);
 			if (where == null) {
 				where = Specification.where(transportCondition);
@@ -111,7 +112,7 @@ class CustomSpecification implements Specification<Tour> {
 	private Object value;
 
 	@Override
-	public Predicate toPredicate(Root<Tour> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+	public Predicate toPredicate(@NotNull Root<Tour> root, CriteriaQuery<?> query, @NotNull CriteriaBuilder criteriaBuilder) {
 		switch (type.toLowerCase()) {
 		case "home_default":
 			// Thực hiện join với bảng Calendar
@@ -119,26 +120,33 @@ class CustomSpecification implements Specification<Tour> {
 			return criteriaBuilder.greaterThanOrEqualTo(calendarJoin.get("startDate"), (Date) value);
 		case "filter_tour":
 			if (field.equalsIgnoreCase("minBudget")) {
+				query.groupBy(root.get("id"));
 				return criteriaBuilder.greaterThanOrEqualTo(root.get("price"), value.toString());
 			}
 			if (field.equalsIgnoreCase("maxBudget")) {
+				query.groupBy(root.get("id"));
 				return criteriaBuilder.lessThanOrEqualTo(root.get("price"), value.toString());
 			}
 			if (field.equalsIgnoreCase("departureSlug")) {
+				query.groupBy(root.get("id"));
 				return criteriaBuilder.like(root.get("departureSlug"), "%" + value.toString() + "%");
 			}
 			if (field.equalsIgnoreCase("destinationSlug")) {
+				query.groupBy(root.get("id"));
 				return criteriaBuilder.like(root.get("destinationSlug"), "%" + value.toString() + "%");
 			}
 			if (field.equalsIgnoreCase("tourType")) {
 				Join<Tour, TourType> tourTypeJoin = root.join("tourType");
+				query.groupBy(root.get("id"));
 				return criteriaBuilder.equal(tourTypeJoin.get("id"), Integer.valueOf(value.toString()));
 			}
 			if (field.equalsIgnoreCase("transportId")) {
+				query.groupBy(root.get("id"));
 				Join<Tour, Transport> transportJoin = root.join("transport");
 				return criteriaBuilder.equal(transportJoin.get("id"), Integer.valueOf(value.toString()));
 			}
 			if (field.equalsIgnoreCase("startDate")) {
+				query.groupBy(root.get("id"));
 				Join<Tour, Calendar> calenderJn = root.join("calendar");
 				return criteriaBuilder.greaterThanOrEqualTo(calenderJn.get("startDate"), (Date) value);
 			}

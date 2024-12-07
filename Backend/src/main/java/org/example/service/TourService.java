@@ -1,5 +1,6 @@
 package org.example.service;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.example.dto.TourDTOv2;
 import org.example.form.TourFilterForm;
@@ -94,21 +95,32 @@ public class TourService implements ITourService {
 
 	@Override
 	public Page<Tour> filterTours(Pageable pageable, TourFilterForm tourFilterForm, String departure,
-			String destination, Integer tourType, Integer transportId, Date startDate) {
+								  String destination, Integer tourType, Integer transportId, Date startDate) {
 		Specification<Tour> where = TourSpecification.buildWhere("filter_tour", tourFilterForm, departure, destination,
 				tourType, transportId, startDate);
-		Date date = new Date();
+		List<Tour> pageTourss = tourReponsitory.findAll(where);
+		System.out.println(pageTourss.size());
 		Page<Tour> pageTours = tourReponsitory.findAll(where, pageable);
+		System.out.println(pageTours.getTotalElements());
 		for (Tour t : pageTours.getContent()) {
-			List<Calendar> calendars = t.getCalendar();
-			if (calendars != null) {
-				calendars.removeIf(calendar -> calendar.getStartDate().before(date));
-			}
-			calendars.sort(Comparator.comparing(Calendar::getStartDate));
+			System.out.println(t);
 		}
-		
+		Date currentDate = new Date();
+		Date tourStartDate = (startDate != null) ? startDate : currentDate;
+		pageTours.getContent().forEach(tour -> {
+			List<Calendar> calendars = tour.getCalendar();
+			if (calendars != null && !calendars.isEmpty()) {
+				List<Calendar> filteredAndSortedCalendars = calendars.stream()
+						.filter(calendar -> !calendar.getStartDate().before(tourStartDate))
+						.sorted(Comparator.comparing(Calendar::getStartDate))
+						.collect(Collectors.toList());
+				tour.setCalendar(filteredAndSortedCalendars);
+			}
+		});
+
 		return pageTours;
 	}
+
 
 	@Override
 	public Long totalTour() {
