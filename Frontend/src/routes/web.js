@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
 const adminController = require('../controllers/dashboardController');
+const { orderPage } = require('../controllers/customerController.js');
 const axios = require('../utils/axios.js');
 const initWebRouters = (app) => {
   router.get('/', (req, res) => {
@@ -54,9 +55,7 @@ const initWebRouters = (app) => {
   router.get('/tour', (req, res) => {
     return res.render('admin/tour.ejs');
   });
-  router.get('/order-tour', (req, res) => {
-    return res.render('customer/orderTour.ejs');
-  });
+  router.get('/order-tour', orderPage);
 
   // trang chi tiết đặt tour
   router.get('/detail/:id', async (req, res) => {

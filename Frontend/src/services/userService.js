@@ -1,6 +1,6 @@
 const db = require('../models');
 const moment = require('moment');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 let getTopUser = (option) => {
   return new Promise(async (resolve, reject) => {
@@ -58,7 +58,33 @@ let getTopUser = (option) => {
     }
   });
 };
+let getInfoById = (inputId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await db.User.findOne({
+        where: {
+          id: inputId,
+        },
+        attributes: ['name', 'phone_number', 'email', 'address'],
+      });
+      if (!data) {
+        return resolve({
+          status: 1,
+          message: 'Không tìm thấy người dùng',
+        });
+      }
+      return resolve({
+        status: 0,
+        message: 'OK',
+        data: data,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
 module.exports = {
   getTopUser: getTopUser,
+  getInfoById: getInfoById,
 };

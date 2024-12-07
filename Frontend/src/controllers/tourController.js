@@ -1,3 +1,4 @@
+const e = require('express');
 const tourService = require('../services/tourService');
 
 let handleGetTourType = async (req, res) => {
@@ -44,7 +45,13 @@ let handleGetTourDetail = async (req, res) => {
         message: 'Lỗi truyền đầu vào dữ liệu',
       });
     }
-    let result = await tourService.getInfoTourDetail(id);
+    let result;
+    let dateId = req.query.dateId;
+    if (dateId) {
+      result = await tourService.getInfoTourDetailByDate(id, dateId);
+    } else {
+      result = await tourService.getInfoTourDetail(id);
+    }
     if (result.status !== 0) {
       return res.status(404).json({
         errCode: result.status,
@@ -57,6 +64,7 @@ let handleGetTourDetail = async (req, res) => {
       data: result.data,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       errorCode: 3,
       message: 'Lỗi call api',
