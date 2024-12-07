@@ -1,5 +1,6 @@
 package org.example.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.exception.ExistedException;
 import org.example.modal.PasswordResetToken;
 import org.example.modal.Users;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,8 +27,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public ArrayList<Users> getAllUSer() {
-		return (ArrayList<Users>) userReponsitory.findAll();
+	public List<Users> getAllUSer() {
+		return  userReponsitory.findAll();
 	}
 
 	@Override
@@ -62,12 +64,12 @@ public class UserService implements IUserService {
 		if (userOpt.isPresent()) {
 			Users userUpdate = userOpt.get();
 			userUpdate.setUserName(user.getUserName());
-//           userUpdate.setPassWord(user.getPassWord());
+            userUpdate.setPassWord(user.getPassWord());
 			userUpdate.setName(user.getName());
 			userUpdate.setPhoneNumber((user.getPhoneNumber()));
 			userUpdate.setEmail(user.getEmail());
 			userUpdate.setAddress(user.getAddress());
-//           userUpdate.setRole(user.getRole());
+            userUpdate.setRole(user.getRole());
 			userReponsitory.save(userUpdate);
 			return true;
 		}
@@ -92,4 +94,11 @@ public class UserService implements IUserService {
 		user.setPassWord(passwordEncoder.encode(password));
 		userReponsitory.save(user);
 	}
+
+	@Override
+	public Users getUserById(int userId) {
+		return userReponsitory.findById(userId)
+				.orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
+	}
+
 }

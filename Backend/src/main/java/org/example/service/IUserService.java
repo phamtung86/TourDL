@@ -3,10 +3,11 @@ package org.example.service;
 import org.example.modal.Users;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-	ArrayList<Users> getAllUSer();
+	List<Users> getAllUSer();
 
 	// create user
 	void createNewUser(Users user);
@@ -23,4 +24,7 @@ public interface IUserService {
 	Optional<Users> getUserByPasswordResetToken(String token);
 
 	void changeUserPassword(Users user, String password);
+
+	// Lấy thông tin người dùng theo ID
+	Users getUserById(int userId);
 }

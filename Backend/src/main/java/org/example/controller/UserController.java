@@ -1,17 +1,20 @@
 package org.example.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.dto.TourDTO;
 import org.example.dto.UserDTO;
 import org.example.exception.ExistedException;
 import org.example.exception.UserException;
 import org.example.mail.GenericResponse;
 import org.example.mail.ISendMailService;
 import org.example.modal.PasswordResetToken;
+import org.example.modal.Tour;
 import org.example.modal.Users;
 import org.example.response.ApiResponse;
 import org.example.service.IPasswordTokenService;
 import org.example.service.IUserService;
 import org.example.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -24,10 +27,8 @@ import static org.example.modal.PasswordResetToken.EXPIRATION;
 import static org.springframework.http.HttpStatus.CONFLICT;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/User")
@@ -42,11 +43,17 @@ public class UserController {
 	private JavaMailSender mailSender;
 	@Autowired
 	private IPasswordTokenService passwordResetToken;
-
+	@Autowired
+	private ModelMapper modelMapper;
 	@GetMapping("/users")
-	public ArrayList<Users> getUsers() {
-		return userService.getAllUSer();
+	public List<UserDTO> getUsers() {
+		List<Users> uses = userService.getAllUSer();
+		List<UserDTO> toursdto = uses.stream()
+				.map(u -> modelMapper.map(u, UserDTO.class)) // Ánh xạ từng đối tượng
+				.collect(Collectors.toList());
+		return toursdto;
 	}
+
 
 	@PostMapping("/users")
 	public ResponseEntity<ApiResponse> addNewUser(@RequestBody Users user) {
@@ -137,4 +144,60 @@ public class UserController {
 		return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/api/User"
 				+ request.getContextPath();
 	}
+
+	@PutMapping("/lock/{userId}")
+	public ResponseEntity<ApiResponse> lockUser(@PathVariable("userId") int userId) {
+		try {
+			// Kiểm tra xem người dùng có tồn tại không
+			Users user = userService.getUserById(userId);
+			if (user == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body(new ApiResponse("User not found", null));
+			}
+
+			// Kiểm tra nếu người dùng đã bị khóa
+			if (user.getRole() == -1) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ApiResponse("User is already locked", null));
+			}
+
+			// Cập nhật role thành -1 (khóa người dùng)
+			user.setRole(-1);
+			userService.updateUser(userId, user);
+
+			return ResponseEntity.ok(new ApiResponse("User locked successfully", user));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse("Error locking user: " + e.getMessage(), null));
+		}
+	}
+
+	@PutMapping("/refresh/{userId}")
+	public ResponseEntity<ApiResponse> unlockUser(@PathVariable("userId") int userId) {
+		try {
+			// Kiểm tra xem người dùng có tồn tại không
+			Users user = userService.getUserById(userId);
+			if (user == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body(new ApiResponse("User not found", null));
+			}
+
+			// Kiểm tra nếu người dùng đang bị khóa (role = -1)
+			if (user.getRole() != -1) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ApiResponse("User is not locked", null));
+			}
+
+			// Cập nhật role thành 0 (mở khóa người dùng)
+			user.setRole(0);
+			userService.updateUser(userId, user);
+
+			return ResponseEntity.ok(new ApiResponse("User unlocked successfully", user));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse("Error unlocking user: " + e.getMessage(), null));
+		}
+	}
+
 }
+
