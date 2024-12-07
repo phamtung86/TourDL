@@ -35,8 +35,9 @@ const initWebRouters = (app) => {
     const voucherId = req.params.id;
     return res.render('admin/voucherModify.ejs', { voucherId });
   });
-  router.get('/calendar/add', (req, res) => {
-    return res.render('admin/calendarAdd.ejs');
+  router.get('/calendar/add/:id', (req, res) => {
+    const tourId = req.params.id;
+    return res.render('admin/calendarAdd.ejs',{tourId});
   });
   router.get('/calendar/modify/:id', (req, res) => {
     const calendarId = req.params.id;
