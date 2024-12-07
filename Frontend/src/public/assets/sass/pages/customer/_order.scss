@@ -52,6 +52,79 @@
       font-weight: bold;
       margin-bottom: 18px;
     }
+    .member-box {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      gap: 10px;
+      .member-box__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid #b1b1b1;
+        padding: 14px;
+        border-radius: 10px;
+        .member-box__item-left {
+          display: flex;
+          flex-direction: column;
+          .member-box__item-heading {
+            font-size: $fs-small;
+            font-weight: bold;
+            margin-bottom: 4px;
+          }
+          span {
+            display: inline-block;
+            font-size: 1em;
+            margin-right: 4px;
+            span {
+              display: inline-block;
+            }
+          }
+        }
+        .member-box__item-right {
+          $size: 32px;
+          display: flex;
+          align-items: center;
+          .member-box__button-left {
+            width: $size;
+            height: $size;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            &:hover {
+              cursor: pointer;
+              background-color: #daefff;
+              transition: 0.2s all ease-in-out;
+            }
+            i {
+              font-size: 1em;
+            }
+          }
+          .member-box__current-value {
+            display: inline-block;
+            margin: 10px;
+            font-size: 1.4em;
+            font-weight: bold;
+          }
+          .member-box__button-right {
+            width: $size;
+            height: $size;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            &:hover {
+              cursor: pointer;
+              background-color: #daefff;
+              transition: 0.2s all ease-in-out;
+            }
+            i {
+              font-size: 1em;
+            }
+          }
+        }
+      }
+    }
     .customer-info__box {
       display: grid;
       grid-template-columns: auto auto;
@@ -99,4 +172,178 @@
       }
     }
   }
+  .tour-infor {
+    .tour-infor-detail {
+      .infor-detail__date {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        .icon {
+          font-size: $fs-small - 0.2em;
+        }
+        .text {
+          font-weight: bold;
+          color: $color-primary;
+          font-size: $fs-small - 0.2em;
+        }
+        .infor-detail__left {
+          display: inline-block;
+          flex-basis: 50%;
+          font-weight: bold;
+          color: black;
+          font-size: 1.2em;
+          margin-bottom: 8px;
+        }
+        .infor-detail__right {
+          display: inline-block;
+          flex-basis: 50%;
+          font-weight: bold;
+          color: black;
+          font-size: 1.2em;
+          margin-bottom: 8px;
+        }
+        .infor-detail__bottom {
+          display: inline-block;
+          flex-basis: 100%;
+          font-weight: bold;
+          color: black;
+          font-size: 1.2em;
+          margin-bottom: 8px;
+        }
+      }
+    }
+    .customer-bill {
+      margin-bottom: 10px;
+      .customer-bill__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        .customer-bill__title {
+          .icon {
+            font-size: 1.6em;
+          }
+          .text {
+            font-size: $fs-small - 0.2em;
+            text-transform: uppercase;
+            font-weight: bold;
+          }
+        }
+        .customer-bill__price {
+          color: red;
+          font-size: $fs-small - 0.2em;
+          font-weight: bold;
+          .customer-bill__price-value {
+          }
+        }
+      }
+      .customer-bill__list {
+        margin-bottom: 4px;
+        .customer-bill__item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 4px;
+          .customer-bill__attributes {
+            display: inline-block;
+            font-weight: normal;
+            font-size: $fs-small - 0.2em;
+          }
+          .customer-bill__box-value {
+            display: inline-block;
+            font-weight: bold;
+            font-size: $fs-small - 0.3em;
+            .customer-bill__value-size {
+            }
+          }
+        }
+      }
+      .customer-bill__final {
+        .block-flex {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          h4 {
+            display: inline-block;
+            font-size: $fs-medium - 0.6em;
+            font-weight: bold;
+            &.customer-bill__final-value {
+              color: red;
+            }
+          }
+        }
+      }
+    }
+    #btn-submit__order {
+      display: block;
+      outline: none;
+      background-color: $color-primary;
+      filter: brightness(0.95);
+      font-size: $fs-small - 0.2em;
+      width: 100%;
+      padding: 8px;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      &:hover {
+        cursor: pointer;
+        filter: brightness(1);
+        transition: 0.2s all ease-in-out;
+      }
+    }
+  }
+}
+.tour-infor__heading {
+  font-size: $fs-medium;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+.tour-infor-detail {
+  width: 100%;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 10px;
+}
+.infor-detail-tour {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.infor-tour-image {
+  width: 35%;
+  border-radius: 10px;
+}
+.image-tour {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+}
+.infor-tour-name-id {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-left: 20px;
+  height: 120px;
+}
+.infor-tour-name {
+  font-size: 1.4em;
+  color: #171717;
+  font-weight: 700;
+}
+.infor-tour-id {
+  font-size: 16px;
+}
+.infor-tour-id-span {
+  font-style: normal;
+  font-weight: 700;
+  color: #171717;
+  font-size: 0.8em;
+}
+hr {
+  border: 1px solid #e5e5e5;
 }
