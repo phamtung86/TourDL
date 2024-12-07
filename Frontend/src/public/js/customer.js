@@ -126,6 +126,8 @@ function showErrorMessage(message) {
     tableBody.innerHTML = `<div class="error-message">${message}</div>`;
 }
 
+// lỗi tìm tiếm -> fix lại
+
 /**
  * Tìm kiếm người dùng theo từ khóa
  */
