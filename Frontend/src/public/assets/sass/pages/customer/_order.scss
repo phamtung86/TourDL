@@ -127,7 +127,7 @@
     }
     .customer-info__box {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: 50% 50%;
       gap: 18px 20px;
       position: relative;
       margin-bottom: 20px;
@@ -148,6 +148,9 @@
         align-items: flex-start;
         justify-content: center;
         $mb: 6px;
+        p {
+          font-size: $fs-small;
+        }
         .box__label {
           font-size: $fs-small;
           font-weight: bold;

@@ -1,4 +1,3 @@
-const e = require('express');
 const tourService = require('../services/tourService');
 
 let handleGetTourType = async (req, res) => {
@@ -72,7 +71,25 @@ let handleGetTourDetail = async (req, res) => {
   }
 };
 
+let handleOrderTour = async (req, res) => {
+  try {
+    let data = req.body;
+    let result = await tourService.createTourOrder(data);
+    return res.status(200).json({
+      errCode: result.status,
+      message: result.message,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errCode: 3,
+      message: 'Lỗi call api',
+    });
+  }
+};
+
 module.exports = {
   handleGetTourType: handleGetTourType,
   handleGetTourDetail: handleGetTourDetail,
+  handleOrderTour: handleOrderTour,
 };
