@@ -406,7 +406,7 @@ let generationToursHTML = (tours) => {
               <span>Giá từ:</span> <br />
               ${Intl.NumberFormat('vi-VN').format(tour.tourPrice)} &#x20AB;
             </p>
-            <a href="#" class="tour-list__item-btn-detail">
+            <a href="/detail/${tour.tourId}" class="tour-list__item-btn-detail">
               Xem chi tiết
             </a>
           </div>

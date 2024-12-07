@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'tour_id',
         as: 'tourOrders',
       });
+      Tour.hasOne(models.TourDetail, {
+        foreignKey: 'tour_id',
+        as: 'tourDetail',
+      });
+      Tour.hasMany(models.TourCalendar, {
+        foreignKey: 'tour_Id',
+        as: 'tourCalendars',
+      });
     }
   }
   Tour.init(
@@ -51,9 +59,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      slot: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
+      departure_slug: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      destination_slug: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       transport_id: {
         type: DataTypes.INTEGER,
