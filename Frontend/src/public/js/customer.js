@@ -131,25 +131,25 @@ function showErrorMessage(message) {
 /**
  * Tìm kiếm người dùng theo từ khóa
  */
-function filterUsers(keyword) {
-    const filteredUsers = allUsers.filter(user =>
-        user.id.toString().includes(keyword) ||
-        user.userName.toLowerCase().includes(keyword.toLowerCase())
-    );
-    renderUsers(filteredUsers);
-}
+// function filterUsers(keyword) {
+//     const filteredUsers = allUsers.filter(user =>
+//         user.id.toString().includes(keyword) ||
+//         user.userName.toLowerCase().includes(keyword.toLowerCase())
+//     );
+//     renderUsers(filteredUsers);
+// }
 
 /**
  * Gán các sự kiện DOM
  */
-function handleEvents() {
-    // Sự kiện tìm kiếm
-    const searchInput = document.querySelector('.action__search--text');
-    searchInput.addEventListener('input', (event) => {
-        const keyword = event.target.value.trim();
-        filterUsers(keyword);
-    });
-}
+// function handleEvents() {
+//     // Sự kiện tìm kiếm
+//     const searchInput = document.querySelector('.action__search--text');
+//     searchInput.addEventListener('input', (event) => {
+//         const keyword = event.target.value.trim();
+//         filterUsers(keyword);
+//     });
+// }
 
 /**
  * Hàm xử lý khi nhấn nút "Khóa"
@@ -266,7 +266,7 @@ function handleRefreshUser() {
  */
 document.addEventListener('DOMContentLoaded', () => {
     getCustomer(); // Tải danh sách người dùng
-    handleEvents(); // Gán sự kiện
+    // handleEvents(); // Gán sự kiện
 
     // Gán sự kiện cho nút "Khóa"
     const lockButton = document.querySelector('.action__button.action__look');

@@ -127,12 +127,12 @@ p {
     color: #000;
 }
 
-.inputcheck {
+/* .inputcheck {
     display: flex;
     max-height: 30px;
     width: 100%;
     justify-content: space-between;
-}
+} */
 
 .btn-submit {
     font-size: 2rem;
@@ -165,4 +165,19 @@ p {
 
 .btn-signin a:active {
     color: blue;
+}
+
+.ip-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 30px 20px 10px 20px;
+}
+
+.ip-link:active {
+    transform: scale(0.90);
 }
