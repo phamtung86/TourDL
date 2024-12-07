@@ -65,7 +65,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    min-height: 400px;
+    min-height: 330px;
 }
 
 .user__admin--table--title {
@@ -201,5 +201,36 @@
 
 .action__look {
     background-color: darkviolet;
+    color: white;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 100px;
+    position: sticky;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination button:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+.pagination button:hover:not([disabled]) {
+    background-color: #0056b3;
     color: white;
 }

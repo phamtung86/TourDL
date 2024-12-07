@@ -1,4 +1,6 @@
 let allUsers = []; // Lưu tất cả người dùng từ API
+let currentPage = 1; // Trang hiện tại
+const pageSize = 5; // Số người dùng mỗi trang
 
 /**
  * Lấy danh sách người dùng từ API
@@ -44,7 +46,14 @@ function renderUsers(users) {
     const tableBody = document.querySelector('.user__admin--table--body');
     tableBody.innerHTML = ''; // Xóa nội dung cũ
 
-    const rows = users
+    // Tính toán phạm vi người dùng cần hiển thị theo trang hiện tại
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = currentPage * pageSize;
+    // Lọc bỏ người dùng có role = 1
+    const filteredUsers = allUsers.filter(user => user.role !== 1);
+    // Lấy người dùng trong phạm vi này
+    const usersToDisplay = filteredUsers.slice(startIndex, endIndex);
+    const rows = usersToDisplay
         .filter(user => user.role !== 1) // Lọc bỏ người dùng có role = 1
         .map(user => `
             <div class="user__admin--table--row ${user.role === -1 ? 'locked' : ''}">
@@ -61,6 +70,52 @@ function renderUsers(users) {
         `).join('');
 
     tableBody.innerHTML = rows || '<div class="empty-message">Không tìm thấy người dùng phù hợp.</div>';
+
+    renderPagination(users.length); // Gọi hàm renderPagination để tạo nút phân trang
+}
+
+/**
+ * Hiển thị các nút phân trang
+ */
+function renderPagination(totalUsers) {
+    const totalPages = Math.ceil(totalUsers / pageSize); // Tính tổng số trang
+    const paginationContainer = document.querySelector('.pagination');
+    paginationContainer.innerHTML = ''; // Xóa các nút phân trang cũ
+
+    // Tạo nút "Previous" (Trang trước)
+    const prevButton = document.createElement('button');
+    prevButton.textContent = '«';
+    prevButton.disabled = currentPage === 1; // Nếu là trang đầu tiên thì vô hiệu hóa
+    prevButton.addEventListener('click', () => changePage(currentPage - 1));
+    paginationContainer.appendChild(prevButton);
+
+    // Tạo các nút số trang
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.classList.toggle('active', i === currentPage); // Đánh dấu trang hiện tại
+        pageButton.addEventListener('click', () => changePage(i)); // Gán sự kiện click
+        paginationContainer.appendChild(pageButton);
+    }
+
+    // Tạo nút "Next" (Trang sau)
+    const nextButton = document.createElement('button');
+    nextButton.textContent = '»';
+    nextButton.disabled = currentPage === totalPages; // Nếu là trang cuối cùng thì vô hiệu hóa
+    nextButton.addEventListener('click', () => changePage(currentPage + 1));
+    paginationContainer.appendChild(nextButton);
+}
+
+
+/**
+ * Thay đổi trang hiện tại và cập nhật giao diện
+ */
+function changePage(pageNumber) {
+    const totalPages = Math.ceil(allUsers.length / pageSize);
+    if (pageNumber < 1 || pageNumber > totalPages) return; // Không thay đổi trang nếu không hợp lệ
+
+    currentPage = pageNumber;
+    renderUsers(allUsers); // Hiển thị lại người dùng trên trang mới
 }
 
 /**
@@ -102,14 +157,15 @@ async function lockUser(userId) {
         // Kiểm tra xem người dùng đã bị khóa chưa
         const userRow = document.querySelector(`input[value="${userId}"]`).closest('.user__admin--table--row');
         if (userRow && userRow.classList.contains('locked')) {
-            alert('Người dùng này đã bị khóa trước đó!');
-            return;
+            alert('Người dùng này đã bị khóa!');
+            return getCustomer();
         }
 
         const response = await axios.put(`http://localhost:8080/api/User/lock/${userId}`);
 
         if (response.status === 200) {
             alert('Khóa tài khoản thành công!');
+            return getCustomer();
 
             // Tìm dòng tương ứng với userId và thêm lớp 'locked'
             if (userRow) {
@@ -138,13 +194,6 @@ function handleLockUser() {
 
     const userId = selectedRadio.value;
 
-    // Kiểm tra nếu người dùng đã bị khóa (role = -1)
-    const user = allUsers.find(user => user.id == userId);
-    if (user && user.role === -1) {
-        alert('Người dùng này đã bị khóa!');
-        return location.reload();
-    }
-
     const confirmLock = confirm(`Bạn có chắc chắn muốn khóa tài khoản với ID: ${userId}?`);
     if (!confirmLock) return;
 
@@ -162,7 +211,7 @@ async function refreshUser(userId) {
 
         if (user && user.role === 0) {
             alert('Người dùng đang hoạt động!');
-            return location.reload(); // Không làm gì thêm, chỉ dừng lại ở đây
+            return getCustomer(); // Không làm gì thêm, chỉ dừng lại ở đây
         }
 
         const response = await axios.put(`http://localhost:8080/api/User/refresh/${userId}`);
