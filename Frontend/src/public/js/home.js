@@ -32,17 +32,24 @@ let apiGetTours = '';
 
 //* Hàm set lại options params cho url filter tours
 let setAPIGetTours = (params) => {
-  apiGetTours = `${URL_API_SERVER_V1}/tours/filter-tour?size=10&sort=${params.sort},asc&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}&tourType=${params.tourType}&transportId=${params.transportId}`;
+  apiGetTours = `${URL_API_SERVER_V1}/tours/filter-tour?size=10&sort=${params.sort}&minBudget=${params.minBudget}&maxBudget=${params.maxBudget}&departure=${params.departure}&destination=${params.destination}&tourType=${params.tourType}&transportId=${params.transportId}&startDate=${params.startDate}`;
+};
+
+let currentDay = () => {
+  let date = new Date();
+  date = date.toISOString().split('T')[0];
+  return date;
 };
 
 setAPIGetTours({
-  sort: 'id',
+  sort: 'price,asc',
   minBudget: '',
   maxBudget: '',
   departure: '',
   destination: '',
   tourType: '',
   transportId: '',
+  startDate: currentDay(),
 });
 
 // Function event click
@@ -147,6 +154,7 @@ const loadEventHTML = () => {
       });
       e.target.classList.add('active');
       boxOptionItemsOfDeparturePoint.innerText = e.target.innerText;
+      boxOptionItemsOfDeparturePoint.dataset.value = e.target.dataset.slug;
     });
   });
   //destination
@@ -165,10 +173,30 @@ const loadEventHTML = () => {
       });
       e.target.classList.add('active');
       boxOptionItemsOfDestination.innerText = e.target.innerText;
+      boxOptionItemsOfDestination.dataset.value = e.target.dataset.slug;
     });
   });
-  buttonFilter.addEventListener('click', async (e) => {
-    e.preventDefault(); // Bỏ sự kiện mặc định của button
+
+  // option sorted
+  let optionItemSorted = document.querySelectorAll('.tour-list__box-link');
+  let boxItemSorted = document.querySelector(
+    '.tour-list__sort-box .tour-list__sort-box-text'
+  );
+  optionItemSorted.forEach((optionItem) => {
+    optionItem.addEventListener('click', (e) => {
+      let hasActive = e.target.classList.contains('active');
+      if (hasActive) return;
+      optionItemSorted.forEach((option) => {
+        option.classList.remove('active');
+      });
+      e.target.classList.add('active');
+      boxItemSorted.innerText = e.target.innerText;
+      boxItemSorted.dataset.value = e.target.dataset.value;
+    });
+  });
+
+  // Hàm lấy option hiện tại
+  let getCurrentOptionn = () => {
     let minBudget = '';
     let maxBudget = '';
     let budget = document.querySelector('.tour-filter__option.budget.active');
@@ -182,29 +210,36 @@ const loadEventHTML = () => {
     let destination = document.querySelector(
       '.tour-filter__box-input.destination>.tour-filter__box-text'
     );
-    let textDeparturePoint = departurePoint.innerText.toString();
-    let textDestination = destination.innerText.toString();
-    console.log(textDeparturePoint, textDestination);
-    textDeparturePoint === 'Tất cả'
-      ? (textDeparturePoint = '')
-      : (textDeparturePoint = textDeparturePoint);
-    textDestination === 'Tất cả'
-      ? (textDestination = '')
-      : (textDestination = textDestination);
+    let textDeparturePoint = departurePoint.dataset.value;
+    let textDestination = destination.dataset.value;
     let type = document.querySelector('.tour-filter__option.type.active');
     let transport = document.querySelector(
       '.tour-filter__option.transport.active'
     );
+    let sorted = document.querySelector('.tour-list__sort-box-text').dataset
+      .value;
+    let dateValueInput = document.querySelector(
+      '.tour-filter__input-date'
+    ).value;
+    let date = new Date(dateValueInput);
+    date = date.toISOString().split('T')[0];
     // Tạo option mới cho url filter tours
     let option = {
-      sort: 'id',
+      sort: sorted,
       minBudget: minBudget,
       maxBudget: !maxBudget ? '' : maxBudget,
       departure: textDeparturePoint,
       destination: textDestination,
       tourType: !type ? `` : type.dataset.id,
       transportId: !transport ? `` : transport.dataset.id,
+      startDate: date,
     };
+    return option;
+  };
+
+  buttonFilter.addEventListener('click', async (e) => {
+    e.preventDefault(); // Bỏ sự kiện mặc định của button
+    let option = getCurrentOptionn();
     setAPIGetTours(option);
     let res = await resTourList(1);
     if (res.status !== 0) {
@@ -335,7 +370,7 @@ let generationToursHTML = (tours) => {
                 </span>
                 <span> Khởi hành:</span>
                 <span class="tour-list__item-value">
-                  ${tour.tourDestination}
+                  ${tour.tourDeparturePoint}
                 </span>
               </li>
               <li class="tour-list__item-col">
@@ -386,9 +421,7 @@ let generationToursHTML = (tours) => {
 let generationProvincesHTML = (dataProvinces) => {
   let provinces = ``;
   dataProvinces.forEach((province) => {
-    provinces += `
-    <li class="tour-filter__option-item">${province.name}</li>
-    `;
+    provinces += `<li data-slug="${province.slug}" class="tour-filter__option-item">${province.name}</li>`;
   });
   optionProvinces.forEach((listProvinces) => {
     listProvinces.innerHTML += provinces;
@@ -446,10 +479,22 @@ let handleScrollRender = async () => {
   }
 };
 
+// Hàm set ngày hiện tại trong thẻ input ngày
+let setDate = () => {
+  let dataInput = document.querySelector('.tour-filter__input-date');
+  let today = new Date(); // Lấy ngày hiện tại bằng khởi tạo đối tượng Date
+  let year = today.getFullYear(); // Lấy năm
+  let month = String(today.getMonth() + 1).padStart(2, '0'); // Lấy tháng
+  let day = String(today.getDate()).padStart(2, '0'); // Lấy ngày
+  dataInput.value = `${year}-${month}-${day}`; // Gán ngày hiện tại
+  dataInput.min = `${year}-${month}-${day}`; // Không cho chọn ngày ở phía sau ngày hiện tại
+};
+
 // Hàm tải HTML vào trong trang website
 const loadHTML = async () => {
   await renderTourList(); // Tải tours
   await renderProvinces(); // Tải danh sách tỉnh thành
+  setDate();
 };
 
 // Event action
