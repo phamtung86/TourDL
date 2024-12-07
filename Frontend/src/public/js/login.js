@@ -10,23 +10,57 @@ document.querySelector('.toggle-password').addEventListener('click', function ()
     }
 });
 
-document.querySelector(".btn-submit").addEventListener("click", async (event) => {
-    event.preventDefault(); // Ngăn form reload trang
-    const email = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+document.querySelector('form').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
+    const errorMessage = document.getElementById('error-message'); // Thêm thông báo lỗi nếu có
+
+    // Tạo đối tượng dữ liệu để gửi tới API
+    const loginData = {
+        emailOrUserName: username, // username từ form
+        password: password
+    };
 
     try {
-        const response = await axios.post("http://localhost:8080/api/auth/login", {
-            email,
-            password
-        });
+        // Gửi yêu cầu đăng nhập đến API bằng axios
+        const response = await axios.post('http://localhost:8080/api/auth/login', loginData);
 
-        // Lưu token vào localStorage (nếu cần)
-        localStorage.setItem("token", response.data.data.token);
+        if (response.status === 200) {
+            // Đăng nhập thành công, lấy dữ liệu JWT từ response
+            const jwtResponse = response.data.data;
 
-        alert("Đăng nhập thành công!");
-        window.location.href = "/"; // Điều hướng đến trang home
+            // Lưu token vào localStorage (hoặc sessionStorage nếu cần)
+            if (remember) {
+                localStorage.setItem('jwt', jwtResponse.token);
+            } else {
+                sessionStorage.setItem('jwt', jwtResponse.token);
+            }
+
+            // Giải mã token JWT để lấy thông tin người dùng
+            const decodedToken = jwt_decode(jwtResponse.token); // Sử dụng jwtResponse.token thay vì jwtToken
+            console.log(decodedToken); // In ra token để kiểm tra
+
+            // Kiểm tra role trong token và điều hướng người dùng
+            if (decodedToken.roles && decodedToken.roles.includes('ROLE_ADMIN')) {
+                // Nếu role là ROLE_ADMIN, điều hướng đến trang dashboard
+                window.location.href = '/dashboard';
+            } else if (decodedToken.roles && decodedToken.roles.includes('ROLE_USER')) {
+                // Nếu role là ROLE_USER, điều hướng đến trang chính
+                window.location.href = '/';
+            } else {
+                // Nếu không có role hợp lệ, điều hướng về trang lỗi hoặc trang khác
+                window.location.href = '/error';
+            }
+        }
     } catch (error) {
-        alert(error.response.data.message || "Đăng nhập thất bại, vui lòng thử lại!");
+        // Xử lý lỗi khi đăng nhập thất bại
+        console.error('Login failed', error);
+        const errorData = error.response ? error.response.data : null;
+        if (errorData) {
+            alert(errorData.message || 'Đăng nhập thất bại');
+        }
     }
 });
