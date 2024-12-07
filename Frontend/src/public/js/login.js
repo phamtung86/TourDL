@@ -41,6 +41,7 @@ document
         // Lưu token vào SessionStorage
         sessionStorage.setItem('jwt', jwtResponse.token);
         sessionStorage.setItem('userID', jwtResponse.userId);
+        sessionStorage.setItem('username', jwtResponse.userName);
         // Giải mã token JWT để lấy thông tin người dùng
         const decodedToken = jwt_decode(jwtResponse.token); // Sử dụng jwtResponse.token thay vì jwtToken
         // Kiểm tra role trong token và điều hướng người dùng

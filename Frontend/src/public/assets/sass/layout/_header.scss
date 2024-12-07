@@ -25,6 +25,9 @@
         }
       }
       .header__button {
+        &.hide {
+          display: none;
+        }
         .button__link {
           display: inline-block;
           padding: 8px 16px;
@@ -43,6 +46,26 @@
             transition: 0.2s ease-in-out;
             border: 1px solid $color-primary;
           }
+        }
+      }
+      .header__infor-customer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .icon {
+          font-size: 1em;
+          padding: 10px;
+          background-color: $color-primary;
+          border-radius: 50%;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .header__infor-customer-name {
+          font-size: $fs-medium;
+          margin-left: 10px;
+          font-weight: bold;
         }
       }
     }
