@@ -103,18 +103,14 @@ let getInfoTourDetail = (inputId) => {
           {
             model: db.TourCalendar,
             as: 'tourCalendars',
-            attributes: [
-              'id',
-              'start_date',
-              'slot',
-            ],
+            attributes: ['id', 'start_date', 'slot'],
             include: [
               {
                 model: db.Voucher,
                 as: 'voucher',
-                attributes: ['value', 'type']
-              }
-            ]
+                attributes: ['value', 'type'],
+              },
+            ],
           },
           {
             model: db.TourDetail,
@@ -144,8 +140,61 @@ let getInfoTourDetail = (inputId) => {
   });
 };
 
+let getInfoTourDetailByDate = (tourId, dateId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await db.Tour.findOne({
+        where: {
+          id: tourId,
+        },
+        attributes: {
+          exclude: [
+            'transport_id',
+            'tour_type_id',
+            'destination',
+            'destination_slug',
+            'file_name',
+          ],
+        },
+        include: [
+          {
+            model: db.TourCalendar,
+            as: 'tourCalendars',
+            where: {
+              id: dateId,
+            },
+            attributes: ['id', 'start_date', 'slot'],
+            include: [
+              {
+                model: db.Voucher,
+                as: 'voucher',
+                attributes: ['value', 'type'],
+              },
+            ],
+          },
+        ],
+        raw: false,
+        nest: true,
+      });
+      if (!data)
+        return resolve({
+          status: 1,
+          message: 'Không tìm thấy',
+        });
+      return resolve({
+        status: 0,
+        message: 'OK',
+        data: data,
+      });
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
 module.exports = {
   getTourByType: getTourByType,
   getTourByCustomer: getTourByCustomer,
   getInfoTourDetail: getInfoTourDetail,
+  getInfoTourDetailByDate: getInfoTourDetailByDate,
 };
