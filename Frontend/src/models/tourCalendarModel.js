@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'tour_Id',
         as: 'tour',
       });
+      TourCalendar.belongsTo(models.Voucher, {
+        foreignKey: 'voucher_Id',
+        as: 'voucher',
+      })
     }
   }
   TourCalendar.init(
@@ -27,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      voucher_id: {
+      voucher_Id: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },

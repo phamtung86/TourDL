@@ -1,6 +1,6 @@
 const db = require('../models');
 const moment = require('moment');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 const getTourByType = () => {
   return new Promise(async (resolve, reject) => {
@@ -103,7 +103,18 @@ let getInfoTourDetail = (inputId) => {
           {
             model: db.TourCalendar,
             as: 'tourCalendars',
-            attributes: ['id', 'start_date', 'slot'],
+            attributes: [
+              'id',
+              'start_date',
+              'slot',
+            ],
+            include: [
+              {
+                model: db.Voucher,
+                as: 'voucher',
+                attributes: ['value', 'type']
+              }
+            ]
           },
           {
             model: db.TourDetail,
@@ -114,7 +125,7 @@ let getInfoTourDetail = (inputId) => {
           },
         ],
         raw: false,
-        nest: true,
+        nest: false,
       });
       if (!data)
         return resolve({
