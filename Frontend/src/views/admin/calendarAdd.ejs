@@ -18,14 +18,18 @@
                 <input type="date" class="tour_input" id="dateStart" name="dateStart" required>
             </div>            
           <div class="lable_input">
-            <label class="from_lable" for="tourImage">Slot:</label>
+            <label class="from_lable" for="slot">Slot:</label>
             <input type="number" class="tour_input" id="slot" name="slot" required>
           </div>
           <div class="lable_input">
-            <label class="from_lable" for="tourPrice">Voucher:</label>
-            <select class="tour_input" id="calendarVoucher" name="calendarVoucher" required>
+            <label class="from_lable" for="calendarVoucher">Voucher:</label>
+            <select class="tour_input" id="calendarVoucher" name="calendarVoucher">
                 <option value="">Tên Voucher</option>
             </select>
+          </div>
+          <div class="lable_input">
+            <label class="from_lable" for="tourCalendar">TourID:</label>
+            <input type="text" class="tour_input" id="tourCalendar" name="tourCalendar" readonly>
           </div>
           <div class="form-button">
             <button class="form-button-cancel" type="button" id="cancelAddTour">Hủy</button>

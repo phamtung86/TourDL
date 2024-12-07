@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.StyledEditorKit;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -22,12 +23,21 @@ public class CalendarController {
 		List<Calendar> calendars = calendarService.getAllCalendar();
 		return calendars;
 	}
+	@DeleteMapping("/Calendar/{id}")
+	public Boolean delCalendar(@PathVariable("id") int id){
+        try {
+            calendarService.delCalendar(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 	@PostMapping("/Calendars")
 	public ResponseEntity<?> createCalendar(@RequestBody Calendar calendar) {
         try {
             Calendar newCalendar = calendarService.createNewCalendar(calendar);
-            return new ResponseEntity<>(newCalendar, HttpStatus.CREATED);
+            return new ResponseEntity<>(newCalendar, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
@@ -36,6 +46,10 @@ public class CalendarController {
 	@GetMapping("/Calendars/{tourId}")
 	public List<CalendarDTO> listCalendarByTourId(@PathVariable("tourId") String tourId) {
         return calendarService.findCalendarbyTour(tourId);
+	}
+	@GetMapping("/Calendars/id/{id}")
+	public CalendarDTO getCalendarDTObyId(@PathVariable("id") int id){
+		return calendarService.getCalendarById(id);
 	}
 
 	// API để lấy các calendar đã hết hạn
@@ -90,5 +104,15 @@ public class CalendarController {
 //        List<Date> startDates = calendarService.getAllStartedDate();
 //        return startDates;
 //    }
+@PutMapping("/Calendars/{id}")
+public ResponseEntity<?> updateCalendar(@PathVariable("id") int id, @RequestBody Calendar calendarDetails) {
+		// Gọi service để cập nhật Calendar
+    try {
+        Calendar updatedCalendar = calendarService.updateCalendar(id, calendarDetails);
+        return new ResponseEntity<>(HttpStatus.OK);
+    } catch (RuntimeException e) {
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+}
 
 }

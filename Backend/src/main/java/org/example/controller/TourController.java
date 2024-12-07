@@ -36,6 +36,10 @@ public class TourController {
 	public List<Tour> listAllTours() {
 		return tourService.getAllTours();
 	}
+	@GetMapping("tours")
+	public List<TourDTOv2> tourDTOv2List(){
+		return tourService.getAllTour();
+	}
 
 	// get tour by name
 	@GetMapping("/search")

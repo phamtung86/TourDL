@@ -23,4 +23,7 @@ public interface ICalendarService {
 	List<Date> getAllStartedDate();
 
 	List<Object> calendarInMonth(int month, int year, String tourId);
+	CalendarDTO getCalendarById(int id);
+	Calendar updateCalendar(int id, Calendar calendarDetails);
+	Boolean delCalendar(int id);
 }
