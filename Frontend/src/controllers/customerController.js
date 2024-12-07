@@ -6,6 +6,19 @@ let orderPage = async (req, res) => {
   if (!tourId || !date) {
     return res.render('404.ejs');
   }
-  return res.render('customer/orderTour.ejs');
+  let dataTour;
+  try {
+    dataTour = await axios.get(
+      `http://localhost:3124/api/v1/tours/${tourId}?dateId=${date}`
+    );
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(dataTour.data.tourCalendars);
+
+  return res.render('customer/orderTour.ejs', {
+    tour: dataTour.data,
+    calendars: dataTour.data.tourCalendars[0],
+  });
 };
 module.exports = { orderPage: orderPage };

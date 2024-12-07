@@ -192,9 +192,43 @@ let getInfoTourDetailByDate = (tourId, dateId) => {
     }
   });
 };
+
+let createTourOrder = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.TourOrder.create(
+        {
+          total_price: data.totalPrice,
+          note: data.note,
+          order_date: data.orderDate,
+          total_member: data.totalMember,
+          tour_id: data.tourId,
+          // userTourOrder: {
+          //   user_Id: data.userId,
+          //   tour_order_Id: data.tour_order_Id,
+          //   status: data.status,
+          //   tour_start_date: data.tour_start_date,
+          // },
+          userTourOrder: data.userTourOrder,
+          members: data.members,
+        },
+        {
+          include: ['userTourOrder', 'members'],
+        }
+      );
+      return resolve({
+        status: 0,
+        message: 'Thành công',
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 module.exports = {
   getTourByType: getTourByType,
   getTourByCustomer: getTourByCustomer,
   getInfoTourDetail: getInfoTourDetail,
   getInfoTourDetailByDate: getInfoTourDetailByDate,
+  createTourOrder: createTourOrder,
 };

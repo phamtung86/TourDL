@@ -28,25 +28,7 @@
   </head>
   <body>
     <!-- Header -->
-    <header id="header" class="header">
-      <div class="header__container grid wide">
-        <div class="header__content">
-          <div class="header__logo">
-            <a href="#" class="header__logo-link">
-              <img
-                src="/assets/image/logo/logo-header.png"
-                alt="logo"
-                class="image__logo"
-              />
-            </a>
-          </div>
-          <div class="header__button">
-            <a href="#" class="button button__link">Đăng nhập</a>
-            <a href="#" class="button button__link">Đăng ký</a>
-          </div>
-        </div>
-      </div>
-    </header>
+    <%- include('../partials/headerCustomer')%>
     <!-- End Header -->
 
     <!-- Body content -->
@@ -214,21 +196,21 @@
                 <div class="infor-detail-tour">
                   <div class="infor-tour-image">
                     <img
-                      src="https://media.travel.com.vn/Tour/tfd_240306040812_127133_DAI NOI (14).jpg"
+                      src="<%= tour.image %>"
                       alt="Hinh anh tour"
                       class="image-tour"
                     />
                   </div>
                   <div class="infor-tour-name-id">
                     <div class="infor-tour-name">
-                      Đà Nẵng - Huế - La Vang - Động Phong Nha - Đà Nẵng
+                      <%= tour.name %>
                     </div>
                     <div class="infor-tour-id">
                       <i class="fa-solid fa-ticket"></i>
                       Mã tour:
-                      <span class="infor-tour-id-span"
-                        >NDDNG3361-006-281224XE-V</span
-                      >
+                      <span class="infor-tour-id-span">
+                        <%= tour.id %>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -237,7 +219,7 @@
                     <span class="icon">
                       <i class="fa-solid fa-map-pin"></i>
                     </span>
-                    Khởi hành: <span class="text">Đà nẵng</span>
+                    Khởi hành: <span class="text"><%= tour.departure_point %></span>
                   </p>
                   <p class="infor-detail__right">
                     <span class="icon">
@@ -249,7 +231,7 @@
                     <span class="icon">
                       <i class="fa-solid fa-hourglass-start"></i>
                     </span>
-                    Ngày đi: <span class="text">28/12/2024</span>
+                    Ngày đi: <span class="text"><%= calendars.start_date %></span>
                   </p>
                 </div>
                 <div class="customer-bill">
@@ -269,7 +251,7 @@
                     <li class="customer-bill__item">
                       <p class="customer-bill__attributes">Người lớn</p>
                       <p class="customer-bill__box-value">
-                        <span class="customer-bill__value-size">4</span>x 1.000.000 &#x20AB
+                        <span class="customer-bill__value-size">1</span>x <%= tour.price %> &#x20AB
                       </p>
                     </li>
                     <li class="customer-bill__item">
@@ -297,6 +279,9 @@
         </div>
       </div>
     </div>
+     <!-- Javascript -->
+     <%- include('../partials/baseScriptFE')%>
+     <script src="/js/orderCustomer.js"></script>
     <script>
       let username = sessionStorage.getItem('username');
       const header = document.querySelector('.header__content');
