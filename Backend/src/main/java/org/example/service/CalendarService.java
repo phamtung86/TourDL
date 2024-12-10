@@ -125,4 +125,39 @@ public class CalendarService implements ICalendarService {
 
 	}
 
+	@Override
+	public CalendarDTO getCalendarById(int id) {
+		CalendarDTO calendarDTO = new CalendarDTO();
+		for (Calendar calendar : calendarReponsitory.findAll()){
+			if(calendar.getId()==id) {
+				calendarDTO = new CalendarDTO(calendar);
+			}
+		}
+		return calendarDTO;
+
+	}
+
+	@Override
+	public Calendar updateCalendar(int id, Calendar calendarDetails) {
+		Optional<Calendar> existingCalendar = calendarReponsitory.findById(id);
+		if(existingCalendar.isPresent()){
+			Calendar exCalendar = existingCalendar.get();
+			exCalendar.setStartDate(calendarDetails.getStartDate());
+			exCalendar.setSlot(calendarDetails.getSlot());
+//			exCalendar.setTour(calendarDetails.getTour());
+			return calendarReponsitory.save(exCalendar);
+		}
+		return null;
+	}
+
+	@Override
+	public Boolean delCalendar(int id) {
+		Optional<Calendar> checkCalendar = calendarReponsitory.findById(id);
+		if(checkCalendar.isPresent()){
+			calendarReponsitory.deleteById(id);
+			return true;
+		}
+		return false;
+	}
+
 }

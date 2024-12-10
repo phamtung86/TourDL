@@ -30,6 +30,7 @@ public class CalendarDTO {
 		this.tourId = calendar.getTour().getId();
 		this.calendarStartDate = calendar.getStartDate();
 		this.voucher = calendar.getVoucher();
+		this.calendarSlot = calendar.getSlot();
 	}
 
 }
