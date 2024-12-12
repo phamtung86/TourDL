@@ -25,6 +25,8 @@
       src="https://kit.fontawesome.com/7b9d660613.js"
       crossorigin="anonymous"
     ></script>
+    <!-- Notification -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>
   <body>
     <!-- Header -->
@@ -215,8 +217,8 @@
                       <div class="customer__gender">
                         <label for="">Giới tính</label>
                         <select name="" id="" class="customer__input-gender">
-                          <option value="Nam">Nam</option>
-                          <option value="Nữ">Nữ</option>
+                          <option value="NAM">Nam</option>
+                          <option value="NU">Nữ</option>
                         </select>
                       </div>
                       <div class="customer__birthday">
@@ -388,13 +390,13 @@
                       <span class="text">Khách hàng</span>
                     </p>
                     <p class="customer-bill__price">
-                      <span class="customer-bill__price-value"><%= Intl.NumberFormat('vi-VN').format(tour.price)  %></span>
+                      <span class="customer-bill__price-value customer"><%= Intl.NumberFormat('vi-VN').format(tour.price)  %></span>
                       &#x20AB
                     </p>
                   </div>
                   <ul class="customer-bill__list">
                     <!-- Người lớn -->
-                    <li class="customer-bill__item">
+                    <li data-type="adult" class="customer-bill__item">
                       <p class="customer-bill__attributes">Người lớn</p>
                       <p class="customer-bill__box-value">
                         <span class="customer-bill__value-size">1</span> x <span class="customer-bill__tour-price adult" data-tourPrice="<%= tour.price %>"><%= Intl.NumberFormat('vi-VN').format(tour.price) %>
@@ -402,7 +404,7 @@
                       </p>
                     </li>
                     <!-- Trẻ em -->
-                    <li class="customer-bill__item hide young">
+                    <li data-type="young" class="customer-bill__item hide young">
                       <p class="customer-bill__attributes">Trẻ em</p>
                       <p class="customer-bill__box-value">
                         <span class="customer-bill__value-size">0</span> x <span class="customer-bill__tour-price young"><%= tour.price %>
@@ -410,7 +412,7 @@
                       </p>
                     </li>
                     <!-- Trẻ nhỏ -->
-                    <li class="customer-bill__item hide children">
+                    <li data-type="children" class="customer-bill__item hide children">
                       <p class="customer-bill__attributes">Trẻ nhỏ</p>
                       <p class="customer-bill__box-value">
                         <span class="customer-bill__value-size">0</span> x <span class="customer-bill__tour-price children"><%= tour.price %>
@@ -418,25 +420,37 @@
                       </p>
                     </li>
                     <!-- Em bé -->
-                    <li class="customer-bill__item hide baby">
+                    <li data-type="baby" class="customer-bill__item hide baby">
                       <p class="customer-bill__attributes">Em bé</p>
                       <p class="customer-bill__box-value">
                         <span class="customer-bill__value-size">0</span> x <span class="customer-bill__tour-price baby"><%= tour.price %>
                         </span> &#x20AB
                       </p>
                     </li>
-                    <li class="customer-bill__item">
+                    <!-- <li class="customer-bill__item">
                       <p class="customer-bill__attributes">Giảm giá</p>
                       <p class="customer-bill__box-value"> 
                         <span class="cutomer-bill__value-size --down">1.000.000</span> &#x20AB
                       </p>
-                    </li>
+                    </li> -->
                   </ul>
+                  <div class="customer-bill__head --bottom">
+                    <p class="customer-bill__title">
+                      <span class="icon"
+                        ><i class="fa-solid fa-tag"></i>
+                      </span>
+                      <span class="text">Giảm giá</span>
+                    </p>
+                    <p class="customer-bill__price">
+                      <span data-value="0" class="customer-bill__price-value sale"><%= Intl.NumberFormat('vi-VN').format(tour.price)  %></span>
+                      &#x20AB
+                    </p>
+                  </div>
                   <div class="customer-bill__final">
                     <div class="block-flex">
                       <h4>Tổng tiền</h4>
                       <h4 id="final-bill" class="customer-bill__final-value">
-                        <span class="customer-bill__final-value-bill">
+                        <span class="customer-bill__final-value-bill" data-value="<%= tour.price %>">
                           <%= Intl.NumberFormat('vi-VN').format(tour.price) %>
                         </span>
                        &#x20AB

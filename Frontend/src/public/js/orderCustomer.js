@@ -16,6 +16,7 @@ let resAPIInfo = async () => {
   }
 };
 
+// Tạo option để lưu giữ liệu local
 let optionTotal = {
   adult: {
     size: 1,
@@ -39,14 +40,17 @@ let optionTotal = {
   },
 };
 
+// Hàm gán giá trị cho dữ liệu local
 let setValueAttributes = (attribute, name, value) => {
   optionTotal[attribute][name] = value;
 };
 
+// Hàm lấy giá trị từ dữ liệu local
 let getValueAttributes = (attribute, name) => {
   return optionTotal[attribute][name];
 };
 
+// Gán số lượng slot nhiều nhất có thể đặt bởi một người hoặc còn lại của một chuyến đi
 let slot = (maximum = 5); //Giá trị slot còn trống trừ 1 slot mặc định
 
 // load info customer
@@ -83,6 +87,7 @@ let setValueToOptionTotal = () => {
   setValueAttributes('baby', 'price', babyPrice);
 };
 
+// Hàm hiển thị giá tour với mỗi loại đối tượng ra màn hình
 let renderPriceHTML = () => {
   let itemsPrice = document.querySelectorAll('.customer-bill__tour-price');
   itemsPrice.forEach((item) => {
@@ -93,17 +98,48 @@ let renderPriceHTML = () => {
   });
 };
 
+// Hàm xử lí cấu hình giá đối với mỗi loại đối tượng tham gia vào tour
 let configPriceTour = () => {
-  setValueToOptionTotal();
-  renderPriceHTML();
+  setValueToOptionTotal(); // Gán giá trị
+  renderPriceHTML(); // Hiển thị giá lên màn hình
 };
 
+// Hàm chịu trách nhiệm load HTML sau khi trang tải hoàn tất
 let loadHTML = async () => {
   await loadInfoCustomer();
   configPriceTour();
 };
 
 // Event
+let reloadBill = () => {
+  let billCustomer = 0;
+  for (let key in optionTotal) {
+    billCustomer +=
+      parseInt(optionTotal[key].size) * parseInt(optionTotal[key].price);
+  }
+  document.querySelector('.customer-bill__price-value.customer').innerHTML =
+    Intl.NumberFormat('vi-VN').format(billCustomer);
+  let salePrice = document.querySelector('.customer-bill__price-value.sale')
+    .dataset.value;
+  let finalBill = billCustomer - salePrice;
+  let finalBillHTML = document.querySelector(
+    '.customer-bill__final-value-bill'
+  );
+  finalBillHTML.innerText = Intl.NumberFormat('vi-VN').format(finalBill);
+  finalBillHTML.dataset.value = finalBill;
+};
+
+// Hàm cập nhật giá bill sau khi có sự thay đổi
+let updateSizeBill = (itemPrice, currentValue) => {
+  //* Cập nhật số lượng trong bill
+  itemPrice.querySelector(
+    '.customer-bill__box-value .customer-bill__value-size'
+  ).innerText = currentValue;
+  setValueAttributes(itemPrice.dataset.type, 'size', currentValue);
+  reloadBill();
+};
+
+// Hàm xử lí UI giảm thành viên
 let eventDiminishSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
   let currentValue = parseInt(itemHTML.dataset.value);
   if (slot === maximum) {
@@ -132,8 +168,10 @@ let eventDiminishSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
   }
   itemHTML.dataset.value = currentValue;
   itemHTML.innerText = currentValue;
+  updateSizeBill(itemPrice, currentValue); //* Cập nhật số lượng trong bill và reload giá
 };
 
+// Hàm xử lí UI tăng thành viên
 let eventIncreaseSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
   let currentValue = parseInt(itemHTML.dataset.value);
   if (slot === 0) {
@@ -146,11 +184,12 @@ let eventIncreaseSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
     infoItemHTML.classList.add('show');
     itemPrice.classList.remove('hide');
   }
-  itemHTML.dataset.value = currentValue;
+  itemHTML.dataset.value = currentValue; // Cập nhật value của box customer hiện tại
   itemHTML.innerText = currentValue;
+  updateSizeBill(itemPrice, currentValue); //* Cập nhật số lượng trong bill và reload giá
+  //* Add thành phần khai báo thông tin khách hàng
   let itemsInfoChildren = infoItemHTML.querySelector('.item__list-customer');
   let type = infoItemHTML.dataset.type;
-
   itemsInfoChildren.innerHTML += `<div class="item__detail-customer" data-type="${type}">
     <div class="customer__name">
       <label for="">Họ tên:</label>
@@ -159,8 +198,8 @@ let eventIncreaseSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
     <div class="customer__gender">
       <label for="">Giới tính</label>
       <select name="" id="" class="customer__input-gender">
-        <option value="Nam">Nam</option>
-        <option value="Nữ">Nữ</option>
+        <option value="NAM">Nam</option>
+        <option value="NU">Nữ</option>
       </select>
     </div>
     <div class="customer__birthday">
@@ -170,6 +209,7 @@ let eventIncreaseSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
   </div>`;
 };
 
+// Hàm xử lí thay đổi số lượng thành viên trong tour
 let handleEventChangeSize = () => {
   let itemBoxCustomers = document.querySelectorAll('.member-box__item');
   let boxInfoCustomers = document.querySelectorAll('.customer-info__content');
@@ -205,8 +245,120 @@ let handleEventChangeSize = () => {
   });
 };
 
+// Hàm xác nhận dữ liệu hợp lệ hay không
+let validatedValue = () => {
+  let inputNames = document.querySelectorAll('.customer__input-name');
+  let inputBirthday = document.querySelectorAll('.customer__input-birthday');
+  let size = inputNames.length - 1;
+  let check = true;
+  let regex = /^[a-zA-Z\s]+$/;
+  while (size > -1) {
+    let value = inputNames[size].value;
+    let valueBirthday = inputBirthday[size].value;
+    if (value === '' || valueBirthday === '') {
+      check = false;
+      break;
+    }
+    if (!regex.test(value)) {
+      check = false;
+      break;
+    }
+    size--;
+  }
+  return check;
+};
+
+// Hàm lấy ngày hiện tại
+let getCurrentDate = () => {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0 (tức tháng 0 là tháng 1)
+  const year = date.getFullYear();
+  day = day < 10 ? '0' + day : day;
+  month = month < 10 ? '0' + month : month;
+  return `${day}-${month}-${year}`;
+};
+
+// Hàm lấy số lượng members tham gia
+let getTotalMember = () => {
+  let size = 0;
+  for (let key in optionTotal) {
+    size += optionTotal[key].size;
+  }
+  return size;
+};
+
+// Hàm lấy ngày tour bắt đầu -> Có convert sang giá trị hợp lệ
+let getTourStartDate = () => {
+  let startDate = document.querySelector(
+    '.infor-detail__bottom .text'
+  ).innerText;
+  let [year, month, date] = startDate.split('-');
+  return `${date}-${month}-${year}`;
+};
+
+// Hàm lấy các thành viên tham gia trong chuyến đi
+let getMembers = () => {
+  let membersHTML = document.querySelectorAll('.item__detail-customer');
+  let arrayMembers = [];
+  membersHTML.forEach((member) => {
+    let name = member.querySelector('.customer__input-name').value;
+    let gender = member.querySelector('.customer__input-gender').value;
+    let birthday = member.querySelector('.customer__input-birthday').value;
+    let [year, month, date] = birthday.split('-');
+    let bod = `${date}-${month}-${year}`;
+    let role = member.dataset.type;
+    let dataMember = {
+      name: name,
+      gender: gender,
+      bod: bod,
+      role: role,
+    };
+    arrayMembers.push(dataMember);
+  });
+  return arrayMembers;
+};
+
+let handleOrderTour = async () => {
+  let totalPrice = document.querySelector('.customer-bill__final-value-bill')
+    .dataset.value;
+  let note = document.querySelector('.customer__note').value;
+  let orderDate = getCurrentDate();
+  let totalMember = getTotalMember();
+  let tourId = document.querySelector('.infor-tour-id-span').innerText.trim();
+  let userId = sessionStorage.getItem('userID');
+  let tourStartDate = getTourStartDate();
+  let members = getMembers();
+  let data = {
+    totalPrice: totalPrice,
+    note: note,
+    orderDate: orderDate,
+    totalMember: totalMember,
+    tourId: tourId,
+    userTourOrder: {
+      user_Id: userId,
+      tour_start_date: tourStartDate,
+    },
+    members: members,
+  };
+  await localStorage.setItem('dataOrderTour', JSON.stringify(data));
+};
+
+let handleAbateTour = () => {
+  let buttonSubmit = document.querySelector('#btn-submit__order');
+  buttonSubmit.addEventListener('click', async () => {
+    let check = validatedValue();
+    if (!check) {
+      swal('Lỗi!', 'Yêu cầu nhập đầy đủ dữ liệu, đầy đủ, đúng!', 'error');
+      // return;
+    }
+    await handleOrderTour();
+  });
+};
+
 let loadEventHTML = () => {
   handleEventChangeSize();
+  handleAbateTour();
 };
 
 // Hiển thị dữ liệu sau khi đã tải trang
