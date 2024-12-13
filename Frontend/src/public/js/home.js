@@ -266,7 +266,6 @@ const loadEventHTML = () => {
 let resTourList = async (pageNumber) => {
   try {
     let api = `${apiGetTours.toString()}&pageNumber=${pageNumber}`;
-    console.log(api);
     let res = await axios.get(api);
     res = res.data;
     return { status: 0, data: res };

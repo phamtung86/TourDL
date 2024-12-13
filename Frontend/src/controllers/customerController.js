@@ -14,8 +14,6 @@ let orderPage = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(dataTour.data.tourCalendars);
-
   return res.render('customer/orderTour.ejs', {
     tour: dataTour.data,
     calendars: dataTour.data.tourCalendars[0],
