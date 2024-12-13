@@ -1,9 +1,9 @@
 // Biến toàn cục
-let currentPage = 1; // Trang hiện tại
+let pageCurrent = 1; // Trang hiện tại
 let pageSize = 10; // Số mục mỗi trang
 let totalPages = 0; // Tổng số trang
 let currentStatus = 0; // Trạng thái hiện tại: 0 - Chờ xử lý
-
+let utos = []
 // DOM Elements
 const quantityPending = document.querySelector(".pending-value");
 const quantityReceived = document.querySelector(".received-value");
@@ -61,6 +61,7 @@ async function getUserTourOrders(pageNumber, status) {
         if (response.status === 200) {
             const data = response.data.content || [];
             totalPages = response.data.totalPages || 0;
+            utos = data
             renderData(data);
             renderPagination(pageNumber, totalPages);
         }
@@ -136,14 +137,24 @@ function renderPagination(currentPage, totalPages) {
 
     // Gắn sự kiện cho phân trang
     document.querySelector(".prev-page").addEventListener("click", () => {
-        if (currentPage > 1) getUserTourOrders(--currentPage, currentStatus);
+        if (currentPage > 1){ 
+            pageCurrent = currentPage - 1; 
+            currentPage -= 1
+            getUserTourOrders(currentPage, currentStatus)
+        };
     });
     document.querySelector(".next-page").addEventListener("click", () => {
-        if (currentPage < totalPages) getUserTourOrders(++currentPage, currentStatus);
+        if (currentPage < totalPages) {
+            pageCurrent = currentPage + 1; 
+            currentPage += 1
+            getUserTourOrders(++currentPage, currentStatus)
+        };
     });
     document.querySelectorAll(".page-numbers").forEach((button) => {
         button.addEventListener("click", (e) => {
             const selectedPage = parseInt(e.target.getAttribute("data-page"));
+            currentPage = selectedPage; // Cập nhật currentPage
+            pageCurrent = currentPage
             getUserTourOrders(selectedPage, currentStatus);
         });
     });
@@ -189,4 +200,23 @@ document.addEventListener("DOMContentLoaded", () => {
     getUserTourOrdersQuantity(2);
     getUserTourOrdersQuantity(-1);
     getUserTourOrders(1, currentStatus);
+});
+// Hàm xử lý tìm kiếm voucher
+function searchOrders(keyword) {
+    if (!keyword) {
+        // alert("Không có dữ liệu để tìm kiếm!");
+        getUserTourOrders(pageCurrent,currentStatus)
+    } else {
+        const filteredOrder = utos.filter(u => u.id.tourOrderId == keyword);
+        renderData(filteredOrder);
+
+    }
+}
+
+
+// Gán sự kiện tìm kiếm cho ô nhập liệu
+const searchInput = document.querySelector('.action__search--text');
+searchInput.addEventListener('input', (event) => {
+    const keyword = event.target.value.trim();
+    searchOrders(keyword);
 });

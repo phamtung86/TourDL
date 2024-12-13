@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public interface TourReponsitory extends JpaRepository<Tour, String>, JpaSpecificationExecutor<Tour> {
+public interface TourReponsitory extends JpaRepository<Tour, String>,   {
 
 	// Bo loc tour
 //	@Query("SELECT t FROM Tour t WHERE " + "(:minBudget IS NULL OR t.price >= :minBudget) AND "
