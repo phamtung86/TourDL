@@ -353,6 +353,13 @@ let handleAbateTour = () => {
       // return;
     }
     await handleOrderTour();
+    try {
+      let res = await axios.post('/pay');
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      swal('Lỗi!', 'Lỗi thanh toán từ hệ thống', 'error');
+    }
   });
 };
 
