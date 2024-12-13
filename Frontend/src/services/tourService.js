@@ -1,6 +1,6 @@
 const db = require('../models');
 const moment = require('moment');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 const getTourByType = () => {
   return new Promise(async (resolve, reject) => {
@@ -104,6 +104,13 @@ let getInfoTourDetail = (inputId) => {
             model: db.TourCalendar,
             as: 'tourCalendars',
             attributes: ['id', 'start_date', 'slot'],
+            include: [
+              {
+                model: db.Voucher,
+                as: 'voucher',
+                attributes: ['value', 'type'],
+              },
+            ],
           },
           {
             model: db.TourDetail,
@@ -111,6 +118,59 @@ let getInfoTourDetail = (inputId) => {
             attributes: {
               exclude: ['id', 'file_name', 'url', 'tour_id'],
             },
+          },
+        ],
+        raw: false,
+        nest: false,
+      });
+      if (!data)
+        return resolve({
+          status: 1,
+          message: 'Không tìm thấy',
+        });
+      return resolve({
+        status: 0,
+        message: 'OK',
+        data: data,
+      });
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
+
+let getInfoTourDetailByDate = (tourId, dateId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await db.Tour.findOne({
+        where: {
+          id: tourId,
+        },
+        attributes: {
+          exclude: [
+            'transport_id',
+            'tour_type_id',
+            'destination',
+            'destination_slug',
+            'file_name',
+          ],
+        },
+        include: [
+          {
+            model: db.TourCalendar,
+            as: 'tourCalendars',
+            where: {
+              id: dateId,
+            },
+            attributes: ['id', 'start_date', 'slot'],
+            include: [
+              {
+                model: db.Voucher,
+                as: 'voucher',
+                attributes: ['value', 'type'],
+              },
+            ],
           },
         ],
         raw: false,
@@ -133,8 +193,42 @@ let getInfoTourDetail = (inputId) => {
   });
 };
 
+let createTourOrder = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.TourOrder.create(
+        {
+          total_price: data.totalPrice,
+          note: data.note,
+          order_date: data.orderDate,
+          total_member: data.totalMember,
+          tour_id: data.tourId,
+          // userTourOrder: {
+          //   user_Id: data.userId,
+          //   tour_order_Id: data.tour_order_Id,
+          //   status: data.status,
+          //   tour_start_date: data.tour_start_date,
+          // },
+          userTourOrder: data.userTourOrder,
+          members: data.members,
+        },
+        {
+          include: ['userTourOrder', 'members'],
+        }
+      );
+      return resolve({
+        status: 0,
+        message: 'Thành công',
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 module.exports = {
   getTourByType: getTourByType,
   getTourByCustomer: getTourByCustomer,
   getInfoTourDetail: getInfoTourDetail,
+  getInfoTourDetailByDate: getInfoTourDetailByDate,
+  createTourOrder: createTourOrder,
 };

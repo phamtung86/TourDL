@@ -9,6 +9,7 @@ import java.util.Collections;
 
 public class TourUserDetail implements UserDetails {
 	private int id;
+	private String username;
 	private String email;
 	private String password;
 	private Collection<GrantedAuthority> authorities;
@@ -24,18 +25,23 @@ public class TourUserDetail implements UserDetails {
 		String role = mapRoleToString(user.getRole());
 		GrantedAuthority authority = new SimpleGrantedAuthority(role);
 
-		return new TourUserDetail(user.getId(), user.getEmail(), user.getPassWord(),
+		return new TourUserDetail(user.getId(),user.getUserName() ,user.getEmail(), user.getPassWord(),
 				Collections.singletonList(authority));
 	}
 
 	public TourUserDetail() {
 	}
 
-	public TourUserDetail(int id, String email, String password, Collection<GrantedAuthority> authorities) {
+	public TourUserDetail(int id,String username, String email, String password, Collection<GrantedAuthority> authorities) {
 		this.id = id;
+		this.username=username;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public int getId() {
@@ -74,7 +80,7 @@ public class TourUserDetail implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return email;
+		return username;
 	}
 
 	@Override

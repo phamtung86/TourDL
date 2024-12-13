@@ -44,7 +44,13 @@ let handleGetTourDetail = async (req, res) => {
         message: 'Lỗi truyền đầu vào dữ liệu',
       });
     }
-    let result = await tourService.getInfoTourDetail(id);
+    let result;
+    let dateId = req.query.dateId;
+    if (dateId) {
+      result = await tourService.getInfoTourDetailByDate(id, dateId);
+    } else {
+      result = await tourService.getInfoTourDetail(id);
+    }
     if (result.status !== 0) {
       return res.status(404).json({
         errCode: result.status,
@@ -57,8 +63,26 @@ let handleGetTourDetail = async (req, res) => {
       data: result.data,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       errorCode: 3,
+      message: 'Lỗi call api',
+    });
+  }
+};
+
+let handleOrderTour = async (req, res) => {
+  try {
+    let data = req.body;
+    let result = await tourService.createTourOrder(data);
+    return res.status(200).json({
+      errCode: result.status,
+      message: result.message,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errCode: 3,
       message: 'Lỗi call api',
     });
   }
@@ -67,4 +91,5 @@ let handleGetTourDetail = async (req, res) => {
 module.exports = {
   handleGetTourType: handleGetTourType,
   handleGetTourDetail: handleGetTourDetail,
+  handleOrderTour: handleOrderTour,
 };

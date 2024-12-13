@@ -69,7 +69,7 @@ public class AuthController {
 			String formattedIssuedAt = issuedAtZonedDateTime.format(formatter);
 			String formattedExpirationTime = expirationTimeZonedDateTime.format(formatter);
 			// Tạo đối tượng JwtResponse bao gồm thông tin thời gian
-			JwtResponse jwtResponse = new JwtResponse(tourUserDetail.getId(), jwt, formattedIssuedAt,
+			JwtResponse jwtResponse = new JwtResponse(tourUserDetail.getId(),jwt,tourUserDetail.getUsername(), formattedIssuedAt,
 					formattedExpirationTime);
 
 			// Trả về phản hồi với JWT và thông tin thời gian

@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Voucher.hasMany(models.TourCalendar, {
+        foreignKey: 'voucher_Id',
+        as: 'calendars'
+      })
     }
   }
   Voucher.init(

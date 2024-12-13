@@ -32,7 +32,11 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       status: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      tour_start_date: {
+        type: DataTypes.DATE,
         allowNull: true,
       },
     },
