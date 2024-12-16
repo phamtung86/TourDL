@@ -132,7 +132,7 @@ async function fetchTourDetail(tourID) {
         // Định dạng ngày từ ISO string
         const formattedDate = new Date(
           calendar.start_date
-        ).toLocaleDateString();
+        ).toLocaleDateString('vi-VN');
 
         // Tạo option cho ngày khởi hành
         const dateOption = document.createElement('option');
@@ -157,7 +157,7 @@ async function fetchTourDetail(tourID) {
         }
       });
     }
-  } catch (error) {}
+  } catch (error) { }
 }
 
 const monthNames = [

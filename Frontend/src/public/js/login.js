@@ -19,7 +19,6 @@ document
 
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const remember = document.getElementById('remember').checked;
     const errorMessage = document.getElementById('error-message'); // Thêm thông báo lỗi nếu có
 
     // Tạo đối tượng dữ liệu để gửi tới API
