@@ -35,7 +35,7 @@ public class Member {
 	private Date dob;
 	
 	@Column(name = "role")
-	private int role;
+	private int role; // 0:em be - 1:tre nho  - 2:Tre em - 3:Nguoi lon
 	
 	@ManyToOne
 	@JoinColumn(name = "tour_order_id")

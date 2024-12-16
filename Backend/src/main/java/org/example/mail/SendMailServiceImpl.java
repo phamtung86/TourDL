@@ -35,7 +35,6 @@ public class SendMailServiceImpl implements ISendMailService {
 	@Override
 	public String validatePasswordResetToken(String token) {
 		PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
-		System.out.println(passToken);
 		return !isTokenFound(passToken) ? "invalidToken" : isTokenExpired(passToken) ? "expired" : null;
 	}
 
@@ -56,7 +55,7 @@ public class SendMailServiceImpl implements ISendMailService {
 		if (locale == null) {
 			locale = Locale.US; // Fallback cho locale mặc định
 		}
-		String url = contextPath + "/changePassword?token=" + token;
+		String url = contextPath + "/change-password?token=" + token;
 		String message = messages.getMessage("message.resetPassword", null,
 				"Vui lòng click vào đường link dưới đây để khôi phục mật khẩu", locale);
 		return constructEmail("Reset Password", message + " \r\n" + url, user);

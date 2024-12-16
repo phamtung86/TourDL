@@ -50,6 +50,8 @@ function formatScientificNumber(number) {
 // Phân loại khách hàng
 function classifyUser(level) {
     switch (level) {
+        case 0 :
+            return "Em bé"
         case 1:
             return "Trẻ nhỏ";
         case 2:

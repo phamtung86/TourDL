@@ -92,10 +92,7 @@ public class TourController {
 
 		// Ánh xạ từ List<Tour> sang List<TourDTO>
 		List<TourDTO> dtoTours = modelMapper.map(pageTours.getContent(), new TypeToken<List<TourDTO>>(){}.getType());
-//		System.out.println(pageable);
-//		System.out.println(pageTours.getTotalPages());
 		Page<TourDTO> dtoTour = new PageImpl<>(dtoTours, pageable, pageTours.getTotalElements());
-//		System.out.println(dtoTours);
 		return dtoTour;
 	}
 

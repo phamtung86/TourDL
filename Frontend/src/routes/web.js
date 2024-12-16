@@ -86,6 +86,32 @@ const initWebRouters = (app) => {
     return res.render('admin/orderAdminDetail.ejs', { userId, orderId });
   });
 
+  // trang thay doi mat khau
+  router.get('/change-password', async (req, res) => {
+    const token = req.query.token;
+    if (!token) {
+      return res.status(400).send('Token is missing!');
+    }
+
+    try {
+      // Gửi yêu cầu kiểm tra token
+      const response = await axios.get(`http://localhost:8080/api/User/changePassword?token=${token}`);
+      // Kiểm tra thông báo từ API
+      if (response.message.trim().length > 0) {
+        // Token hợp lệ, render trang thay đổi mật khẩu
+        return res.render('customer/change-password.ejs', { token });
+      } else {
+        // Token không hợp lệ, hiển thị lỗi
+        return res.status(403).send('Token không hợp lệ!');
+      }
+    } catch (error) {
+      console.error('Error validating token:', error);
+      return res.status(500).send('Đã xảy ra lỗi trong quá trình xác thực token');
+    }
+  });
+
+
+
   return app.use('/', router);
 };
 

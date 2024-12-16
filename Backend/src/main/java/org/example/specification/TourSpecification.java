@@ -1,23 +1,21 @@
 package org.example.specification;
 
+import java.util.Date;
+
+import org.example.form.TourFilterForm;
+import org.example.modal.Calendar;
+import org.example.modal.Tour;
+import org.example.modal.TourType;
+import org.example.modal.Transport;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.data.jpa.domain.Specification;
+
+import ch.qos.logback.core.util.StringUtil;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import org.example.modal.Tour;
-import org.example.modal.TourType;
-import org.example.form.TourFilterForm;
-import org.example.modal.Calendar;
-import org.example.modal.Transport;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import ch.qos.logback.core.util.StringUtil;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 

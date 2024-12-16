@@ -14,18 +14,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public interface TourReponsitory extends JpaRepository<Tour, String>, JpaSpecificationExecutor<Tour> {
+public interface TourReponsitory extends JpaRepository<Tour, String>,JpaSpecificationExecutor<Tour>  {
 
-	// Bo loc tour
-//	@Query("SELECT t FROM Tour t WHERE " + "(:minBudget IS NULL OR t.price >= :minBudget) AND "
-//			+ "(:maxBudget IS NULL OR t.price <= :maxBudget) AND "
-//			+ "(:departureLocation IS NULL OR t.departurePoint = :departureLocation) AND "
-//			+ "(:destination IS NULL OR t.destination = :destination) AND "
-//			+ "(:tourType IS NULL OR t.tourType.id = :tourType) AND "
-//			+ "(:transportation IS NULL OR t.transport.id = :transportation)")
-//	Page<Tour> filterTours(Pageable pageable, @Param("minBudget") BigDecimal minBudget,
-//			@Param("maxBudget") BigDecimal maxBudget, @Param("departureLocation") String departureLocation,
-//			@Param("destination") String destination, @Param("tourType") Integer tourType,
-//			@Param("transportation") Integer transportation);
+
 
 }

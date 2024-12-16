@@ -122,7 +122,6 @@ public class UserController {
 
 	@PostMapping("/savePassword")
 	public GenericResponse savePassword(final Locale locale, @RequestBody UserDTO userDTO) {
-		System.out.println(userDTO.getToken());
 		String result = sendMailService.validatePasswordResetToken(userDTO.getToken());
 		if (result != null) {
 			String message = messages.getMessage("message.resetPassword", null, "Lỗi trong quá trình đặt lại mật khẩu",
