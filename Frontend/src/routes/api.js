@@ -3,6 +3,7 @@ const router = express.Router();
 const transportController = require('../controllers/transportController');
 const userController = require('../controllers/userController');
 const tourController = require('../controllers/tourController');
+const paymentController = require('../controllers/paymentController');
 
 const initAPIs = (app) => {
   router.get('/transports', transportController.handleGetValues);
@@ -12,6 +13,7 @@ const initAPIs = (app) => {
   router.get('/tours/:id', tourController.handleGetTourDetail);
   router.get('/users/:id', userController.handleGetInfo);
   router.post('/tour-order', tourController.handleOrderTour);
+  router.post('/payment', paymentController.handleGetLinkPay);
   return app.use('/api/v1/', router);
 };
 
