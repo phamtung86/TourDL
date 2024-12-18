@@ -44,6 +44,27 @@
         }
       }
     }
+    .thank-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .image-container {
+        $size: 280px;
+        height: $size;
+        width: $size;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        margin-bottom: 30px;
+      }
+      .text {
+        font-size: 4.6em;
+        color: $color-primary;
+      }
+    }
   }
   .customer-info {
     $mbottom: 30px;

@@ -344,6 +344,19 @@ let handleOrderTour = async () => {
   await localStorage.setItem('dataOrderTour', JSON.stringify(data));
 };
 
+let getDataOrder = () => {
+  let finalBill = document.querySelector('.customer-bill__final-value-bill')
+    .dataset.value;
+  let price = parseInt(finalBill) / 23000;
+  let name = document.querySelector('.infor-tour-name').innerText;
+  let username = document.querySelector('p.name').innerText;
+  return {
+    name: name,
+    description: `${username} đặt tour du lịch tại 3TV tour`,
+    price: price.toFixed(2),
+  };
+};
+
 let handleAbateTour = () => {
   let buttonSubmit = document.querySelector('#btn-submit__order');
   buttonSubmit.addEventListener('click', async () => {
@@ -354,8 +367,9 @@ let handleAbateTour = () => {
     }
     await handleOrderTour();
     try {
-      let res = await axios.post('/pay');
-      console.log(res);
+      let data = getDataOrder();
+      let res = await axios.post('/api/v1/payment', data);
+      window.location.href = res.data.url;
     } catch (error) {
       console.log(error);
       swal('Lỗi!', 'Lỗi thanh toán từ hệ thống', 'error');

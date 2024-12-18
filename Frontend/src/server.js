@@ -42,7 +42,7 @@ configViewEngine(app);
 initWebRouters(app);
 initAPIs(app);
 
-app.post('/pay', apiProxy, (req, res) => {
+app.post('/pay', (req, res) => {
   try {
     const create_payment_json = {
       intent: 'sale',
@@ -91,37 +91,37 @@ app.post('/pay', apiProxy, (req, res) => {
   }
 });
 
-app.get('/success', (req, res) => {
-  const payerId = req.query.PayerID;
-  const paymentId = req.query.paymentId;
+// app.get('/success', (req, res) => {
+//   const payerId = req.query.PayerID;
+//   const paymentId = req.query.paymentId;
 
-  const execute_payment_json = {
-    payer_id: payerId,
-    transactions: [
-      {
-        amount: {
-          currency: 'USD',
-          total: '25.00',
-        },
-      },
-    ],
-  };
-  paypal.payment.execute(
-    paymentId,
-    execute_payment_json,
-    function (error, payment) {
-      if (error) {
-        console.log(error.response);
-        throw error;
-      } else {
-        console.log(JSON.stringify(payment));
-        res.send('Success (Mua hàng thành công)');
-      }
-    }
-  );
-});
+//   const execute_payment_json = {
+//     payer_id: payerId,
+//     transactions: [
+//       {
+//         amount: {
+//           currency: 'USD',
+//           total: '25.00',
+//         },
+//       },
+//     ],
+//   };
+//   paypal.payment.execute(
+//     paymentId,
+//     execute_payment_json,
+//     function (error, payment) {
+//       if (error) {
+//         console.log(error.response);
+//         throw error;
+//       } else {
+//         console.log(JSON.stringify(payment));
+//         res.send('Success (Mua hàng thành công)');
+//       }
+//     }
+//   );
+// });
 
-app.get('/cancel', (req, res) => res.send('Cancelled (Đơn hàng đã hủy)'));
+// app.get('/cancel', (req, res) => res.send('Cancelled (Đơn hàng đã hủy)'));
 
 // Middleware 404 not found
 app.use((req, res) => {

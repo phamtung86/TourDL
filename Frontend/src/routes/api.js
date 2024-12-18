@@ -13,7 +13,7 @@ const initAPIs = (app) => {
   router.get('/tours/:id', tourController.handleGetTourDetail);
   router.get('/users/:id', userController.handleGetInfo);
   router.post('/tour-order', tourController.handleOrderTour);
-  router.post('/payment', paymentController.handleGetLinkPay);
+  router.post('/payment', paymentController.handleCreateOrder);
   return app.use('/api/v1/', router);
 };
 

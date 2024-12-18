@@ -196,6 +196,8 @@ let getInfoTourDetailByDate = (tourId, dateId) => {
 let createTourOrder = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
+      console.log('data: ', { data });
+
       await db.TourOrder.create(
         {
           total_price: data.totalPrice,
@@ -203,12 +205,6 @@ let createTourOrder = (data) => {
           order_date: data.orderDate,
           total_member: data.totalMember,
           tour_id: data.tourId,
-          // userTourOrder: {
-          //   user_Id: data.userId,
-          //   tour_order_Id: data.tour_order_Id,
-          //   status: data.status,
-          //   tour_start_date: data.tour_start_date,
-          // },
           userTourOrder: data.userTourOrder,
           members: data.members,
         },
