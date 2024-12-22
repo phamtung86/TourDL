@@ -158,7 +158,7 @@ let eventDiminishSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
   slot++;
   let itemsInfoChildren = infoItemHTML.querySelectorAll(
     '.item__list-customer .item__detail-customer'
-  ); // Lấy cách thẻ thành phần trong list
+  ); // Lấy các thẻ thành phần trong list
   itemsInfoChildren[itemsInfoChildren.length - 1].remove();
   if (currentValue === 0) {
     currentValue = 0;
@@ -175,6 +175,7 @@ let eventDiminishSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
 let eventIncreaseSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
   let currentValue = parseInt(itemHTML.dataset.value);
   if (slot === 0) {
+    swal('Lỗi!', 'Tour này đã hết chỗ trống', 'error');
     return;
   }
   currentValue++;
@@ -268,17 +269,6 @@ let validatedValue = () => {
   return check;
 };
 
-// Hàm lấy ngày hiện tại
-let getCurrentDate = () => {
-  let date = new Date();
-  let day = date.getDate();
-  let month = date.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0 (tức tháng 0 là tháng 1)
-  const year = date.getFullYear();
-  day = day < 10 ? '0' + day : day;
-  month = month < 10 ? '0' + month : month;
-  return `${day}-${month}-${year}`;
-};
-
 // Hàm lấy số lượng members tham gia
 let getTotalMember = () => {
   let size = 0;
@@ -294,7 +284,7 @@ let getTourStartDate = () => {
     '.infor-detail__bottom .text'
   ).innerText;
   let [year, month, date] = startDate.split('-');
-  return `${date}-${month}-${year}`;
+  return `${year}-${month}-${date}`;
 };
 
 // Hàm lấy các thành viên tham gia trong chuyến đi
@@ -323,7 +313,6 @@ let handleOrderTour = async () => {
   let totalPrice = document.querySelector('.customer-bill__final-value-bill')
     .dataset.value;
   let note = document.querySelector('.customer__note').value;
-  let orderDate = getCurrentDate();
   let totalMember = getTotalMember();
   let tourId = document.querySelector('.infor-tour-id-span').innerText.trim();
   let userId = sessionStorage.getItem('userID');
@@ -332,7 +321,6 @@ let handleOrderTour = async () => {
   let data = {
     totalPrice: totalPrice,
     note: note,
-    orderDate: orderDate,
     totalMember: totalMember,
     tourId: tourId,
     userTourOrder: {

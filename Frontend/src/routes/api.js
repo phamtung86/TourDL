@@ -12,6 +12,7 @@ const initAPIs = (app) => {
   router.get('/tours', tourController.handleGetTourType);
   router.get('/tours/:id', tourController.handleGetTourDetail);
   router.get('/users/:id', userController.handleGetInfo);
+  // Post tour
   router.post('/tour-order', tourController.handleOrderTour);
   router.post('/payment', paymentController.handleCreateOrder);
   return app.use('/api/v1/', router);

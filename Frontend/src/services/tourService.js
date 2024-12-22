@@ -196,16 +196,32 @@ let getInfoTourDetailByDate = (tourId, dateId) => {
 let createTourOrder = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log('data: ', { data });
-
+      console.log(
+        'Date: ',
+        new Date()
+          .toLocaleString('en', {
+            timeZone: 'Asia/Ho_Chi_Minh',
+            hour12: false,
+          })
+          .replace(/,/g, '')
+      );
+      let orderDate = new Date()
+        .toLocaleString('en', {
+          timeZone: 'Asia/Ho_Chi_Minh',
+          hour12: false,
+        })
+        .replace(/,/g, '');
       await db.TourOrder.create(
         {
           total_price: data.totalPrice,
           note: data.note,
-          order_date: data.orderDate,
+          order_date: orderDate,
           total_member: data.totalMember,
           tour_id: data.tourId,
-          userTourOrder: data.userTourOrder,
+          userTourOrder: {
+            user_Id: data.userTourOrder.user_Id,
+            tour_start_date: new Date(data.userTourOrder.tour_start_date),
+          },
           members: data.members,
         },
         {

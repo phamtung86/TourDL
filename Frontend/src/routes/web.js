@@ -120,10 +120,9 @@ const initWebRouters = (app) => {
   router.get('/complete-order', async (req, res, next) => {
     try {
       await paymentService.capturePayment(req.query.token);
-      res.render('customer/orderTourSuccess');
+      return res.render('customer/orderTourSuccess');
     } catch (error) {
-      res.send('Error: ' + error);
-      res.render('/');
+      return res.redirect('/');
     }
   });
 

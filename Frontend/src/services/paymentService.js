@@ -14,7 +14,7 @@ async function generateAccessToken() {
   return response.data.access_token;
 }
 
-let createOrder = async (data) => {
+let createOrder = async (inputData) => {
   const accessToken = await generateAccessToken();
   const response = await axios({
     url: process.env.PAYPAL_BASE_URL + '/v2/checkout/orders',
@@ -29,23 +29,23 @@ let createOrder = async (data) => {
         {
           items: [
             {
-              name: data.name,
-              description: data.description,
+              name: inputData.name,
+              description: inputData.description,
               quantity: 1,
               unit_amount: {
                 currency_code: 'USD',
-                value: data.price,
+                value: inputData.price,
               },
             },
           ],
 
           amount: {
             currency_code: 'USD',
-            value: data.price,
+            value: inputData.price,
             breakdown: {
               item_total: {
                 currency_code: 'USD',
-                value: data.price,
+                value: inputData.price,
               },
             },
           },
