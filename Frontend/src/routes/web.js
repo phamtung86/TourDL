@@ -4,6 +4,8 @@ const db = require('../models/index');
 const adminController = require('../controllers/dashboardController');
 const { orderPage } = require('../controllers/customerController.js');
 const axios = require('../utils/axios.js');
+const paymentService = require('../services/paymentService.js');
+const tourController = require('../controllers/tourController.js');
 const initWebRouters = (app) => {
   router.get('/', (req, res) => {
     return res.render('customer/home.ejs');
@@ -95,7 +97,9 @@ const initWebRouters = (app) => {
 
     try {
       // Gửi yêu cầu kiểm tra token
-      const response = await axios.get(`http://localhost:8080/api/User/changePassword?token=${token}`);
+      const response = await axios.get(
+        `http://localhost:8080/api/User/changePassword?token=${token}`
+      );
       // Kiểm tra thông báo từ API
       if (response.message.trim().length > 0) {
         // Token hợp lệ, render trang thay đổi mật khẩu
@@ -106,11 +110,27 @@ const initWebRouters = (app) => {
       }
     } catch (error) {
       console.error('Error validating token:', error);
-      return res.status(500).send('Đã xảy ra lỗi trong quá trình xác thực token');
+      return res
+        .status(500)
+        .send('Đã xảy ra lỗi trong quá trình xác thực token');
     }
   });
 
+  // Đặt tour thành công
+  router.get('/complete-order', async (req, res, next) => {
+    try {
+      await paymentService.capturePayment(req.query.token);
+      return res.render('customer/orderTourSuccess');
+    } catch (error) {
+      return res.redirect('/');
+    }
+  });
 
+  // Hủy thanh toán đặt tour
+  router.get('/cancel-order', (req, res) => {
+    // res.redirect('/');
+    res.render('customer/orderTourSuccess');
+  });
 
   return app.use('/', router);
 };

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
+const moment = require('moment-timezone');
 // Create connect to Database
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -9,6 +10,13 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
+    // dialectOptions: { timezone: '+07:00' },
+    dialectOptions: {
+      useUTC: false, //for reading from database
+      dateStrings: true,
+      typeCast: true,
+    },
+    timezone: '+07:00',
     logging: false,
   }
 );
