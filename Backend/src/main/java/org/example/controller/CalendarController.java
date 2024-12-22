@@ -27,7 +27,7 @@ public class CalendarController {
 	public ResponseEntity<?> createCalendar(@RequestBody Calendar calendar) {
         try {
             Calendar newCalendar = calendarService.createNewCalendar(calendar);
-            return new ResponseEntity<>(newCalendar, HttpStatus.CREATED);
+            return new ResponseEntity<>(newCalendar, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
@@ -84,6 +84,30 @@ public class CalendarController {
 		}
 
 	}
+	@DeleteMapping("/Calendar/{id}")
+	public Boolean delCalendar(@PathVariable("id") int id){
+		try {
+			calendarService.delCalendar(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	@GetMapping("/Calendars/id/{id}")
+	public CalendarDTO getCalendarDTObyId(@PathVariable("id") int id){
+		return calendarService.getCalendarById(id);
+	}
+	@PutMapping("/Calendars/{id}")
+	public ResponseEntity<?> updateCalendar(@PathVariable("id") int id, @RequestBody Calendar calendarDetails) {
+		// Gọi service để cập nhật Calendar
+		try {
+			Calendar updatedCalendar = calendarService.updateCalendar(id, calendarDetails);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+	}
+
 
 //    @GetMapping("/Calendar/StarteDates")
 //    public List<Date> listDate(){

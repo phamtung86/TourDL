@@ -1,10 +1,7 @@
 package org.example.modal;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -14,6 +11,7 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class Voucher {
 
 	@Column(name = "id")

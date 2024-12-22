@@ -44,4 +44,5 @@ public interface ITourService {
 
 	Optional<TourDTOv2> getTourById(String tourId);
 	Tour updateTour(String tourId, Tour updatedTour);
+	List<TourDTOv2> getAllTour();
 }
