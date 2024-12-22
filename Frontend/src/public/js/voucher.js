@@ -243,13 +243,22 @@ async function fetchVoucherById(id) {
     }
 }
 
+function checkExpiryVoucher(expiryDate) {
+    const today = new Date();
+    const expirationDate = new Date(expiryDate);
+    return expirationDate >= today ? true: false;
+}
+
+
 // Xử lý khi nhấn nút "Làm mới"
 const btnRefresh = document.querySelector('.action__refresh');
 btnRefresh.addEventListener('click', async () => {
     const selectedRadio = document.querySelector('input[name="select__voucher"]:checked');
     if (selectedRadio) {
         const selectedVoucherId = selectedRadio.value;
-        await fetchVoucherById(selectedVoucherId); // Chờ khi dữ liệu được lấy về
+        await fetchVoucherById(selectedVoucherId); 
+        console.log(checkVoucher(voucherById.expiryDate));
+        
         if (checkExpiryVoucher(voucherById.expiryDate)) {
             updateStatusVoucher(selectedVoucherId, 1); // Cập nhật trạng thái voucher thành "hoạt động"
         } else {
@@ -273,13 +282,6 @@ btnModify.addEventListener('click', () => {
         alert("Bạn chưa chọn voucher để sửa");
     }
 });
-
-// Kiểm tra hết hạn voucher
-function checkExpiryVoucher(expiryDate) {
-    const today = new Date();
-    const expirationDate = new Date(expiryDate);
-    return expirationDate >= today ? "Không hết hạn" : "Đã hết hạn";
-}
 
 // Khởi động trang khi tải
 document.addEventListener("DOMContentLoaded", () => {
