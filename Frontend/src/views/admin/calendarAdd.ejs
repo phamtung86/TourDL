@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Thêm mới tour</title>
+  <title>Thêm mới Calendar</title>
   <%- include('../partials/head') %>
     <link rel="stylesheet" href="/assets/css/calendarAdd.css">
     <link rel="stylesheet" href="/assets/css/index.css">
@@ -19,7 +19,7 @@
             </div>            
           <div class="lable_input">
             <label class="from_lable" for="tourImage">Slot:</label>
-            <input type="number" class="tour_input" id="slot" name="slot" required>
+            <input type="number" class="tour_input" id="slot" name="slot" min="1" required>
           </div>
           <div class="lable_input">
             <label class="from_lable" for="tourPrice">Voucher:</label>
@@ -28,7 +28,7 @@
             </select>
           </div>
           <div class="form-button">
-            <button class="form-button-cancel" type="button" id="cancelAddTour">Hủy</button>
+            <button class="form-button-cancel" type="button" id="cancelAddCalendar">Hủy</button>
             <button class="form-button-submit" type="submit">Lưu</button>
           </div>
         </form>

@@ -1,30 +1,26 @@
+// Lấy ID tour từ URL
 const urlPath = window.location.pathname;
-const tourId = urlPath.split('/').pop();
-async function fetchVoucher(){
-    fetch('http://localhost:8080/api/v1/vouchers')  // Thay bằng URL API thực tế của bạn
-        .then(response => response.json())
-        .then(data => {
-            // Kiểm tra dữ liệu trả về có hợp lệ không
-            if (true) {
-                const vouchers = document.getElementById('calendarVoucher');
-                // Xóa các option cũ
-                vouchers.innerHTML = '<option value="">Chọn voucher</option>';
-                // Thêm các option mới từ dữ liệu API
-                data.forEach(province => {
-                    const optionStart = document.createElement('option');
-                    optionStart.value = province.id; // Dùng _id làm giá trị
-                    optionStart.textContent = province.voucherName; // Tên tỉnh thành
-                    vouchers.appendChild(optionStart);
-                });
-            } else {
-                console.error('Dữ liệu không hợp lệ:', data);
-            }
-        })
-        .catch(error => {
-            console.error('Lỗi khi lấy dữ liệu:', error);
-        });
-}
+const CalendarId = urlPath.split('/').pop(); // Lấy ID từ URL
+document.getElementById("calendarId").value= CalendarId;
+// Hàm lấy thông tin tour từ API
+async function getCalendarById(id) {
+    try {
+        const response = await axios.get(`http://localhost:8080/api/Calendar/Calendars/id/${id}`);
+        if (response.status === 200) {
+            const calendar = response.data;
+            const dateStart = calendar.calendarStartDate.split('T')[0];
+            // Cập nhật các trường thông tin
+            document.getElementById('dateStart').value = dateStart;
+            document.getElementById('slot').value = calendar.calendarSlot;
 
+        } else {
+            console.error('Lỗi khi lấy thông tin calendar');
+        }
+    } catch (error) {
+        console.error('Lỗi khi lấy thông tin calendar:', error);
+    }
+}
+document.addEventListener('DOMContentLoaded', getCalendarById(CalendarId));
 
 document.querySelector('.crudFrom').addEventListener('submit', async (event) => {
     event.preventDefault(); // Ngăn chặn tải lại trang
@@ -42,21 +38,16 @@ document.querySelector('.crudFrom').addEventListener('submit', async (event) => 
     const formattedStartDate = `${rawStartDate}T${hours}:${minutes}:${seconds}`;
 
     const calendarData = {
+        id: parseInt(CalendarId),
         startDate: formattedStartDate,
         slot: parseInt(document.getElementById('slot').value,10),
-        voucher: {
-            id: parseInt(document.getElementById('calendarVoucher').value,10)
-        },
-        tour: {
-            id: tourId
-        }
     };
     console.log(calendarData);
     console.log(JSON.stringify(calendarData)); // Kiểm tra dữ liệu trước khi gửi
 
         try {
-        const response = await fetch('http://localhost:8080/api/Calendar/Calendars', {
-            method: 'POST',
+        const response = await fetch(`http://localhost:8080/api/Calendar/Calendars/${CalendarId}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -76,9 +67,8 @@ document.querySelector('.crudFrom').addEventListener('submit', async (event) => 
         console.error('Lỗi kết nối:', err);
     }
 });
-document.addEventListener('DOMContentLoaded', fetchVoucher);
-// Khi nhấn nút Hủy
-const cancelAddVoucherBtn = document.getElementById("cancelAddCalendar")
-cancelAddVoucherBtn.addEventListener('click', () => {
-    window.location.href = `/tour/calendar/${tourId}`; // Quay lại trang danh sách voucher
+const cancelAddTourBtn = document.getElementById('cancelAddTour');
+cancelAddTourBtn.addEventListener('click', () => {
+    window.location.href = `/tour`; // Quay lại trang danh sách tour
 });
+document.addEventListener('DOMContentLoaded', fetchVoucher);

@@ -176,6 +176,16 @@ public class TourService implements ITourService {
 		}
 		return null; // Nếu không tìm thấy tour với ID, trả về null hoặc bạn có thể ném exception
 	}
+
+	@Override
+	public List<TourDTOv2> getAllTour() {
+		List<TourDTOv2> tourDTOv2s = new ArrayList<>();
+		for (Tour tour : tourReponsitory.findAll()){
+			TourDTOv2 tourDTOv2 = new TourDTOv2(tour);
+			tourDTOv2s.add(tourDTOv2);
+		}
+		return tourDTOv2s;
+	}
 }
 
 
