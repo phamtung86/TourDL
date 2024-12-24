@@ -1,32 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models/index');
 const adminController = require('../controllers/dashboardController');
 const { orderPage } = require('../controllers/customerController.js');
 const axios = require('../utils/axios.js');
 const paymentService = require('../services/paymentService.js');
-const tourController = require('../controllers/tourController.js');
+const validateMiddleware = require('../middleware/validate');
+
 const initWebRouters = (app) => {
+  // Trang chủ
   router.get('/', (req, res) => {
     return res.render('customer/home.ejs');
   });
-  router.get('/get-test', async (req, res) => {
-    try {
-      let tour_order = await db.TourDetail.findAll({});
-      return res.status(200).json(tour_order);
-    } catch (error) {
-      return res.send(error);
-    }
-  });
+  // Dashboard
   router.get('/Dashboard', adminController.getDashBoard);
-
+  // Quản lí voucher
   router.get('/voucher', (req, res) => {
     return res.render('admin/voucher.ejs');
   });
-
   router.get('/voucher/add', (req, res) => {
     return res.render('admin/voucherAdd.ejs');
   });
+  router.get('/voucher/modify/:id', (req, res) => {
+    const voucherId = req.params.id;
+    return res.render('admin/voucherModify.ejs', { voucherId });
+  });
+  // Quản lí tour
   router.get('/tour/add', (req, res) => {
     return res.render('admin/tourAdd.ejs');
   });
@@ -34,32 +32,28 @@ const initWebRouters = (app) => {
     const tourId = req.params.id;
     return res.render('admin/tourModify.ejs', { tourId });
   });
-  router.get('/voucher/modify/:id', (req, res) => {
-    const voucherId = req.params.id;
-    return res.render('admin/voucherModify.ejs', { voucherId });
+  router.get('/tour', (req, res) => {
+    return res.render('admin/tour.ejs');
   });
+  // Quản lí lịch tour
   router.get('/calendar/add/:id', (req, res) => {
     const tourId = req.params.id;
-    return res.render('admin/calendarAdd.ejs',{tourId});
+    return res.render('admin/calendarAdd.ejs', { tourId });
   });
   router.get('/calendar/modify/:id', (req, res) => {
     const calendarId = req.params.id;
     return res.render('admin/calendarModify.ejs', { calendarId });
   });
-
-  // trang quản lý tài khoản
-  router.get('/customer', (req, res) => {
-    return res.render('admin/customer.ejs');
-  });
   router.get('/tour/calendar/:id', (req, res) => {
     const tourId = req.params.id;
     return res.render('admin/tourCalendar.ejs', { tourId });
   });
-  router.get('/tour', (req, res) => {
-    return res.render('admin/tour.ejs');
+  // Quản lí tài khoản
+  router.get('/customer', (req, res) => {
+    return res.render('admin/customer.ejs');
   });
-  router.get('/order-tour', orderPage);
-
+  // Đặt tour
+  router.get('/order-tour', validateMiddleware.checkLogged, orderPage);
   // trang chi tiết đặt tour
   router.get('/detail/:id', async (req, res) => {
     let response = await axios.get(
@@ -68,28 +62,17 @@ const initWebRouters = (app) => {
     return res.render('customer/detail.ejs');
   });
 
-  // trang đăng nhập
+  // Đăng nhập
   router.get('/login', (req, res) => {
     return res.render('customer/login.ejs');
   });
 
-  // trang đăng ký
+  // Đăng ký
   router.get('/register', (req, res) => {
     return res.render('customer/register.ejs');
   });
 
-  // trang order
-  router.get('/admin-order', (req, res) => {
-    return res.render('admin/order.ejs');
-  });
-
-  router.get('/admin-order/user/:userId/order/:orderID', (req, res) => {
-    const userId = req.params.userId;
-    const orderId = req.params.orderID;
-    return res.render('admin/orderAdminDetail.ejs', { userId, orderId });
-  });
-
-  // trang thay doi mat khau
+  // Thay đổi mật khẩu
   router.get('/change-password', async (req, res) => {
     const token = req.query.token;
     if (!token) {
@@ -117,8 +100,18 @@ const initWebRouters = (app) => {
     }
   });
 
+  // Quản lí order
+  router.get('/admin-order', (req, res) => {
+    return res.render('admin/order.ejs');
+  });
+  router.get('/admin-order/user/:userId/order/:orderID', (req, res) => {
+    const userId = req.params.userId;
+    const orderId = req.params.orderID;
+    return res.render('admin/orderAdminDetail.ejs', { userId, orderId });
+  });
+
   // Đặt tour thành công
-  router.get('/complete-order', async (req, res, next) => {
+  router.get('/complete-order', async (req, res) => {
     try {
       await paymentService.capturePayment(req.query.token);
       return res.render('customer/orderTourSuccess');

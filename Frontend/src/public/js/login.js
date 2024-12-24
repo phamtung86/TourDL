@@ -68,46 +68,47 @@ document
       }
     }
   });
-const btnRegister = document.querySelector(".register-click")
-btnRegister.addEventListener("click", (e) => {
-  e.preventDefault()
-  window.location.href = `/register`
-})
-const btnForgotPassword = document.querySelector(".ip-link")
-btnForgotPassword.addEventListener("click", () => {
-    document.querySelector(".container-right").style = "display : none";
-    document.querySelector(".reset-password").style = "display : flex"
-})
-const btnBack = document.querySelector(".btn-back")
-btnBack.addEventListener("click", () => {
-    document.querySelector(".container-right").style = "display : flex";
-    document.querySelector(".reset-password").style = "display : none"
-})
+const btnRegister = document.querySelector('.register-click');
+btnRegister.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.location.href = `/register`;
+});
+const btnForgotPassword = document.querySelector('.ip-link');
+btnForgotPassword.addEventListener('click', () => {
+  document.querySelector('.container-right').style = 'display : none';
+  document.querySelector('.reset-password').style = 'display : flex';
+});
+const btnBack = document.querySelector('.btn-back');
+btnBack.addEventListener('click', () => {
+  document.querySelector('.container-right').style = 'display : flex';
+  document.querySelector('.reset-password').style = 'display : none';
+});
 
-async function resetPassword () {
-  const email = document.getElementById("email").value;
+async function resetPassword() {
+  const email = document.getElementById('email').value;
   console.log(email.trim().length);
-  
-  if(email.trim().length > 0){
-    try {
-      const respone = await axios.post(`http://localhost:8080/api/User/resetPassword?email=${email}`)
-      if(respone.status == 200){
 
-        alert(respone.data.message)
-      } 
+  if (email.trim().length > 0) {
+    try {
+      const respone = await axios.post(
+        `http://localhost:8080/api/User/resetPassword?email=${email}`
+      );
+      if (respone.status == 200) {
+        alert(respone.data.message);
+      }
     } catch (error) {
-      console.log("Gửi yêu cầu đặt lại mật khẩu thất bại " + error);
-      alert("Gửi yêu cầu đặt lại mật khẩu thất bại. Vui lòng kiểm tra lại !")
-    } 
+      console.log('Gửi yêu cầu đặt lại mật khẩu thất bại ' + error);
+      alert('Gửi yêu cầu đặt lại mật khẩu thất bại. Vui lòng kiểm tra lại !');
+    }
   } else {
-    alert("Nhập chưa đúng")
+    alert('Nhập chưa đúng');
   }
 }
 
-const btnResetSubmit = document.querySelector(".btn-submit-reset")
-btnResetSubmit.addEventListener("click", (e) => {
-  e.preventDefault()
-    resetPassword()
-    // document.querySelector(".container-right").style = "display : flex";
-    // document.querySelector(".reset-password").style = "display : none"
-})
+const btnResetSubmit = document.querySelector('.btn-submit-reset');
+btnResetSubmit.addEventListener('click', (e) => {
+  e.preventDefault();
+  resetPassword();
+  // document.querySelector(".container-right").style = "display : flex";
+  // document.querySelector(".reset-password").style = "display : none"
+});

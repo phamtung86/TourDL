@@ -282,8 +282,11 @@ let resTourList = async (pageNumber) => {
 let resProvinces = async () => {
   try {
     let res = await axios.get(
-      `https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1`
+      // `https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1`
+      `http://localhost:3124/api/v1/provinces`
     );
+    console.log(res);
+
     return {
       status: 0,
       data: {

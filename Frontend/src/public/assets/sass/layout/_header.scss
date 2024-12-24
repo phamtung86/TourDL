@@ -67,6 +67,15 @@
           margin-left: 10px;
           font-weight: bold;
         }
+        .icon__logout {
+          font-size: $fs-medium;
+          margin-left: 10px;
+          display: inline-block;
+          &:hover {
+            color: $color-primary;
+            cursor: pointer;
+          }
+        }
       }
     }
   }

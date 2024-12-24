@@ -1,7 +1,11 @@
 let resAPIInfo = async () => {
   try {
     let userId = sessionStorage.getItem('userID');
-    let res = await axios.get(`http://localhost:3124/api/v1/users/${userId}`);
+    let res = await axios.get(`http://localhost:3124/api/v1/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+      },
+    });
     //   Chưa validation
     return res.data.data;
   } catch (error) {
@@ -296,7 +300,7 @@ let getMembers = () => {
     let gender = member.querySelector('.customer__input-gender').value;
     let birthday = member.querySelector('.customer__input-birthday').value;
     let [year, month, date] = birthday.split('-');
-    let bod = `${date}-${month}-${year}`;
+    let bod = new Date(`${year}-${month}-${date}`);
     let role = member.dataset.type;
     let dataMember = {
       name: name,
