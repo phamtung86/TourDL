@@ -3,35 +3,40 @@ const jwt = require('jsonwebtoken');
 
 let validateAPI = (req, res, next) => {
   try {
-    let bearerToken = req.headers.authorization.split(' ');
-    let token = bearerToken[1];
-    console.log(token);
-
-    if (!token) {
+    let authHeader = req.cookies['SessionID'];
+    if (!authHeader) {
       return res.status(401).json({
         errCode: 2,
         message: 'Không token xác thực',
       });
     }
     try {
-      //   let generationToken = jwt.sign(
-      //     {
-      //       name: 'vinh',
-      //     },
-      //     'khanhvinh',
-      //     {
-      //       algorithm: 'HS256',
-      //     }
-      //   );
-      //   let tokenVerify = jwt.verify(generationToken, 'khanhvinh');
-      let tokenVerify = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(tokenVerify);
+      let tokenVerify = jwt.verify(authHeader, process.env.JWT_SECRET);
+      res.locals.userRole = tokenVerify.role;
+      next();
     } catch (error) {
       console.log(error);
-
       return res.status(401).json({
         errCode: 2,
         message: 'Token không hợp lệ',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errCode: 3,
+      message: 'Error from server',
+    });
+  }
+};
+
+let authorizationAPI = (req, res, next) => {
+  try {
+    let role = res.locals.userRole;
+    if (role !== 1 && role !== 0) {
+      return res.status(401).json({
+        errCode: 1,
+        message: 'Không có quyền truy cập dữ liệu',
       });
     }
     next();
@@ -42,35 +47,65 @@ let validateAPI = (req, res, next) => {
     });
   }
 };
-// Middleware check logged in
+
+let authorizationAPIAdmin = (req, res, next) => {
+  try {
+    let role = res.locals.userRole;
+    if (role !== 1) {
+      return res.status(401).json({
+        errCode: 1,
+        message: 'Không có quyền truy cập dữ liệu',
+      });
+    }
+    next();
+  } catch (error) {
+    return res.status(500).json({
+      errCode: 3,
+      message: 'Error from server',
+    });
+  }
+};
+
+// Middleware kiểm tra đã đăng nhập hay chưa
 let checkLogged = async (req, res, next) => {
   try {
-    let authHeader = req.headers;
-    // console.log({ req });
-    next();
-    /*
-    if (!authHeader || !userId) {
+    let authHeader = req.cookies['SessionID'];
+    if (!authHeader) {
       return res.redirect('/login');
     }
     try {
-      let result = await authService.getPublicKey(userId);
-      if (result.errCode !== 0) {
+      let verify = await jwt.verify(authHeader, process.env.JWT_SECRET);
+      console.log(verify.role);
+      if (verify.role === -1) {
         return res.redirect('/login');
       }
-      let verify = jwt.verify(authHeader, result.publicKey);
-      return next();
+      res.locals.role = verify.role;
+      next();
     } catch (error) {
+      console.log(error);
       return res.redirect('/login');
     }
-    */
   } catch (error) {
-    return res.status(500).json({
-      message: 'error from server',
-    });
+    return res.render('404.ejs');
+  }
+};
+
+let authorizationAdmin = (req, res, next) => {
+  try {
+    let role = res.locals.role;
+    if (role !== 1) {
+      return res.redirect('/login');
+    }
+    next();
+  } catch (error) {
+    return res.redirect('/login');
   }
 };
 
 module.exports = {
   checkLogged: checkLogged,
   validateAPI: validateAPI,
+  authorizationAPIAdmin: authorizationAPIAdmin,
+  authorizationAPI: authorizationAPI,
+  authorizationAdmin: authorizationAdmin,
 };

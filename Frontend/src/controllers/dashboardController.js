@@ -1,17 +1,31 @@
 const axios = require('../utils/axios.js');
 let getDashBoard = async (req, res) => {
-  const revenue = await axios.get(`http://localhost:8080/api/v1/Revenue/MONTH`);
+  let cookies = req.headers.cookie;
+  let axiosConfig = {
+    headers: {
+      Cookie: cookies, // Gắn cookie vào trong headers
+    },
+    withCredentials: true, // Gắn thông tin xác thực
+  };
+  const revenue = await axios.get(
+    `http://localhost:8080/api/v1/Revenue/MONTH`,
+    axiosConfig
+  );
   const topTour = await axios.get(
-    `http://localhost:8080/api/v1/TopTour?type=MONTH`
+    `http://localhost:8080/api/v1/TopTour?type=MONTH`,
+    axiosConfig
   );
   const totalAccountCustomer = await axios.get(
-    `http://localhost:8080/api/User/TotalUsers`
+    `http://localhost:8080/api/User/TotalUsers`,
+    axiosConfig
   );
   const totalTourOrder = await axios.get(
-    `http://localhost:8080/api/v1/TourOrders/TourOrdersByType/MONTH`
+    `http://localhost:8080/api/v1/TourOrders/TourOrdersByType/MONTH`,
+    axiosConfig
   );
   const topCustomer = await axios.get(
-    `http://localhost:3124/api/v1/users-top?month=3`
+    `http://localhost:3124/api/v1/users-top?month=3`,
+    axiosConfig
   );
 
   let data = {
