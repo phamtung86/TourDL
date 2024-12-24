@@ -1,7 +1,8 @@
 const buttonLogout = document.querySelector('.icon__logout');
 
-const handleLogout = () => {
+const handleLogout = async () => {
   sessionStorage.clear();
+  await axios.post('http://localhost:3124/api/v1/auth/logout');
   window.location.href = '/';
 };
 

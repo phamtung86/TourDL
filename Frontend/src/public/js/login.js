@@ -42,6 +42,9 @@ document
         sessionStorage.setItem('jwt', jwtResponse.token);
         sessionStorage.setItem('userID', jwtResponse.userId);
         sessionStorage.setItem('username', jwtResponse.userName);
+        await axios.post('http://localhost:3124/api/v1/auth/login', {
+          userId: jwtResponse.userId,
+        });
         // Giải mã token JWT để lấy thông tin người dùng
         const decodedToken = jwt_decode(jwtResponse.token); // Sử dụng jwtResponse.token thay vì jwtToken
         // Kiểm tra role trong token và điều hướng người dùng
