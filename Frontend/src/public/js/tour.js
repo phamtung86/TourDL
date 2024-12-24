@@ -137,6 +137,46 @@ btnCalendar.addEventListener('click', () => {
         alert("Bạn chưa chọn tour");
     }
 });
+const btnDetail = document.querySelector(".action__adddetail")
+btnDetail.addEventListener('click', () => {
+    const selectedRadio = document.querySelector('input[name="select__voucher"]:checked');
+    if (selectedRadio) {
+        const selectedTourId = selectedRadio.value;
+        window.location.href = `/tour/detail/${selectedTourId}`;
+    } else {
+        alert("Bạn chưa chọn tour");
+    }
+});
+// Hàm xóa tour
+async function deleteTour(tourId) {
+    try {
+        const response = await axios.delete(`http://localhost:8080/api/v1/tours/${tourId}`);
+        if (response.status === 204) {
+            alert('Xóa tour thành công!');
+            getTours(); // Tải lại danh sách tour sau khi xóa
+        } else {
+            alert('Có lỗi xảy ra khi xóa tour!');
+        }
+    } catch (error) {
+        console.error('Lỗi khi xóa tour:', error);
+        alert('Lỗi khi xóa tour! Vui lòng thử lại.');
+    }
+}
+
+// Xử lý sự kiện xóa tour
+const btnDelete = document.querySelector(".action__remove");
+btnDelete.addEventListener('click', () => {
+    const selectedRadio = document.querySelector('input[name="select__voucher"]:checked');
+    if (selectedRadio) {
+        const selectedTourId = selectedRadio.value;
+        const confirmDelete = confirm('Bạn có chắc chắn muốn xóa tour này?');
+        if (confirmDelete) {
+            deleteTour(selectedTourId); // Gọi hàm xóa tour
+        }
+    } else {
+        alert('Bạn chưa chọn tour để xóa!');
+    }
+});
 
 
 // Hàm gọi khi tải trang

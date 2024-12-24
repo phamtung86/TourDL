@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.dto.TourDetailDTO;
+import org.example.dto.TourDetailDTOv2;
 import org.example.modal.TourDetail;
 import org.example.service.ITourDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +24,29 @@ public class TourDetailController {
 	}
 
 	@GetMapping("/TourDetails/{tourId}")
-	public ResponseEntity<TourDetail> tourDetailById(@PathVariable("tourId") String tourId) {
-		TourDetail tourDetail = tourDetailService.findTourDetailByTourId(tourId);
-		if (tourDetail == null) {
+	public ResponseEntity<TourDetailDTOv2> tourDetailById(@PathVariable("tourId") String tourId) {
+		TourDetailDTOv2 tourDetailDTO = tourDetailService.findTourDetailByTourId(tourId);
+		if (tourDetailDTO == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(tourDetail, HttpStatus.OK);
+		return new ResponseEntity<>(tourDetailDTO, HttpStatus.OK);
 	}
 
 	@PostMapping("/TourDetail")
-	public ResponseEntity<TourDetail> addNewTourDetail(@RequestBody TourDetail tourDetail) {
-		TourDetail newTourDetail = tourDetailService.createNewTourDetail(tourDetail);
-		return new ResponseEntity<>(newTourDetail, HttpStatus.CREATED);
+	public boolean addNewTourDetail(@RequestBody TourDetailDTO tourDetailDTO) {
+		return tourDetailService.createNewTourDetail(tourDetailDTO);
+	}
+	@PutMapping("/TourDetails")
+	public boolean updateTourDetail(@RequestBody TourDetailDTO tourDetailDTO){
+		return tourDetailService.updateTourDeltail(tourDetailDTO);
 	}
 
 	@GetMapping("/TourDetals/total")
 	public int getTotalTour() {
 		return tourDetailService.sumTour();
+	}
+	@GetMapping("TourDetail/exist/{tourId}")
+	public boolean checkTourDetailByTourId(@PathVariable("tourId") String tourId){
+		return tourDetailService.checkTourDeTailByIDTour(tourId);
 	}
 }

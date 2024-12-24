@@ -1,11 +1,14 @@
 package org.example.service;
 
+import org.example.dto.TourDetailDTO;
+import org.example.dto.TourDetailDTOv2;
 import org.example.modal.TourDetail;
 import org.example.reponsitory.TourDetailReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TourDetailService implements ITourDetailService {
@@ -19,20 +22,29 @@ public class TourDetailService implements ITourDetailService {
 
 	// Xem theo id_tour
 	@Override
-	public TourDetail findTourDetailByTourId(String tourId) {
+	public TourDetailDTOv2 findTourDetailByTourId(String tourId) {
 		TourDetail tourDetail = tourDetailRepository.findTourDetailByTourId(tourId);
 
 		if (tourDetail == null) {
 			// Xử lý khi không tìm thấy tourDetail
 			throw new RuntimeException("TourDetail not found for ID: " + tourId);
 		}
-		return tourDetail;
+        return new TourDetailDTOv2(tourDetail);
 	}
 
 	// Add tour_detail
 	@Override
-	public TourDetail createNewTourDetail(TourDetail tourDetail) {
-		return tourDetailRepository.save(tourDetail);
+	public boolean createNewTourDetail(TourDetailDTO tourDetailDTO) {
+		TourDetail detail = new TourDetail();
+		detail.setCuisine(tourDetailDTO.getCuisine());
+		detail.setSaleDescription(tourDetailDTO.getSaleDescription());
+		detail.setSightSeeing(tourDetailDTO.getSightSeeing());
+		detail.setSuitablePeople(tourDetailDTO.getSuitablePeople());
+		detail.setTransport(tourDetailDTO.getTransport());
+		detail.setTimeSuitable(tourDetailDTO.getTimeSuitable());
+		detail.setTour(tourDetailDTO.getTour());
+		tourDetailRepository.save(detail);
+		return true;
 	}
 
 	// Delete TourDetail by ID
@@ -49,4 +61,29 @@ public class TourDetailService implements ITourDetailService {
 	public int sumTour() {
 		return tourDetailRepository.findAll().size();
 	}
+
+	@Override
+	public boolean updateTourDeltail(TourDetailDTO tourDetailDTO) {
+		Optional<TourDetail> tourDetailOptional = tourDetailRepository.findById(tourDetailDTO.getId());
+		if(tourDetailOptional.isEmpty()) return false;
+		TourDetail tourDetail = tourDetailOptional.get();
+		tourDetail.setCuisine(tourDetailDTO.getCuisine());
+		tourDetail.setSaleDescription(tourDetailDTO.getSaleDescription());
+		tourDetail.setSightSeeing(tourDetailDTO.getSightSeeing());
+		tourDetail.setSuitablePeople(tourDetailDTO.getSuitablePeople());
+		tourDetail.setTransport(tourDetailDTO.getTransport());
+		tourDetail.setTimeSuitable(tourDetailDTO.getTimeSuitable());
+		tourDetailRepository.save(tourDetail);
+        return true;
+	}
+
+	@Override
+	public boolean checkTourDeTailByIDTour(String id) {
+		TourDetail tourDetail = tourDetailRepository.findTourDetailByTourId(id);
+		if(tourDetail == null ) return false;
+		return true;
+
+	}
+
+
 }
