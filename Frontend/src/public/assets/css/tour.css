@@ -202,3 +202,12 @@ padding: 10px;
     font-weight: bold; /* In đậm chữ */
     color: #333; /* Màu chữ */
   }
+  .action__adddetail{
+    background-color: rgb(203, 46, 164);
+    color: white;
+
+  }
+  .action__remove{
+    background-color: rgb(203, 46, 164);
+    color: white;
+  }
