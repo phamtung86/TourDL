@@ -351,16 +351,17 @@ let handleAbateTour = () => {
     let check = validatedValue();
     if (!check) {
       swal('Lỗi!', 'Yêu cầu nhập đầy đủ dữ liệu, đầy đủ, đúng!', 'error');
-      // return;
-    }
-    await handleOrderTour();
-    try {
-      let data = getDataOrder();
-      let res = await axios.post('/api/v1/payment', data);
-      window.location.href = res.data.url;
-    } catch (error) {
-      console.log(error);
-      swal('Lỗi!', 'Lỗi thanh toán từ hệ thống', 'error');
+      return;
+    } else {
+      await handleOrderTour();
+      try {
+        let data = getDataOrder();
+        let res = await axios.post('/api/v1/payment', data);
+        window.location.href = res.data.url;
+      } catch (error) {
+        console.log(error);
+        swal('Lỗi!', 'Lỗi thanh toán từ hệ thống', 'error');
+      }
     }
   });
 };
