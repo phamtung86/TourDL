@@ -28,10 +28,6 @@ const initWebRouters = (app) => {
   router.get('/tour/add', (req, res) => {
     return res.render('admin/tourAdd.ejs');
   });
-  router.get('/tour/detail/:id', (req, res) => {
-    const tourId = req.params.id;
-    return res.render('admin/tourDetail.ejs',{tourId});
-  });
   router.get('/tour/modify/:id', (req, res) => {
     const tourId = req.params.id;
     return res.render('admin/tourModify.ejs', { tourId });
