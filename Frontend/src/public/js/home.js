@@ -285,8 +285,6 @@ let resProvinces = async () => {
       // `https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1`
       `http://localhost:3124/api/v1/provinces`
     );
-    console.log(res);
-
     return {
       status: 0,
       data: {

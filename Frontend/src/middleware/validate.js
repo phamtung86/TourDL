@@ -75,7 +75,6 @@ let checkLogged = async (req, res, next) => {
     }
     try {
       let verify = await jwt.verify(authHeader, process.env.JWT_SECRET);
-      console.log(verify.role);
       if (verify.role === -1) {
         return res.redirect('/login');
       }

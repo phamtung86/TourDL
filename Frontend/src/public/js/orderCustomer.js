@@ -104,10 +104,24 @@ let configPriceTour = () => {
   renderPriceHTML(); // Hiển thị giá lên màn hình
 };
 
+let showFinalBill = () => {
+  let tourPrice = parseInt(
+    document.querySelector('.customer-bill__tour-price.adult').dataset.tourprice
+  );
+  let salePrice = parseInt(
+    document.querySelector('.customer-bill__price-value.sale').dataset.value
+  );
+  let temp = tourPrice - salePrice;
+  temp < 0 ? (temp = 0) : (temp = temp);
+  let finalBill = document.querySelector('.customer-bill__final-value-bill');
+  finalBill.dataset.value = temp;
+  finalBill.innerText = Intl.NumberFormat('vi-VN').format(temp);
+};
 // Hàm chịu trách nhiệm load HTML sau khi trang tải hoàn tất
 let loadHTML = async () => {
   await loadInfoCustomer();
   configPriceTour();
+  showFinalBill();
 };
 
 // Event
@@ -175,7 +189,7 @@ let eventDiminishSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
 let eventIncreaseSize = (itemHTML, parentHTML, infoItemHTML, itemPrice) => {
   let currentValue = parseInt(itemHTML.dataset.value);
   if (slot === 0) {
-    swal('Lỗi!', 'Tour này đã hết chỗ trống', 'error');
+    swal('Lỗi!', 'Đạt giới hạn số lượng cho phép đặt', 'error');
     return;
   }
   currentValue++;
@@ -252,7 +266,8 @@ let validatedValue = () => {
   let inputBirthday = document.querySelectorAll('.customer__input-birthday');
   let size = inputNames.length - 1;
   let check = true;
-  let regex = /^[a-zA-Z\s]+$/;
+  let regex =
+    /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỂếỄỆỈỊỌỎỐỒỔỖỘỚờỞỡỡỤỦỨỪỬỮỰỲỴÝỶỸửữựỲỴÝỶỸ\s]+$/;
   while (size > -1) {
     let value = inputNames[size].value;
     let valueBirthday = inputBirthday[size].value;

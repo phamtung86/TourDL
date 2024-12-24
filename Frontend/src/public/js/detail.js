@@ -67,14 +67,12 @@ function extractVoucherIdFromUrl(url) {
   return splitId;
 }
 let tourId = extractVoucherIdFromUrl(window.location.pathname);
-console.log(tourId);
 async function fetchTourDetail(tourID) {
   try {
     const response = await axios.get(
       `http://localhost:3124/api/v1/tours/${tourID}`
     );
     if (response.status == 200) {
-      console.log(response);
       const tour = response.data.data;
       const priceFormatted = new Intl.NumberFormat('vi-VN').format(tour.price);
 
@@ -104,7 +102,7 @@ async function fetchTourDetail(tourID) {
 
       // Thêm giá vào p và phần "/Khách" vào một thẻ span
       priceElement.innerHTML = `${priceFormatted} đ <span>/Khách</span>`;
-      document.querySelector('.tour-pice-pagecode span').textContent = tour.id;
+      document.querySelector('.tour-pice-pagecode span').innerText = tour.id;
 
       // document.querySelector('.idtour').textContent = tour.id;
       document.querySelector('.departure').textContent = tour.departure_point;

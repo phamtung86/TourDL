@@ -226,6 +226,7 @@
       </script>
     </footer>
     <!-- End Footer -->
+    <%- include('../partials/baseScriptFE')%>
     <script>
       let username = sessionStorage.getItem('username');
       const header = document.querySelector('.header__content');
@@ -233,14 +234,18 @@
         let headerButtonBox = document.querySelector('.header__button');
         headerButtonBox.classList.add('hide');
         header.innerHTML += `<div class="header__infor-customer">
-          <span class="icon">
-            <i class="fa-solid fa-user"></i>
-          </span>
-          <span class="header__infor-customer-name"> ${username} </span>
-        </div>`;
+        <span class="icon">
+          <i class="fa-solid fa-user"></i>
+        </span>
+        <span class="header__infor-customer-name"> ${username} </span>
+        <span class="icon__logout" title="Đăng xuất"> 
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </span>
+      </div>`;
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="/js/detail.js"></script>
+    <script src="/js/logout.js"></script>
   </body>
 </html>
