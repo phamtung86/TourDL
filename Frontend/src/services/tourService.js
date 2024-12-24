@@ -86,6 +86,10 @@ let getTourByCustomer = () => {
 let getInfoTourDetail = (inputId) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let myMoment = moment();
+      let currentDay = myMoment.format('YYYY-MM-DD');
+      console.log(currentDay);
+
       let data = await db.Tour.findOne({
         where: {
           id: inputId,
@@ -103,6 +107,11 @@ let getInfoTourDetail = (inputId) => {
           {
             model: db.TourCalendar,
             as: 'tourCalendars',
+            where: {
+              start_date: {
+                [Op.gte]: currentDay,
+              },
+            },
             attributes: ['id', 'start_date', 'slot'],
             include: [
               {
@@ -196,15 +205,6 @@ let getInfoTourDetailByDate = (tourId, dateId) => {
 let createTourOrder = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(
-        'Date: ',
-        new Date()
-          .toLocaleString('en', {
-            timeZone: 'Asia/Ho_Chi_Minh',
-            hour12: false,
-          })
-          .replace(/,/g, '')
-      );
       let orderDate = new Date()
         .toLocaleString('en', {
           timeZone: 'Asia/Ho_Chi_Minh',

@@ -378,7 +378,7 @@
                     <span class="icon">
                       <i class="fa-solid fa-hourglass-start"></i>
                     </span>
-                    Ngày đi: <span class="text"><%= calendars.start_date %></span>
+                    Ngày đi: <span class="text" data-value="<%= calendars.start_date%>"><%= calendars.start_date_format %></span>
                   </p>
                 </div>
                 <div class="customer-bill">
@@ -442,7 +442,7 @@
                       <span class="text">Giảm giá</span>
                     </p>
                     <p class="customer-bill__price">
-                      <span data-value="0" class="customer-bill__price-value sale"><%= Intl.NumberFormat('vi-VN').format(tour.price)  %></span>
+                      <span data-value="<%=(calendars.voucher.type === 1) ? calendars.voucher.value : (calendars.voucher.value * tour.price)/100  %>" class="customer-bill__price-value sale"><%= (calendars.voucher.type === 1) ? Intl.NumberFormat('vi-VN').format(calendars.voucher.value) : Intl.NumberFormat('vi-VN').format((calendars.voucher.value * tour.price)/100) %></span>
                       &#x20AB
                     </p>
                   </div>
